@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils'; // Adjust the import path as necessary
 import { AnimatePresence, motion } from 'framer-motion'; // Import AnimatePresence
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 
 interface SelectOption {
   label: string;
@@ -60,17 +60,25 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
       <div
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'flex w-full cursor-pointer items-center justify-between rounded-full bg-[rgba(255,255,255,0.06)] px-4 py-3 text-white',
+          'flex w-full cursor-pointer items-center justify-between rounded-full bg-[rgba(255,255,255,0.06)] px-4 py-3 text-white transition-all duration-300',
           selectedClassName,
         )}
       >
         <span>{selected ? selected.label : placeholder}</span>
         {Icon && <Icon className="ml-2" />} {/* Optional icon */}
-        {isOpen ? (
-          <FaChevronUp className="text-white" />
-        ) : (
-          <FaChevronDown className="text-white" />
-        )}
+        <div
+          className={cn(
+            'flex h-7 w-7 items-center justify-center rounded-full transition-all duration-300',
+            isOpen ? 'bg-theme1' : 'bg-[#05092B]',
+          )}
+        >
+          <FaChevronDown
+            className={cn(
+              'text-white transition-transform duration-300',
+              isOpen ? 'rotate-180' : 'rotate-0',
+            )}
+          />
+        </div>
       </div>
 
       {/* Dropdown options with Framer Motion animation and AnimatePresence */}

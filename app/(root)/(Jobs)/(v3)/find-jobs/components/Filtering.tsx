@@ -1,20 +1,14 @@
 'use client';
+import { InputField, SelectDropdown } from '@/components/common';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { LiaAddressBook } from 'react-icons/lia';
 
 const Filtering = () => {
   const searchInputRef = useRef<any>(null);
@@ -29,9 +23,9 @@ const Filtering = () => {
     remoteOnly: false,
   });
 
-  const handleSearchFocus = () => {
-    searchInputRef.current.style.width = '105%';
-  };
+  //   const handleSearchFocus = () => {
+  //     searchInputRef.current.style.width = '105%';
+  //   };
 
   const handleSearchBlur = () => {
     searchInputRef.current.style.width = '100%';
@@ -44,21 +38,27 @@ const Filtering = () => {
     }));
   };
 
+  const statusOptions = [
+    { value: 'beginner', label: 'Beginner' },
+    { value: 'intermediate', label: 'Intermediate' },
+    { value: 'expert', label: 'Expert' },
+  ];
+
   return (
     <div>
       <div>
         <div className="mb-8">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
-            <Input
-              ref={searchInputRef}
+            <div className="absolute left-3 top-1/2 flex h-8 w-8 -translate-y-1/2 transform items-center justify-center rounded-full bg-[#05092B]">
+              <Search className="text-white" size={18} />
+            </div>
+            <InputField
+              inputClassName="placeholder:text-white "
               type="text"
               placeholder="Job title, keywords, or company"
-              className="w-full rounded-md border-gray-700 bg-gray-800 py-2 pl-10 pr-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-xl border-transparent bg-[rgba(255,255,255,0.05)] py-3 pl-14 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={searchTerm}
               onChange={(e: any) => setSearchTerm(e.target.value)}
-              onFocus={handleSearchFocus}
-              onBlur={handleSearchBlur}
             />
           </div>
         </div>
@@ -66,65 +66,51 @@ const Filtering = () => {
       <div>
         <div>
           <div className="mb-8">
-            <div className="flex flex-wrap gap-4">
-              <Input
-                type="text"
-                placeholder="City, state, or zip code"
-                className="w-64 border-gray-700 bg-gray-800 text-gray-100"
-                value={selectedFilters.location}
-                onChange={(e: any) =>
-                  handleFilterChange('location', e.target.value)
-                }
-              />
-              <Select
-                onValueChange={(value) =>
-                  handleFilterChange('jobType', [value])
-                }
-              >
-                <SelectTrigger className="w-48 border-gray-700 bg-gray-800 text-gray-100">
-                  <SelectValue placeholder="Job Type" />
-                </SelectTrigger>
-                <SelectContent className="border-gray-700 bg-gray-800 text-gray-100">
-                  <SelectItem value="full-time">Full-time</SelectItem>
-                  <SelectItem value="part-time">Part-time</SelectItem>
-                  <SelectItem value="contract">Contract</SelectItem>
-                  <SelectItem value="internship">Internship</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select
-                onValueChange={(value) =>
-                  handleFilterChange('datePosted', value)
-                }
-              >
-                <SelectTrigger className="w-48 border-gray-700 bg-gray-800 text-gray-100">
-                  <SelectValue placeholder="Date Posted" />
-                </SelectTrigger>
-                <SelectContent className="border-gray-700 bg-gray-800 text-gray-100">
-                  <SelectItem value="1d">Last 24 hours</SelectItem>
-                  <SelectItem value="3d">Last 3 days</SelectItem>
-                  <SelectItem value="7d">Last 7 days</SelectItem>
-                  <SelectItem value="14d">Last 14 days</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select
-                onValueChange={(value) =>
-                  handleFilterChange('salary', value.split('-').map(Number))
-                }
-              >
-                <SelectTrigger className="w-48 border-gray-700 bg-gray-800 text-gray-100">
-                  <SelectValue placeholder="Salary Estimate" />
-                </SelectTrigger>
-                <SelectContent className="border-gray-700 bg-gray-800 text-gray-100">
-                  <SelectItem value="0-50">$0 - $50,000</SelectItem>
-                  <SelectItem value="50-100">$50,000 - $100,000</SelectItem>
-                  <SelectItem value="100-150">$100,000 - $150,000</SelectItem>
-                  <SelectItem value="150-200">$150,000+</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="relative flex flex-wrap gap-4">
+              <div>
+                <div className="absolute left-3 top-1/2 flex h-8 w-8 -translate-y-1/2 transform items-center justify-center rounded-full bg-[#05092B]">
+                  <LiaAddressBook className="text-white" size={18} />
+                </div>
+                <InputField
+                  inputClassName="placeholder:text-white"
+                  type="text"
+                  placeholder="City, state, or zip code"
+                  className="w-64 rounded-xl border-transparent bg-[rgba(255,255,255,0.05)] py-2 pl-14 text-white"
+                  value={selectedFilters.location}
+                  onChange={(e: any) =>
+                    handleFilterChange('location', e.target.value)
+                  }
+                />
+              </div>
+
+              <div>
+                <SelectDropdown
+                  selectedClassName="rounded text-sm w-60 py-2 rounded-xl font-semibold"
+                  options={statusOptions}
+                  placeholder="Job type"
+                />
+              </div>
+
+              <div>
+                <SelectDropdown
+                  placeholder="Date Posted"
+                  selectedClassName="rounded text-sm w-60 py-2 rounded-xl font-semibold"
+                  options={statusOptions}
+                />
+              </div>
+
+              <div>
+                <SelectDropdown
+                  placeholder="Salary Estimate"
+                  selectedClassName="rounded text-sm w-60 py-2 rounded-xl font-semibold"
+                  options={statusOptions}
+                />
+              </div>
+
               <Button
                 onClick={() => setShowFilters(!showFilters)}
                 variant="outline"
-                className="flex items-center gap-2 border-gray-700 bg-gray-800 text-gray-100"
+                className="flex items-center gap-2 border-transparent bg-[rgba(255,255,255,0.05)] text-gray-100"
               >
                 {showFilters ? (
                   <ChevronUp size={18} />
@@ -145,7 +131,15 @@ const Filtering = () => {
                 transition={{ duration: 0.3 }}
                 className="mb-8"
               >
-                <Card className="border-gray-700 bg-gray-800">
+                <Card
+                  style={{
+                    borderColor: 'rgba(255, 255, 255, 0.14)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                    backdropFilter: 'blur(30px)',
+                    boxShadow: '0px 20px 50px rgba(1, 5, 43, 0.2)',
+                  }}
+                  className="border"
+                >
                   <CardContent className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3">
                     <div>
                       <label className="mb-2 block text-sm font-medium text-gray-300">

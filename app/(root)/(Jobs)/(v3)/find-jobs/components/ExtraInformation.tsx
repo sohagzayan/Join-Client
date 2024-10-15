@@ -16,7 +16,7 @@ const ExtraInformation = ({
     setShowJobModal(true);
   };
 
-  const topJobs = jobs_news.slice(0, 5);
+  const topJobs = jobs_news.slice(0, 3);
   const mostViewedJobs = jobs_news.slice(5, 10);
 
   const peopleAlsoSearched = [
@@ -28,12 +28,12 @@ const ExtraInformation = ({
   ];
 
   return (
-    <div>
+    <div className="sticky left-0 top-5">
       <div>
-        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-3">
-          <Card className="border-gray-700 bg-gray-800">
+        <div className="mb-4 flex flex-col rounded-lg bg-[rgba(255,255,255,0.08)]">
+          <Card className="border-transparent">
             <CardHeader>
-              <CardTitle className="flex items-center text-blue-400">
+              <CardTitle className="flex items-center text-lg text-theme1">
                 <TrendingUp className="mr-2" /> Top Jobs
               </CardTitle>
             </CardHeader>
@@ -42,7 +42,7 @@ const ExtraInformation = ({
                 {topJobs.map((job: any) => (
                   <li
                     key={job.id}
-                    className="cursor-pointer text-gray-300 hover:text-blue-400"
+                    className="cursor-pointer text-text4 hover:text-theme1"
                     onClick={() => handleJobClick(job)}
                   >
                     {job.title} - {job.company}
@@ -52,9 +52,9 @@ const ExtraInformation = ({
             </CardContent>
           </Card>
 
-          <Card className="border-gray-700 bg-gray-800">
+          <Card className="border-transparent">
             <CardHeader>
-              <CardTitle className="flex items-center text-blue-400">
+              <CardTitle className="flex items-center text-lg text-theme1">
                 <Eye className="mr-2" /> Most Viewed This Week
               </CardTitle>
             </CardHeader>
@@ -63,7 +63,7 @@ const ExtraInformation = ({
                 {mostViewedJobs.map((job: any) => (
                   <li
                     key={job.id}
-                    className="cursor-pointer text-gray-300 hover:text-blue-400"
+                    className="cursor-pointer text-text4 hover:text-theme1"
                     onClick={() => handleJobClick(job)}
                   >
                     {job.title} - {job.company}
@@ -73,9 +73,9 @@ const ExtraInformation = ({
             </CardContent>
           </Card>
 
-          <Card className="border-gray-700 bg-gray-800">
+          <Card className="border-transparent">
             <CardHeader>
-              <CardTitle className="flex items-center text-blue-400">
+              <CardTitle className="flex items-center text-lg text-theme1">
                 <Search className="mr-2" /> People Also Searched
               </CardTitle>
             </CardHeader>
@@ -84,7 +84,7 @@ const ExtraInformation = ({
                 {peopleAlsoSearched.map((keyword, index) => (
                   <Badge
                     key={index}
-                    className="cursor-pointer bg-gray-700 text-gray-200 hover:bg-gray-600"
+                    className="cursor-pointer border border-[rgba(0,123,255,0.2)] bg-[rgba(0,123,255,0.1)] text-gray-200 text-theme1 hover:bg-gray-600"
                     onClick={() => setSearchTerm(keyword)}
                   >
                     {keyword}

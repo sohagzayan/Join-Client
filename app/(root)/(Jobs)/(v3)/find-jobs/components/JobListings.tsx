@@ -1,3 +1,4 @@
+import { SelectDropdown } from '@/components/common';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,13 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { jobs_news } from '@/utils/data';
 import { Badge, Briefcase, DollarSign, MapPin, Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -26,7 +20,8 @@ const JobListings = ({
   setSelectedJob,
   selectedJob,
 }: any) => {
-  const [currentPage, setCurrentPage] = useState<any>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isMounted, setIsMounted] = useState<boolean>(false); // Flag to check if component is mounted
 
   const jobsPerPage = 10;
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -42,7 +37,7 @@ const JobListings = ({
   );
 
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-  const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const handleJobClick = (job: any) => {
     setSelectedJob(job);
@@ -50,37 +45,49 @@ const JobListings = ({
   };
 
   useEffect(() => {
-    setSelectedJob(jobs_news[0]);
+    setIsMounted(true); // Set the flag to true after mounting the component
+    if (jobs_news.length > 0) {
+      setSelectedJob(jobs_news[0]); // Set the default selected job after the component mounts
+    }
   }, []);
+
+  if (!isMounted) {
+    // Prevent rendering on server-side or until the component has mounted
+    return null;
+  }
+
+  const statusOptions = [
+    { value: 'beginner', label: 'Relevance' },
+    { value: 'intermediate', label: 'Date' },
+    { value: 'expert', label: 'salary' },
+  ];
 
   return (
     <div>
-      <Card className="border-gray-700 bg-gray-800">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-xl text-blue-400">
+      <Card className="border-transparent">
+        <CardHeader className="mb-5 flex flex-row items-center justify-between py-0">
+          <CardTitle className="text-xl text-theme1">
             Job Listings ({filteredJobs.length})
           </CardTitle>
-          <Select defaultValue="relevance">
-            <SelectTrigger className="w-[180px] border-gray-600 bg-gray-700 text-gray-100">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent className="border-gray-600 bg-gray-700">
-              <SelectItem value="relevance">Relevance</SelectItem>
-              <SelectItem value="date">Date</SelectItem>
-              <SelectItem value="salary">Salary</SelectItem>
-            </SelectContent>
-          </Select>
+          <div>
+            <SelectDropdown
+              placeholder="Sort by"
+              selectedClassName="rounded text-sm w-52 py-2 rounded-xl font-semibold"
+              options={statusOptions}
+            />
+          </div>
         </CardHeader>
+
         <CardContent>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4">
             {currentJobs.map((job: any) => (
               <Card
                 key={job.id}
-                className="cursor-pointer border-gray-600 bg-gray-700 transition-colors hover:bg-gray-600"
+                className="cursor-pointer border-transparent bg-[rgba(255,255,255,0.08)] transition-colors hover:border-theme1"
                 onClick={() => handleJobClick(job)}
               >
                 <CardHeader>
-                  <CardTitle className="text-lg text-blue-400">
+                  <CardTitle className="text-lg text-white">
                     {job.title}
                   </CardTitle>
                   <CardDescription className="text-gray-400">
@@ -94,9 +101,9 @@ const JobListings = ({
                           className="inline"
                         />
                       ))}
-                      <span className="ml-1 text-gray-400">
+                      <h5 className="ml-1 text-gray-400">
                         {job.companyRating.toFixed(1)}
-                      </span>
+                      </h5>
                     </div>
                   </CardDescription>
                 </CardHeader>
@@ -117,11 +124,7 @@ const JobListings = ({
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {job.skills.slice(0, 3).map((skill: any) => (
-                      <Badge
-                        key={skill}
-                        // variant="secondary"
-                        className="bg-gray-600 text-gray-200"
-                      >
+                      <Badge key={skill} className="bg-gray-600 text-gray-200">
                         {skill}
                       </Badge>
                     ))}
