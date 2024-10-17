@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 import { IoSearchOutline, IoSettingsOutline } from 'react-icons/io5';
 import { LuUser2 } from 'react-icons/lu';
+import DashboardTopBar from './components/DashboardTopBar';
 
 export default function RootLayouts({
   children,
@@ -113,7 +114,7 @@ export default function RootLayouts({
           {/* <Header variant='primary' /> */}
           <div style={{ flex: '1 1 0', overflow: 'hidden' }} className="h-full">
             <main className="flex h-full w-full flex-1 flex-col overflow-x-hidden">
-              {/* <DashboardTopBar /> */}
+              <DashboardTopBar />
 
               <main
                 className="flex-1 overflow-y-auto"

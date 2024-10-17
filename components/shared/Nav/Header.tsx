@@ -36,7 +36,7 @@ const Header = ({ variant }: HeaderType) => {
 
   return (
     <>
-      {!noNeedHeader ?? (
+      {!noNeedHeader && (
         <div
           style={{ backdropFilter: scrollY >= 70 ? 'blur(5px)' : '' }}
           className={`z-[999] border-b border-[rgba(255,255,255,0.08)] bg-themeDark2 px-4 transition-all duration-300 ${
