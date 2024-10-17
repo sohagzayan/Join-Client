@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { jobs, jobs_news } from '@/utils/data';
+import { jobs_news } from '@/utils/data';
 import { useEffect, useState } from 'react';
 import JobCard from './JobCard';
 
@@ -79,7 +79,7 @@ const JobListings = ({
                 key={job.id + 10}
                 setSelectedJob={setSelectedJob}
                 setShowJobModal={setShowJobModal}
-                job={jobs}
+                job={job}
               />
             ))}
           </div>

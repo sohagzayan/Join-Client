@@ -1,3 +1,6 @@
+'use client';
+import { InputField, SelectDropdown } from '@/components/common';
+import TextArea from '@/components/common/text-area';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,16 +11,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Briefcase,
@@ -28,6 +23,7 @@ import {
   MapPin,
   Star,
 } from 'lucide-react';
+import React from 'react';
 
 const JobModal = ({
   showJobModal,
@@ -35,6 +31,15 @@ const JobModal = ({
   selectedJob,
   setShowEarlyApplyModal,
 }: any) => {
+  const [selectedRange, setSelectedRange] = React.useState(null);
+
+  const salaryRanges = [
+    { value: '50k-75k', label: '$50,000 - $75,000' },
+    { value: '75k-100k', label: '$75,000 - $100,000' },
+    { value: '100k-125k', label: '$100,000 - $125,000' },
+    { value: '125k+', label: '$125,000+' },
+  ];
+
   return (
     <Dialog open={showJobModal} onOpenChange={setShowJobModal}>
       <div
@@ -172,7 +177,7 @@ const JobModal = ({
                         <Badge
                           key={skill}
                           variant="secondary"
-                          className="bg-gray-600 text-gray-200"
+                          className="border-[rgba(0,123,255,0.2)] bg-[rgba(0,123,255,0.1)] text-theme1"
                         >
                           {skill}
                         </Badge>
@@ -203,23 +208,30 @@ const JobModal = ({
               </TabsContent>
               <TabsContent value="apply">
                 <form className="space-y-4">
-                  <Input
+                  <InputField
                     type="text"
                     placeholder="Full Name"
                     required
-                    className="border-gray-600 bg-gray-700 text-gray-100"
+                    inputClassName="placeholder:text-white"
+                    className="rounded-md border border-gray-600 bg-themeDark text-gray-100 text-white"
                   />
-                  <Input
-                    type="email"
+
+                  <InputField
+                    type="text"
                     placeholder="Email Address"
                     required
-                    className="border-gray-600 bg-gray-700 text-gray-100"
+                    inputClassName="placeholder:text-white"
+                    className="rounded-md border border-gray-600 bg-themeDark text-gray-100 text-white"
                   />
-                  <Input
-                    type="tel"
+
+                  <InputField
+                    type="text"
                     placeholder="Phone Number"
-                    className="border-gray-600 bg-gray-700 text-gray-100"
+                    required
+                    inputClassName="placeholder:text-white"
+                    className="rounded-md border border-gray-600 bg-themeDark text-gray-100 text-white"
                   />
+
                   <div>
                     <label
                       htmlFor="resume"
@@ -227,12 +239,22 @@ const JobModal = ({
                     >
                       Upload Resume
                     </label>
-                    <Input
-                      id="resume"
-                      type="file"
-                      accept=".pdf,.doc,.docx"
-                      className="border-gray-600 bg-gray-700 text-gray-100"
-                    />
+                    <div>
+                      <div>
+                        <label
+                          htmlFor="resume"
+                          className="inline-block cursor-pointer rounded-md border border-gray-600 bg-themeDark px-4 py-2 text-white"
+                        >
+                          Choose File
+                        </label>
+                        <input
+                          id="resume"
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          className="hidden"
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <label
@@ -241,15 +263,15 @@ const JobModal = ({
                     >
                       Cover Letter
                     </label>
-                    <textarea
+                    <TextArea
                       id="1" // Ensure id is string
                       placeholder="Tell us why you're a great fit for this role..."
                       rows={4}
-                      className="border-gray-600 bg-gray-700 text-gray-100"
+                      className="text-whit w-full rounded-md border border-gray-600 bg-themeDark text-gray-100"
                     />
                   </div>
-                  <div>
-                    <label className="mb-2 block text-sm font-medium text-gray-300">
+                  <div className="flex items-center gap-5">
+                    <label className="block text-sm font-medium text-gray-300">
                       Are you willing to relocate?
                     </label>
                     <RadioGroup>
@@ -279,23 +301,11 @@ const JobModal = ({
                     <label className="mb-2 block text-sm font-medium text-gray-300">
                       Whats your expected salary range?
                     </label>
-                    <Select>
-                      <SelectTrigger className="border-gray-600 bg-gray-700 text-gray-100">
-                        <SelectValue placeholder="Select salary range" />
-                      </SelectTrigger>
-                      <SelectContent className="border-gray-600 bg-gray-700">
-                        <SelectItem value="50k-75k">
-                          $50,000 - $75,000
-                        </SelectItem>
-                        <SelectItem value="75k-100k">
-                          $75,000 - $100,000
-                        </SelectItem>
-                        <SelectItem value="100k-125k">
-                          $100,000 - $125,000
-                        </SelectItem>
-                        <SelectItem value="125k+">$125,000+</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <SelectDropdown
+                      options={salaryRanges}
+                      className=""
+                      selectedClassName="rounded-md"
+                    />
                   </div>
                   <Button
                     type="submit"
@@ -306,18 +316,12 @@ const JobModal = ({
                 </form>
               </TabsContent>
             </Tabs>
-            <DialogFooter className="flex items-center justify-between">
+            <DialogFooter className="">
               <Button
                 variant="outline"
-                className="text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
+                className="border-red text-red hover:bg-red hover:text-white"
               >
                 <Flag className="mr-2 h-4 w-4" /> Report this job
-              </Button>
-              <Button
-                className="bg-blue-600 text-white hover:bg-blue-700"
-                onClick={() => setShowEarlyApplyModal(true)}
-              >
-                Early Apply
               </Button>
             </DialogFooter>
           </>

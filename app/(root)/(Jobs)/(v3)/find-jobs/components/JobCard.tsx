@@ -18,6 +18,7 @@ import {
 
 const JobCard = ({ job, setSelectedJob, setShowJobModal }: any) => {
   const handleJobClick = (job: any) => {
+    console.log('job', job);
     setSelectedJob(job);
     setShowJobModal(true);
   };
@@ -95,6 +96,7 @@ const JobCard = ({ job, setSelectedJob, setShowJobModal }: any) => {
           Quick Apply
         </Button>
         <Button
+          onClick={() => handleJobClick(job)}
           size="sm"
           className="border-2 border-theme1 bg-theme1 text-white transition-all duration-100 ease-in-out hover:border-white hover:bg-white hover:text-theme1"
         >
