@@ -2216,3 +2216,319 @@ export const jobs: Job[] = [
     salary: '$100,000 - $130,000',
   },
 ];
+
+export const jobs_news: any = [
+  {
+    id: 1,
+    title: 'Senior Clinical Administrative Coordinator',
+    company: 'Optum',
+    location: 'Phoenix, AZ 85001 • Remote',
+    salary: '$19.47 - $38.08 an hour',
+    type: 'Full-time',
+    experience: '5+ years',
+    skills: ['Windows', 'Administrative Support', 'Healthcare'],
+    description:
+      "We're seeking an experienced Clinical Administrative Coordinator to join our innovative team...",
+    postedDate: '2023-06-01',
+    companyRating: 3.3,
+    schedule: 'Monday to Friday',
+    primaryResponsibilities: [
+      'Work with a Clinical Care Team to support patient and provider engagement',
+      'Engage high-risk patients telephonically to schedule appointments with Clinical Care Team',
+      'Utilize multiple technology systems and outreach to provider offices and/or pharmacies as needed',
+    ],
+    fullJobDescription:
+      'As a Senior Clinical Administrative Coordinator, you will play a crucial role in supporting our Clinical Care Team...',
+    benefits: [
+      'Competitive salary',
+      'Health insurance',
+      '401(k) with company match',
+      'Paid time off',
+      'Professional development opportunities',
+    ],
+    requiredQualifications: [
+      "Bachelor's degree in Healthcare Administration or related field",
+      '5+ years of experience in healthcare administration',
+      'Proficiency in Windows and Microsoft Office Suite',
+      'Strong organizational and communication skills',
+    ],
+    preferredQualifications: [
+      "Master's degree in Healthcare Administration",
+      'Experience with electronic health records (EHR) systems',
+      'Bilingual in English and Spanish',
+    ],
+    telecommutingRequirements:
+      'This position allows for remote work within the state of Arizona or Colorado.',
+    softSkills: [
+      'Excellent communication',
+      'Problem-solving',
+      'Time management',
+      'Attention to detail',
+      'Teamwork',
+    ],
+    coloradoResidentsOnly:
+      'For Colorado residents, the salary range for this position is $19.47 - $38.08 per hour, based on experience and qualifications.',
+    applicationDeadline: '2023-07-15',
+  },
+  {
+    id: 1,
+    title: 'Senior Clinical Administrative Coordinator',
+    company: 'Optum',
+    location: 'Phoenix, AZ 85001 • Remote',
+    salary: '$19.47 - $38.08 an hour',
+    type: 'Full-time',
+    experience: '5+ years',
+    skills: ['Windows', 'Administrative Support', 'Healthcare'],
+    description:
+      "We're seeking an experienced Clinical Administrative Coordinator to join our innovative team...",
+    postedDate: '2023-06-01',
+    companyRating: 3.3,
+    schedule: 'Monday to Friday',
+    primaryResponsibilities: [
+      'Work with a Clinical Care Team to support patient and provider engagement',
+      'Engage high-risk patients telephonically to schedule appointments with Clinical Care Team',
+      'Utilize multiple technology systems and outreach to provider offices and/or pharmacies as needed',
+    ],
+    fullJobDescription:
+      'As a Senior Clinical Administrative Coordinator, you will play a crucial role in supporting our Clinical Care Team...',
+    benefits: [
+      'Competitive salary',
+      'Health insurance',
+      '401(k) with company match',
+      'Paid time off',
+      'Professional development opportunities',
+    ],
+    requiredQualifications: [
+      "Bachelor's degree in Healthcare Administration or related field",
+      '5+ years of experience in healthcare administration',
+      'Proficiency in Windows and Microsoft Office Suite',
+      'Strong organizational and communication skills',
+    ],
+    preferredQualifications: [
+      "Master's degree in Healthcare Administration",
+      'Experience with electronic health records (EHR) systems',
+      'Bilingual in English and Spanish',
+    ],
+    telecommutingRequirements:
+      'This position allows for remote work within the state of Arizona or Colorado.',
+    softSkills: [
+      'Excellent communication',
+      'Problem-solving',
+      'Time management',
+      'Attention to detail',
+      'Teamwork',
+    ],
+    coloradoResidentsOnly:
+      'For Colorado residents, the salary range for this position is $19.47 - $38.08 per hour, based on experience and qualifications.',
+    applicationDeadline: '2023-07-15',
+  },
+  {
+    id: 1,
+    title: 'Senior Clinical Administrative Coordinator',
+    company: 'Optum',
+    location: 'Phoenix, AZ 85001 • Remote',
+    salary: '$19.47 - $38.08 an hour',
+    type: 'Full-time',
+    experience: '5+ years',
+    skills: ['Windows', 'Administrative Support', 'Healthcare'],
+    description:
+      "We're seeking an experienced Clinical Administrative Coordinator to join our innovative team...",
+    postedDate: '2023-06-01',
+    companyRating: 3.3,
+    schedule: 'Monday to Friday',
+    primaryResponsibilities: [
+      'Work with a Clinical Care Team to support patient and provider engagement',
+      'Engage high-risk patients telephonically to schedule appointments with Clinical Care Team',
+      'Utilize multiple technology systems and outreach to provider offices and/or pharmacies as needed',
+    ],
+    fullJobDescription:
+      'As a Senior Clinical Administrative Coordinator, you will play a crucial role in supporting our Clinical Care Team...',
+    benefits: [
+      'Competitive salary',
+      'Health insurance',
+      '401(k) with company match',
+      'Paid time off',
+      'Professional development opportunities',
+    ],
+    requiredQualifications: [
+      "Bachelor's degree in Healthcare Administration or related field",
+      '5+ years of experience in healthcare administration',
+      'Proficiency in Windows and Microsoft Office Suite',
+      'Strong organizational and communication skills',
+    ],
+    preferredQualifications: [
+      "Master's degree in Healthcare Administration",
+      'Experience with electronic health records (EHR) systems',
+      'Bilingual in English and Spanish',
+    ],
+    telecommutingRequirements:
+      'This position allows for remote work within the state of Arizona or Colorado.',
+    softSkills: [
+      'Excellent communication',
+      'Problem-solving',
+      'Time management',
+      'Attention to detail',
+      'Teamwork',
+    ],
+    coloradoResidentsOnly:
+      'For Colorado residents, the salary range for this position is $19.47 - $38.08 per hour, based on experience and qualifications.',
+    applicationDeadline: '2023-07-15',
+  },
+  {
+    id: 1,
+    title: 'Senior Clinical Administrative Coordinator',
+    company: 'Optum',
+    location: 'Phoenix, AZ 85001 • Remote',
+    salary: '$19.47 - $38.08 an hour',
+    type: 'Full-time',
+    experience: '5+ years',
+    skills: ['Windows', 'Administrative Support', 'Healthcare'],
+    description:
+      "We're seeking an experienced Clinical Administrative Coordinator to join our innovative team...",
+    postedDate: '2023-06-01',
+    companyRating: 3.3,
+    schedule: 'Monday to Friday',
+    primaryResponsibilities: [
+      'Work with a Clinical Care Team to support patient and provider engagement',
+      'Engage high-risk patients telephonically to schedule appointments with Clinical Care Team',
+      'Utilize multiple technology systems and outreach to provider offices and/or pharmacies as needed',
+    ],
+    fullJobDescription:
+      'As a Senior Clinical Administrative Coordinator, you will play a crucial role in supporting our Clinical Care Team...',
+    benefits: [
+      'Competitive salary',
+      'Health insurance',
+      '401(k) with company match',
+      'Paid time off',
+      'Professional development opportunities',
+    ],
+    requiredQualifications: [
+      "Bachelor's degree in Healthcare Administration or related field",
+      '5+ years of experience in healthcare administration',
+      'Proficiency in Windows and Microsoft Office Suite',
+      'Strong organizational and communication skills',
+    ],
+    preferredQualifications: [
+      "Master's degree in Healthcare Administration",
+      'Experience with electronic health records (EHR) systems',
+      'Bilingual in English and Spanish',
+    ],
+    telecommutingRequirements:
+      'This position allows for remote work within the state of Arizona or Colorado.',
+    softSkills: [
+      'Excellent communication',
+      'Problem-solving',
+      'Time management',
+      'Attention to detail',
+      'Teamwork',
+    ],
+    coloradoResidentsOnly:
+      'For Colorado residents, the salary range for this position is $19.47 - $38.08 per hour, based on experience and qualifications.',
+    applicationDeadline: '2023-07-15',
+  },
+  {
+    id: 1,
+    title: 'Senior Clinical Administrative Coordinator',
+    company: 'Optum',
+    location: 'Phoenix, AZ 85001 • Remote',
+    salary: '$19.47 - $38.08 an hour',
+    type: 'Full-time',
+    experience: '5+ years',
+    skills: ['Windows', 'Administrative Support', 'Healthcare'],
+    description:
+      "We're seeking an experienced Clinical Administrative Coordinator to join our innovative team...",
+    postedDate: '2023-06-01',
+    companyRating: 3.3,
+    schedule: 'Monday to Friday',
+    primaryResponsibilities: [
+      'Work with a Clinical Care Team to support patient and provider engagement',
+      'Engage high-risk patients telephonically to schedule appointments with Clinical Care Team',
+      'Utilize multiple technology systems and outreach to provider offices and/or pharmacies as needed',
+    ],
+    fullJobDescription:
+      'As a Senior Clinical Administrative Coordinator, you will play a crucial role in supporting our Clinical Care Team...',
+    benefits: [
+      'Competitive salary',
+      'Health insurance',
+      '401(k) with company match',
+      'Paid time off',
+      'Professional development opportunities',
+    ],
+    requiredQualifications: [
+      "Bachelor's degree in Healthcare Administration or related field",
+      '5+ years of experience in healthcare administration',
+      'Proficiency in Windows and Microsoft Office Suite',
+      'Strong organizational and communication skills',
+    ],
+    preferredQualifications: [
+      "Master's degree in Healthcare Administration",
+      'Experience with electronic health records (EHR) systems',
+      'Bilingual in English and Spanish',
+    ],
+    telecommutingRequirements:
+      'This position allows for remote work within the state of Arizona or Colorado.',
+    softSkills: [
+      'Excellent communication',
+      'Problem-solving',
+      'Time management',
+      'Attention to detail',
+      'Teamwork',
+    ],
+    coloradoResidentsOnly:
+      'For Colorado residents, the salary range for this position is $19.47 - $38.08 per hour, based on experience and qualifications.',
+    applicationDeadline: '2023-07-15',
+  },
+  {
+    id: 1,
+    title: 'Senior Clinical Administrative Coordinator',
+    company: 'Optum',
+    location: 'Phoenix, AZ 85001 • Remote',
+    salary: '$19.47 - $38.08 an hour',
+    type: 'Full-time',
+    experience: '5+ years',
+    skills: ['Windows', 'Administrative Support', 'Healthcare'],
+    description:
+      "We're seeking an experienced Clinical Administrative Coordinator to join our innovative team...",
+    postedDate: '2023-06-01',
+    companyRating: 3.3,
+    schedule: 'Monday to Friday',
+    primaryResponsibilities: [
+      'Work with a Clinical Care Team to support patient and provider engagement',
+      'Engage high-risk patients telephonically to schedule appointments with Clinical Care Team',
+      'Utilize multiple technology systems and outreach to provider offices and/or pharmacies as needed',
+    ],
+    fullJobDescription:
+      'As a Senior Clinical Administrative Coordinator, you will play a crucial role in supporting our Clinical Care Team...',
+    benefits: [
+      'Competitive salary',
+      'Health insurance',
+      '401(k) with company match',
+      'Paid time off',
+      'Professional development opportunities',
+    ],
+    requiredQualifications: [
+      "Bachelor's degree in Healthcare Administration or related field",
+      '5+ years of experience in healthcare administration',
+      'Proficiency in Windows and Microsoft Office Suite',
+      'Strong organizational and communication skills',
+    ],
+    preferredQualifications: [
+      "Master's degree in Healthcare Administration",
+      'Experience with electronic health records (EHR) systems',
+      'Bilingual in English and Spanish',
+    ],
+    telecommutingRequirements:
+      'This position allows for remote work within the state of Arizona or Colorado.',
+    softSkills: [
+      'Excellent communication',
+      'Problem-solving',
+      'Time management',
+      'Attention to detail',
+      'Teamwork',
+    ],
+    coloradoResidentsOnly:
+      'For Colorado residents, the salary range for this position is $19.47 - $38.08 per hour, based on experience and qualifications.',
+    applicationDeadline: '2023-07-15',
+  },
+  // ... (add 9 more job listings with similar detailed information)
+];

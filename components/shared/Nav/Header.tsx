@@ -13,28 +13,33 @@ const Header = ({ variant }: HeaderType) => {
   const [scrollY, setScrollY] = useState(0);
   const pathname = usePathname();
   console.log('variant', variant);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setScrollY(scrollY);
     };
     window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll); // Cleanup listener on unmount
   }, []);
 
+  // Check if it's an authentication page or other specific pages
   const isAuthPage =
     pathname.includes('/signup') ||
     pathname.includes('/login') ||
     pathname.includes('/reset-password');
 
-  const noNeedHeaderAnyMore = pathname.includes('/profile');
+  const noStickyHeader = pathname.includes('/find-jobs');
 
   return (
     <>
-      {/* {!isAuthPage && <Marquee />} */}
-
       <div
         style={{ backdropFilter: scrollY >= 70 ? 'blur(5px)' : '' }}
-        className={`z-[999] border-b border-[rgba(255,255,255,0.08)] bg-themeDark2 px-4 transition-all duration-300 ${scrollY >= 70 ? `header sticky left-0 top-0` : `relative left-0 right-0 top-0 z-40`}`}
+        className={`z-[999] border-b border-[rgba(255,255,255,0.08)] bg-themeDark2 px-4 transition-all duration-300 ${
+          !noStickyHeader && scrollY >= 70
+            ? 'header sticky left-0 top-0'
+            : 'relative left-0 right-0 top-0 z-40'
+        }`}
       >
         <div className="container relative flex h-[90px] items-center justify-between lg:px-16 xl:px-10">
           <div className="flex items-center gap-10">
@@ -46,7 +51,7 @@ const Header = ({ variant }: HeaderType) => {
               <HeaderController />
             ) : (
               <div>
-                <h3>Here to hire talent? </h3>
+                <h3>Here to hire talent?</h3>
               </div>
             )}
           </div>
