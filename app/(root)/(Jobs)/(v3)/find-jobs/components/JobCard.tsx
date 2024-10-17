@@ -35,7 +35,10 @@ const JobCard = ({ job, setSelectedJob, setShowJobModal }: any) => {
               Optum company
             </p>
           </div>
-          <Badge variant="secondary" className="self-start text-xs text-green">
+          <Badge
+            variant="secondary"
+            className="self-start border-[rgba(0,123,255,0.2)] bg-[rgba(0,123,255,0.1)] text-xs text-green"
+          >
             Full-time
           </Badge>
         </div>
