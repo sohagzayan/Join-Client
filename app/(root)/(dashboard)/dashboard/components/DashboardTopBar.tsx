@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { ChevronDown, Clock, Plus, Search, User } from 'lucide-react';
+import { ChevronDown, Plus, Search } from 'lucide-react';
 import * as React from 'react';
 
 export default function DashboardTopBar() {
@@ -85,41 +85,19 @@ export default function DashboardTopBar() {
           </PopoverContent>
         </Popover>
         <span className="rounded bg-yellow px-2 py-0.5 text-xs">Free</span>
-        {/* <span className="text-gray-300">/</span>
-        <span>jobs</span>
-        <ChevronDown className="h-4 w-4 text-gray-500" />
-        <span className="text-gray-300">/</span> */}
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-8 text-sm">
-              <i data-lucide="briefcase-business"></i>
-              Manage Jobs
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            <DropdownMenuLabel>Job Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Plus className="mr-2 h-4 w-4" /> Post New Job
-            </DropdownMenuItem>
-            <DropdownMenuItem>View Active Jobs</DropdownMenuItem>
-            <DropdownMenuItem>Edit Draft Jobs</DropdownMenuItem>
-            <DropdownMenuItem>Job Templates</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
       </div>
       <div className="flex items-center space-x-2">
         <Button variant="ghost" size="sm">
           Analytics
         </Button>
-        <Button variant="ghost" size="icon">
+        {/* <Button variant="ghost" size="icon">
           <User className="h-5 w-5" />
           <span className="sr-only">User profile</span>
-        </Button>
-        <Button variant="ghost" size="icon">
+        </Button> */}
+        {/* <Button variant="ghost" size="icon">
           <Clock className="h-5 w-5" />
           <span className="sr-only">Recent activity</span>
-        </Button>
+        </Button> */}
       </div>
     </nav>
   );

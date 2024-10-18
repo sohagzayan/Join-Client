@@ -115,7 +115,6 @@ export default function RootLayouts({
           <div style={{ flex: '1 1 0', overflow: 'hidden' }} className="h-full">
             <main className="flex h-full w-full flex-1 flex-col overflow-x-hidden">
               <DashboardTopBar />
-
               <main
                 className="flex-1 overflow-y-auto"
                 style={{ maxHeight: '100vh' }}
