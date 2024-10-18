@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { ChevronDown, Plus, Search } from 'lucide-react';
+import { ChevronDown, Clock, Plus, Search, User } from 'lucide-react';
 import * as React from 'react';
 
 export default function DashboardTopBar() {
@@ -87,17 +87,14 @@ export default function DashboardTopBar() {
         <span className="rounded bg-yellow px-2 py-0.5 text-xs">Free</span>
       </div>
       <div className="flex items-center space-x-2">
-        <Button variant="ghost" size="sm">
-          Analytics
-        </Button>
-        {/* <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon">
           <User className="h-5 w-5" />
           <span className="sr-only">User profile</span>
-        </Button> */}
-        {/* <Button variant="ghost" size="icon">
+        </Button>
+        <Button variant="ghost" size="icon">
           <Clock className="h-5 w-5" />
           <span className="sr-only">Recent activity</span>
-        </Button> */}
+        </Button>
       </div>
     </nav>
   );
