@@ -35,22 +35,22 @@ const navItems = (role: any) => {
     // },
     {
       label: 'Manage Jobs',
-      key: `/${role}/manage-jobs`,
+      key: `/${role}/dashboard/manage-jobs`,
       icon: <FiFileText />,
     },
     {
       label: 'Submit Job',
-      key: `/${role}/manage-jobs`,
+      key: `/${role}/dashboard/manage-jobs`,
       icon: <LuPencilLine />,
     },
     {
       label: 'Shortlist',
-      key: `/${role}/manage-jobs`,
+      key: `/${role}/dashboard/manage-jobs`,
       icon: <BsBookmarkStar />,
     },
     {
       label: 'Membership',
-      key: `/${role}/manage-jobs`,
+      key: `/${role}/dashboard/manage-jobs`,
       icon: <TbShoppingBagExclamation />,
     },
     // {
@@ -80,7 +80,7 @@ const navItems = (role: any) => {
     },
     {
       label: 'Meetings',
-      key: `/${role}/meetings`,
+      key: `/${role}/dashboard/meetings`,
       icon: <FiVideo />,
     },
   ];
