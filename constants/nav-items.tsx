@@ -1,8 +1,11 @@
 import { AiOutlineUser } from 'react-icons/ai';
-import { FiSettings } from 'react-icons/fi';
+import { BsBookmarkStar } from 'react-icons/bs';
+import { FiFileText, FiSettings, FiVideo } from 'react-icons/fi';
 import { GrAnalytics, GrOverview } from 'react-icons/gr';
 import { HiOutlineCalendar } from 'react-icons/hi';
 import { IoBriefcaseOutline } from 'react-icons/io5';
+import { LuLayoutDashboard, LuPencilLine } from 'react-icons/lu';
+import { TbMessageDots, TbShoppingBagExclamation } from 'react-icons/tb';
 
 const navItems = (role: any) => {
   const defaultNavItems = [
@@ -24,44 +27,65 @@ const navItems = (role: any) => {
   ];
 
   const recruitNavItem = [
+    {
+      label: 'Dashboard',
+      key: `/dashboard`,
+      icon: <LuLayoutDashboard />,
+    },
     // {
-    //     label: 'Discover',
-    //     key: `/discover`,
+    //   label: 'Manage Projects',
+    //   key: `/manage-projects`,
+    //   icon: <FiFileText />,
     // },
     {
-      label: 'Overview',
-      key: `/recruit/overview`,
-      icon: null,
+      label: 'Manage Jobs',
+      key: `/manage-jobs`,
+      icon: <FiFileText />,
     },
     {
-      label: 'Find talent',
-      key: `/recruit/all-features/find-talent`,
-      icon: null,
+      label: 'Submit Job',
+      key: `/manage-jobs`,
+      icon: <LuPencilLine />,
     },
     {
-      label: 'Post a jobs',
-      key: `/recruit/all-features/post-a-job`,
-      icon: null,
+      label: 'Shortlist',
+      key: `/manage-jobs`,
+      icon: <BsBookmarkStar />,
     },
     {
-      label: 'Free ATS',
-      key: `/recruit/all-features/free-ats`,
-      icon: null,
+      label: 'Membership',
+      key: `/manage-jobs`,
+      icon: <TbShoppingBagExclamation />,
+    },
+    // {
+    //   label: 'Bought Services',
+    //   key: `/bought-services`,
+    //   icon: <FiShoppingBag />,
+    // },
+    // {
+    //   label: 'My Company',
+    //   key: `/my-company`,
+    //   icon: <FiUsers />,
+    // },
+    // {
+    //   label: 'Follow',
+    //   key: `/follow`,
+    //   icon: <FiUsers />,
+    // },
+    // {
+    //   label: 'My Package',
+    //   key: `/my-package`,
+    //   icon: <FiPackage />,
+    // },
+    {
+      label: 'Messages',
+      key: `/messages`,
+      icon: <TbMessageDots />,
     },
     {
-      label: 'Customers',
-      key: `/recruit/customers`,
-      icon: null,
-    },
-    {
-      label: 'Join Directory',
-      key: `/recruit/plans/recruit-plans`,
-      icon: null,
-    },
-    {
-      label: 'For job seekers',
-      key: `/candidates/overview`,
-      icon: null,
+      label: 'Meetings',
+      key: `/meetings`,
+      icon: <FiVideo />,
     },
   ];
 
@@ -147,7 +171,7 @@ const navItems = (role: any) => {
   console.log('role >', role);
 
   if (role === 'recruit') return recruitNavItem;
-  else if (`${role}/portal` === 'candidate/portal') return dashboardNavItem;
+  else if (`${role}/dashboard` === 'recruiter/dashboard') return recruitNavItem;
   else if (role === 'candidates') return candidateNavItem;
   else if (role === 'admin') return adminNavItem;
   else {
