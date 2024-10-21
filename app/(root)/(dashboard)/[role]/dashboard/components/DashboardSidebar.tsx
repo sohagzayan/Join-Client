@@ -6,6 +6,8 @@ const DashboardSideBar = () => {
   const pathname = usePathname();
   const sideBarItems = navItems('recruiter');
 
+  console.log();
+
   return (
     <div>
       {sideBarItems.map((item) => (

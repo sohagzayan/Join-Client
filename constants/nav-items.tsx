@@ -1,9 +1,5 @@
-import { AiOutlineUser } from 'react-icons/ai';
 import { BsBookmarkStar } from 'react-icons/bs';
-import { FiFileText, FiSettings, FiVideo } from 'react-icons/fi';
-import { GrAnalytics, GrOverview } from 'react-icons/gr';
-import { HiOutlineCalendar } from 'react-icons/hi';
-import { IoBriefcaseOutline } from 'react-icons/io5';
+import { FiFileText, FiVideo } from 'react-icons/fi';
 import { LuLayoutDashboard, LuPencilLine } from 'react-icons/lu';
 import { TbMessageDots, TbShoppingBagExclamation } from 'react-icons/tb';
 
@@ -29,7 +25,7 @@ const navItems = (role: any) => {
   const recruitNavItem = [
     {
       label: 'Dashboard',
-      key: `/dashboard`,
+      key: `/${role}/dashboard`,
       icon: <LuLayoutDashboard />,
     },
     // {
@@ -39,22 +35,22 @@ const navItems = (role: any) => {
     // },
     {
       label: 'Manage Jobs',
-      key: `/manage-jobs`,
+      key: `/${role}/manage-jobs`,
       icon: <FiFileText />,
     },
     {
       label: 'Submit Job',
-      key: `/manage-jobs`,
+      key: `/${role}/manage-jobs`,
       icon: <LuPencilLine />,
     },
     {
       label: 'Shortlist',
-      key: `/manage-jobs`,
+      key: `/${role}/manage-jobs`,
       icon: <BsBookmarkStar />,
     },
     {
       label: 'Membership',
-      key: `/manage-jobs`,
+      key: `/${role}/manage-jobs`,
       icon: <TbShoppingBagExclamation />,
     },
     // {
@@ -79,12 +75,12 @@ const navItems = (role: any) => {
     // },
     {
       label: 'Messages',
-      key: `/messages`,
+      key: `/${role}/dashboard/messages`,
       icon: <TbMessageDots />,
     },
     {
       label: 'Meetings',
-      key: `/meetings`,
+      key: `/${role}/meetings`,
       icon: <FiVideo />,
     },
   ];
@@ -135,48 +131,13 @@ const navItems = (role: any) => {
     },
   ];
 
-  const dashboardNavItem = [
-    {
-      label: 'Profile',
-      key: `/candidate/portal/profile`,
-      icon: <AiOutlineUser />,
-    },
-    {
-      label: 'Overview',
-      key: `/candidate/portal/overview`,
-      icon: <GrOverview />,
-    },
-    {
-      label: 'Job Tracker',
-      key: `/candidate/portal/job-tracker`,
-      icon: <IoBriefcaseOutline />,
-    },
-    {
-      label: 'Calender',
-      key: `/candidate/portal/calender`,
-      icon: <HiOutlineCalendar />,
-    },
-    {
-      label: 'Analytics',
-      key: `/candidate/portal/analytics`,
-      icon: <GrAnalytics />,
-    },
-    {
-      label: 'Settings',
-      key: `/candidate/portal/settings`,
-      icon: <FiSettings />,
-    },
-  ];
-
   console.log('role >', role);
 
-  if (role === 'recruit') return recruitNavItem;
-  else if (`${role}/dashboard` === 'recruiter/dashboard') return recruitNavItem;
+  // Ensure that the role dynamically adds correct routes
+  if (role === 'recruiter') return recruitNavItem;
   else if (role === 'candidates') return candidateNavItem;
   else if (role === 'admin') return adminNavItem;
-  else {
-    return defaultNavItems;
-  }
+  else return defaultNavItems;
 };
 
 export default navItems;
