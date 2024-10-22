@@ -36,8 +36,9 @@ const TextArea: React.FC<TextAreaWithIconProps> = ({
       )}
       <div
         className={cn(
-          'relative w-full rounded-2xl bg-[rgba(255,255,255,0.06)] p-2',
+          'relative w-full rounded-2xl border border-transparent bg-[rgba(255,255,255,0.06)] p-2', // Default border is transparent
           className,
+          'focus-within:border-theme1', // Add border color on focus using your theme color
         )}
       >
         <textarea
@@ -45,11 +46,12 @@ const TextArea: React.FC<TextAreaWithIconProps> = ({
           onChange={onChange}
           placeholder={placeholder}
           className={cn(
-            'h-32 w-full resize-none bg-transparent p-3 text-gray-400 focus:outline-none md:h-32 lg:h-48', // Added fixed height and disabled resizing
+            'h-32 w-full resize-none bg-transparent p-3 text-gray-400 focus:border-theme1 focus:outline-none md:h-24 lg:h-40', // Change border on focus
             textAreaClassName,
           )}
           {...rest}
         />
+
         {Icon && (
           <div className="absolute bottom-3 right-3">
             <Icon className="h-6 w-6 text-white" />

@@ -336,3 +336,34 @@ body {
 .custom-calendar .rbc-toolbar .rbc-btn-group > button.rbc-active {
   background-color: #3771fe !important;
 }
+
+/* Hide scroll bar common class */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Special bg and color */
+.nav_active {
+  position: relative;
+}
+.nav_active {
+  position: absolute;
+  content: '';
+  left: auto;
+  right: 0;
+  width: 100%;
+  bottom: 0;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(55, 113, 254, 0) 0%,
+    rgba(55, 113, 254, 0.14) 100%
+  );
+  filter: drop-shadow(0px 2px 0px #3771fe);
+  opacity: 0;
+}
