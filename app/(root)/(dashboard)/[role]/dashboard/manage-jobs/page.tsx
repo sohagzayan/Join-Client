@@ -2,14 +2,14 @@
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
-import { Bell, Edit2, Menu, Moon, Plus, Sun, Trash2 } from 'lucide-react';
-import React, { useState } from 'react';
 import {
   DragDropContext,
   Draggable,
   Droppable,
   DropResult,
-} from 'react-beautiful-dnd';
+} from '@hello-pangea/dnd';
+import { Bell, Edit2, Menu, Moon, Plus, Sun, Trash2 } from 'lucide-react';
+import React, { useState } from 'react';
 
 // Types
 type Skill = string;
@@ -29,30 +29,70 @@ interface Column {
   candidateIds: string[];
 }
 
+interface Job {
+  title: string;
+  salary: string;
+  icon: JSX.Element;
+}
+
 // Mock data
 const initialCandidates: Candidate[] = [
   {
     id: 'candidate-1',
     name: 'Irene Sacchi',
     role: 'Java Team Lead',
-    image: '/placeholder.svg?height=40&width=40',
+    image: '/educational.png',
     skills: ['Java', 'Developer', '.NET', 'CSS'],
   },
   {
     id: 'candidate-2',
     name: 'John Doe',
     role: 'Frontend Developer',
-    image: '/placeholder.svg?height=40&width=40',
+    image: '/educational.png',
     skills: ['React', 'JavaScript', 'HTML', 'CSS'],
   },
-  // Add more candidates as needed
+  {
+    id: 'candidate-3',
+    name: 'Jane Smith',
+    role: 'UI/UX Designer',
+    image: '/educational.png',
+    skills: ['Figma', 'Sketch', 'Photoshop', 'CSS'],
+  },
+  {
+    id: 'candidate-4',
+    name: 'Michael Brown',
+    role: 'Backend Developer',
+    image: '/educational.png',
+    skills: ['Node.js', 'Express', 'MongoDB', 'SQL'],
+  },
+  {
+    id: 'candidate-5',
+    name: 'Lisa Taylor',
+    role: 'Product Manager',
+    image: '/educational.png',
+    skills: ['Agile', 'Scrum', 'Project Management', 'Leadership'],
+  },
+  {
+    id: 'candidate-6',
+    name: 'James Wilson',
+    role: 'QA Engineer',
+    image: '/educational.png',
+    skills: ['Testing', 'Cypress', 'Selenium', 'Automation'],
+  },
 ];
 
 const initialColumns: { [key in JobStatus]: Column } = {
   New: {
     id: 'New',
     title: 'New',
-    candidateIds: ['candidate-1', 'candidate-2'],
+    candidateIds: [
+      'candidate-1',
+      'candidate-2',
+      'candidate-3',
+      'candidate-4',
+      'candidate-5',
+      'candidate-6',
+    ],
   },
   Shortlisted: {
     id: 'Shortlisted',
@@ -66,13 +106,12 @@ const initialColumns: { [key in JobStatus]: Column } = {
   },
 };
 
-const jobs: any = [
+const jobs: Job[] = [
   {
     title: 'Manager',
     salary: '2000$',
     icon: <div className="h-6 w-6 rounded-md bg-blue-500" />,
   },
-  // Other job objects...
 ];
 
 export default function Component() {
@@ -82,60 +121,42 @@ export default function Component() {
   const [selectedJob, setSelectedJob] = useState('Senior Java Developer');
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+    const { source, destination } = result;
 
+    // Check if the destination is valid
     if (!destination) return;
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    )
-      return;
+    const sourceColumn = columns[source.droppableId as JobStatus];
+    const destinationColumn = columns[destination.droppableId as JobStatus];
 
-    const start = columns[source.droppableId as JobStatus];
-    const finish = columns[destination.droppableId as JobStatus];
+    const sourceItems = Array.from(sourceColumn.candidateIds);
+    const destinationItems = Array.from(destinationColumn.candidateIds);
 
-    if (start === finish) {
-      const newCandidateIds = Array.from(start.candidateIds);
-      newCandidateIds.splice(source.index, 1);
-      newCandidateIds.splice(destination.index, 0, draggableId);
+    // Remove item from the source column
+    const [removed] = sourceItems.splice(source.index, 1);
 
-      const newColumn = {
-        ...start,
-        candidateIds: newCandidateIds,
-      };
-
-      setColumns({
-        ...columns,
-        [newColumn.id]: newColumn,
-      });
+    // Move the item to the new column or reorder within the same column
+    if (source.droppableId === destination.droppableId) {
+      sourceItems.splice(destination.index, 0, removed);
     } else {
-      const startCandidateIds = Array.from(start.candidateIds);
-      startCandidateIds.splice(source.index, 1);
-      const newStart = {
-        ...start,
-        candidateIds: startCandidateIds,
-      };
-
-      const finishCandidateIds = Array.from(finish.candidateIds);
-      finishCandidateIds.splice(destination.index, 0, draggableId);
-      const newFinish = {
-        ...finish,
-        candidateIds: finishCandidateIds,
-      };
-
-      setColumns({
-        ...columns,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish,
-      });
+      destinationItems.splice(destination.index, 0, removed);
     }
+
+    setColumns({
+      ...columns,
+      [source.droppableId]: {
+        ...sourceColumn,
+        candidateIds: sourceItems,
+      },
+      [destination.droppableId]: {
+        ...destinationColumn,
+        candidateIds: destinationItems,
+      },
+    });
   };
 
-  const Sidebar = React.memo(({ className = '' }: { className?: string }) => (
-    <div
-      className={`rounded-lg bg-white p-4 shadow dark:bg-gray-800 ${className}`}
-    >
+  const Sidebar = React.memo(() => (
+    <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">Jobs</h2>
         <Button size="icon" variant="outline">
@@ -143,7 +164,7 @@ export default function Component() {
         </Button>
       </div>
       <div className="space-y-2">
-        {jobs.map((job) => (
+        {jobs.map((job: Job) => (
           <Button
             key={job.title}
             variant="ghost"
@@ -235,17 +256,20 @@ export default function Component() {
             <DragDropContext onDragEnd={onDragEnd}>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {Object.values(columns).map((column) => (
-                  <Droppable droppableId={column.id} key={column.id}>
-                    {(provided) => (
-                      <div
-                        className="flex min-h-[200px] flex-col justify-between rounded-lg bg-gray-100 p-4 dark:bg-gray-700"
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                      >
-                        <h3 className="mb-2 text-lg font-semibold">
-                          {column.title}
-                        </h3>
-                        <div className="flex-grow space-y-2">
+                  <div
+                    key={column.id}
+                    className="flex flex-col rounded-lg bg-gray-100 p-4 dark:bg-gray-700"
+                  >
+                    <h3 className="mb-2 text-lg font-semibold">
+                      {column.title}
+                    </h3>
+                    <Droppable droppableId={column.id}>
+                      {(provided) => (
+                        <div
+                          className="flex-grow space-y-2"
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                        >
                           {column.candidateIds.map((candidateId, index) => {
                             const candidate = candidates.find(
                               (cand) => cand.id === candidateId,
@@ -298,9 +322,9 @@ export default function Component() {
                           })}
                           {provided.placeholder}
                         </div>
-                      </div>
-                    )}
-                  </Droppable>
+                      )}
+                    </Droppable>
+                  </div>
                 ))}
               </div>
             </DragDropContext>

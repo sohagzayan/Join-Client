@@ -1,13 +1,13 @@
-import type { Metadata } from 'next';
-import { Figtree } from 'next/font/google';
-import './globals.css';
-import ReduxProvider from '@/redux/provider';
-import 'remixicon/fonts/remixicon.css';
-import Provider from '@/context/client-provider';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/utils/authOptions';
-import 'tailwindcss/tailwind.css';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import Provider from '@/context/client-provider';
+import ReduxProvider from '@/redux/provider';
+import { authOptions } from '@/utils/authOptions';
+import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
+import { Figtree } from 'next/font/google';
+import 'remixicon/fonts/remixicon.css';
+import 'tailwindcss/tailwind.css';
+import './globals.css';
 const inter = Figtree({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800', '900'],
