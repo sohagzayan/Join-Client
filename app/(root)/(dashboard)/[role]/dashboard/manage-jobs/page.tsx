@@ -29,7 +29,7 @@ import React, { useState } from 'react';
 
 // Types
 type Skill = string;
-type JobStatus = 'New' | 'Shortlisted' | 'Interviewed';
+type JobStatus = 'Sourced' | 'In_Progress' | 'Interview' | 'Hired';
 
 interface Candidate {
   id: string;
@@ -96,11 +96,12 @@ const initialCandidates: Candidate[] = [
     skills: ['Testing', 'Cypress', 'Selenium', 'Automation'],
   },
 ];
+// type JobStatus = 'Sourced' | 'In_Progress' | 'Interview' | 'Hired';
 
 const initialColumns: { [key in JobStatus]: Column } = {
-  New: {
-    id: 'New',
-    title: 'New',
+  Sourced: {
+    id: 'Sourced',
+    title: 'Sourced',
     candidateIds: [
       'candidate-1',
       'candidate-2',
@@ -110,14 +111,19 @@ const initialColumns: { [key in JobStatus]: Column } = {
       'candidate-6',
     ],
   },
-  Shortlisted: {
-    id: 'Shortlisted',
-    title: 'Shortlisted',
+  In_Progress: {
+    id: 'In_Progress',
+    title: 'In_Progress',
     candidateIds: [],
   },
-  Interviewed: {
-    id: 'Interviewed',
-    title: 'Interviewed',
+  Interview: {
+    id: 'Interview',
+    title: 'Interview',
+    candidateIds: [],
+  },
+  Hired: {
+    id: 'Hired',
+    title: 'Hired',
     candidateIds: [],
   },
 };
@@ -341,11 +347,11 @@ export default function Component() {
 
             {/* Drag and Drop context */}
             <DragDropContext onDragEnd={onDragEnd}>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
                 {Object.values(columns).map((column) => (
                   <div
                     key={column.id}
-                    className="flex flex-col rounded-lg bg-themeDark p-4 dark:bg-gray-700"
+                    className="flex min-h-[150px] flex-col rounded-lg bg-themeDark p-4 dark:bg-gray-700"
                   >
                     <h3 className="mb-2 text-lg font-semibold">
                       {column.title}
