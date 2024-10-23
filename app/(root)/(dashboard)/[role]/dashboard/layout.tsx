@@ -89,7 +89,7 @@ export default function RootLayouts({
                 className="flex-1 overflow-y-auto"
                 style={{ maxHeight: '100vh' }}
               >
-                <div className="mx-auto my-16 w-full max-w-7xl space-y-16 overscroll-y-auto">
+                <div className="mx-auto w-full space-y-16 overscroll-y-auto">
                   {children}
                 </div>
               </main>

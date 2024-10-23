@@ -1,5 +1,11 @@
 'use client';
+import { InputField } from '@/components/common';
 import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
 import {
@@ -8,7 +14,17 @@ import {
   Droppable,
   DropResult,
 } from '@hello-pangea/dnd';
-import { Bell, Edit2, Menu, Moon, Plus, Sun, Trash2 } from 'lucide-react';
+import {
+  Bell,
+  ChevronDown,
+  Edit2,
+  Menu,
+  Moon,
+  Plus,
+  Search,
+  Sun,
+  Trash2,
+} from 'lucide-react';
 import React, { useState } from 'react';
 
 // Types
@@ -120,6 +136,19 @@ export default function Component() {
   const [columns, setColumns] = useState(initialColumns);
   const [selectedJob, setSelectedJob] = useState('Senior Java Developer');
 
+  const [currentCompany, setCurrentCompany] =
+    React.useState('TechRecruit Inc.');
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [companies, setCompanies] = React.useState([
+    'TechRecruit Inc.',
+    'Global Staffing Solutions',
+    'Talent Finders Ltd.',
+  ]);
+
+  const filteredCompanies = companies.filter((company) =>
+    company.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
 
@@ -156,37 +185,80 @@ export default function Component() {
   };
 
   const Sidebar = React.memo(() => (
-    <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Jobs</h2>
-        <Button size="icon" variant="outline">
-          <Plus className="h-4 w-4" />
-        </Button>
-      </div>
-      <div className="space-y-2">
-        {jobs.map((job: Job) => (
-          <Button
-            key={job.title}
-            variant="ghost"
-            className={`w-full justify-start ${
-              selectedJob === job.title ? 'bg-blue-100 dark:bg-blue-900' : ''
-            }`}
-            onClick={() => setSelectedJob(job.title)}
-          >
-            <div className="flex items-center">
-              {job.icon}
-              <div className="ml-2 text-left">
-                <div className="font-medium">{job.title}</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  {job.salary}
+    <div className="flex items-center space-x-5 rounded-lg border-2 border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] px-4 py-1 shadow">
+      <div className=" ">
+        <div className="flex items-center space-x-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                className="px-0 py-2 font-semibold text-white"
+              >
+                {currentCompany}
+                <ChevronDown className="ml-1 h-4 w-4 text-gray-500" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="ml-16 w-64 border-2 border-[rgba(255,255,255,0.1)] bg-[#181C3B] p-0 text-white">
+              <div className="p-2">
+                <div className="relative mb-2">
+                  <InputField
+                    type="search"
+                    icon={Search}
+                    placeholder="Find company..."
+                    // value={searchTerm}
+                    // onChange={(e: any) => setSearchTerm(e.target.value)}
+                    className="rounded-md border-2 border-[rgba(255,255,255,0.1)] bg-themeDark outline-none"
+                  />
                 </div>
+                <div className="max-h-48 overflow-auto">
+                  {filteredCompanies.map((company) => (
+                    <Button
+                      key={company}
+                      variant="ghost"
+                      className="w-full justify-between"
+                      onClick={() => {
+                        setCurrentCompany(company);
+                        setSearchTerm('');
+                      }}
+                    >
+                      {company}
+                      {company === currentCompany && (
+                        <svg
+                          className="text-primary h-4 w-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      )}
+                    </Button>
+                  ))}
+                </div>
+                <Button variant="ghost" className="mt-2 w-full justify-start">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Create New Job
+                </Button>
               </div>
-            </div>
-          </Button>
-        ))}
+            </PopoverContent>
+          </Popover>
+          <span className="rounded border border-[rgba(0,123,255,0.2)] bg-[rgba(0,123,255,0.1)] px-2 py-0.5 text-xs text-theme1">
+            Free
+          </span>
+        </div>
       </div>
-      <Button className="mt-4 w-full" variant="outline">
-        Manage jobs
+      <Button
+        size="icon"
+        variant="outline"
+        className="border-transparent bg-theme1 text-white"
+      >
+        <Plus className="h-4 w-4" />
       </Button>
     </div>
   ));
@@ -194,14 +266,12 @@ export default function Component() {
   Sidebar.displayName = 'Sidebar';
 
   return (
-    <div
-      className={`min-h-screen ${
-        darkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-100'
-      }`}
-    >
+    <div className={`min-h-screen`}>
       <div className="container mx-auto p-4">
         <div className="mb-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Job Board</h1>
+          <div className="hidden lg:block">
+            <Sidebar />
+          </div>
           <div className="flex items-center space-x-4">
             <Switch
               checked={darkMode}
@@ -227,10 +297,7 @@ export default function Component() {
             </Sheet>
           </div>
         </div>
-        <div className="grid gap-4 lg:grid-cols-4">
-          <div className="hidden lg:block">
-            <Sidebar />
-          </div>
+        <div className="grid">
           <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800 lg:col-span-3">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-xl font-semibold">{selectedJob}</h2>
