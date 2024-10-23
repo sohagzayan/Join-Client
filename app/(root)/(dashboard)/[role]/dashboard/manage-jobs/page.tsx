@@ -57,42 +57,42 @@ const initialCandidates: Candidate[] = [
     id: 'candidate-1',
     name: 'Irene Sacchi',
     role: 'Java Team Lead',
-    image: '/educational.png',
+    image: '/candidate-1.webp',
     skills: ['Java', 'Developer', '.NET', 'CSS'],
   },
   {
     id: 'candidate-2',
     name: 'John Doe',
     role: 'Frontend Developer',
-    image: '/educational.png',
+    image: '/candidate-1.webp',
     skills: ['React', 'JavaScript', 'HTML', 'CSS'],
   },
   {
     id: 'candidate-3',
     name: 'Jane Smith',
     role: 'UI/UX Designer',
-    image: '/educational.png',
+    image: '/candidate-1.webp',
     skills: ['Figma', 'Sketch', 'Photoshop', 'CSS'],
   },
   {
     id: 'candidate-4',
     name: 'Michael Brown',
     role: 'Backend Developer',
-    image: '/educational.png',
+    image: '/candidate-1.webp',
     skills: ['Node.js', 'Express', 'MongoDB', 'SQL'],
   },
   {
     id: 'candidate-5',
     name: 'Lisa Taylor',
     role: 'Product Manager',
-    image: '/educational.png',
+    image: '/candidate-1.webp',
     skills: ['Agile', 'Scrum', 'Project Management', 'Leadership'],
   },
   {
     id: 'candidate-6',
     name: 'James Wilson',
     role: 'QA Engineer',
-    image: '/educational.png',
+    image: '/candidate-1.webp',
     skills: ['Testing', 'Cypress', 'Selenium', 'Automation'],
   },
 ];
@@ -298,14 +298,29 @@ export default function Component() {
           </div>
         </div>
         <div className="grid">
-          <div className="rounded-lg bg-white p-4 shadow dark:bg-gray-800 lg:col-span-3">
+          <div
+            style={{
+              borderColor: 'rgba(255, 255, 255, 0.14)',
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              boxShadow: '0px 20px 50px rgba(1, 5, 43, 0.2)',
+            }}
+            className="rounded-lg border p-4 text-white shadow lg:col-span-3"
+          >
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-xl font-semibold">{selectedJob}</h2>
               <div className="flex items-center space-x-2">
-                <Button size="icon" variant="outline">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="border border-red text-red transition-all duration-150 ease-in-out hover:bg-red hover:text-white"
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
-                <Button size="icon" variant="outline">
+                <Button
+                  size="icon"
+                  variant="secondary"
+                  className="border border-transparent bg-theme1 text-white hover:border-theme1 hover:bg-transparent hover:text-theme1"
+                >
                   <Edit2 className="h-4 w-4" />
                 </Button>
                 <Button>
@@ -316,7 +331,12 @@ export default function Component() {
             </div>
             <div className="mb-4 flex space-x-4">
               <Button variant="default">Kanban board</Button>
-              <Button variant="outline">Job info</Button>
+              <Button
+                variant="outline"
+                className="border border-theme1 text-theme1 transition-all duration-150 ease-in-out hover:bg-theme1 hover:text-white"
+              >
+                Job info
+              </Button>
             </div>
 
             {/* Drag and Drop context */}
@@ -325,7 +345,7 @@ export default function Component() {
                 {Object.values(columns).map((column) => (
                   <div
                     key={column.id}
-                    className="flex flex-col rounded-lg bg-gray-100 p-4 dark:bg-gray-700"
+                    className="flex flex-col rounded-lg bg-themeDark p-4 dark:bg-gray-700"
                   >
                     <h3 className="mb-2 text-lg font-semibold">
                       {column.title}
@@ -353,7 +373,7 @@ export default function Component() {
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    className={`max-w-full overflow-hidden rounded-lg bg-white p-4 shadow dark:bg-gray-800 ${
+                                    className={`max-w-full overflow-hidden rounded-lg border border-[rgba(255,255,255,0.14)] bg-[rgba(255,255,255,0.06)] p-4 ${
                                       snapshot.isDragging ? 'shadow-lg' : ''
                                     }`}
                                   >
@@ -376,7 +396,7 @@ export default function Component() {
                                       {candidate.skills.map((skill) => (
                                         <span
                                           key={skill}
-                                          className="rounded bg-gray-200 px-2 py-1 text-xs dark:bg-gray-700"
+                                          className="rounded border border-[rgba(0,123,255,0.2)] bg-[rgba(0,123,255,0.1)] px-2 py-1 text-xs text-theme1 dark:bg-gray-700"
                                         >
                                           {skill}
                                         </span>

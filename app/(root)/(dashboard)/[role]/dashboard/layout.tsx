@@ -28,10 +28,15 @@ export default function RootLayouts({
       <div className="flex h-full">
         <div className={`flex h-full w-14 cursor-pointer flex-col`}>
           <nav
+            style={{
+              borderColor: 'rgba(255, 255, 255, 0.14)',
+              backgroundColor: '#181C3B',
+              boxShadow: '0px 20px 50px rgba(1, 5, 43, 0.2)',
+            }}
             onMouseEnter={handleExpandSideBar}
             onMouseLeave={handleExpandSideBar}
             data-state={isExpanded ? 'expanded' : 'collapsed'}
-            className={`bg-studio border-default transition-width hide-scrollbar group z-10 flex h-full w-14 flex-col justify-between overflow-y-auto overflow-x-hidden border-r bg-white py-2 duration-200 data-[state=expanded]:w-[13rem] data-[state=expanded]:shadow-xl`}
+            className={`border-default transition-width hide-scrollbar group z-10 flex h-full w-14 flex-col justify-between overflow-y-auto overflow-x-hidden border-r bg-white py-2 text-white duration-200 data-[state=expanded]:w-[13rem] data-[state=expanded]:shadow-xl`}
           >
             <ul className="flex flex-col justify-start gap-y-1 px-2">
               <Link href="/" className="mx-2 flex h-[40px] items-center">
