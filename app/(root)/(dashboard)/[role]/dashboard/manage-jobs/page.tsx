@@ -6,97 +6,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Switch } from '@/components/ui/switch';
+import { initialCandidates } from '@/utils/data';
 import {
   DragDropContext,
   Draggable,
   Droppable,
   DropResult,
 } from '@hello-pangea/dnd';
-import {
-  Bell,
-  ChevronDown,
-  Edit2,
-  Menu,
-  Moon,
-  Plus,
-  Search,
-  Sun,
-  Trash2,
-} from 'lucide-react';
+import { Bell, ChevronDown, Edit2, Plus, Search, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 
 // Types
 type Skill = string;
 type JobStatus = 'Sourced' | 'In_Progress' | 'Interview' | 'Hired';
 
-interface Candidate {
-  id: string;
-  name: string;
-  role: string;
-  image: string;
-  skills: Skill[];
-}
-
 interface Column {
   id: JobStatus;
   title: string;
   candidateIds: string[];
 }
-
-interface Job {
-  title: string;
-  salary: string;
-  icon: JSX.Element;
-}
-
-// Mock data
-const initialCandidates: Candidate[] = [
-  {
-    id: 'candidate-1',
-    name: 'Irene Sacchi',
-    role: 'Java Team Lead',
-    image: '/candidate-1.webp',
-    skills: ['Java', 'Developer', '.NET', 'CSS'],
-  },
-  {
-    id: 'candidate-2',
-    name: 'John Doe',
-    role: 'Frontend Developer',
-    image: '/candidate-1.webp',
-    skills: ['React', 'JavaScript', 'HTML', 'CSS'],
-  },
-  {
-    id: 'candidate-3',
-    name: 'Jane Smith',
-    role: 'UI/UX Designer',
-    image: '/candidate-1.webp',
-    skills: ['Figma', 'Sketch', 'Photoshop', 'CSS'],
-  },
-  {
-    id: 'candidate-4',
-    name: 'Michael Brown',
-    role: 'Backend Developer',
-    image: '/candidate-1.webp',
-    skills: ['Node.js', 'Express', 'MongoDB', 'SQL'],
-  },
-  {
-    id: 'candidate-5',
-    name: 'Lisa Taylor',
-    role: 'Product Manager',
-    image: '/candidate-1.webp',
-    skills: ['Agile', 'Scrum', 'Project Management', 'Leadership'],
-  },
-  {
-    id: 'candidate-6',
-    name: 'James Wilson',
-    role: 'QA Engineer',
-    image: '/candidate-1.webp',
-    skills: ['Testing', 'Cypress', 'Selenium', 'Automation'],
-  },
-];
-// type JobStatus = 'Sourced' | 'In_Progress' | 'Interview' | 'Hired';
 
 const initialColumns: { [key in JobStatus]: Column } = {
   Sourced: {
@@ -128,15 +56,7 @@ const initialColumns: { [key in JobStatus]: Column } = {
   },
 };
 
-const jobs: Job[] = [
-  {
-    title: 'Manager',
-    salary: '2000$',
-    icon: <div className="h-6 w-6 rounded-md bg-blue-500" />,
-  },
-];
-
-export default function Component() {
+export default function Job_manage() {
   const [darkMode, setDarkMode] = useState(false);
   const [candidates, setCandidates] = useState(initialCandidates);
   const [columns, setColumns] = useState(initialColumns);
@@ -277,30 +197,6 @@ export default function Component() {
         <div className="mb-4 flex items-center justify-between">
           <div className="hidden lg:block">
             <Sidebar />
-          </div>
-          <div className="flex items-center space-x-4">
-            <Switch
-              checked={darkMode}
-              onCheckedChange={setDarkMode}
-              className="data-[state=checked]:bg-blue-600"
-            />
-            <span>
-              {darkMode ? (
-                <Moon className="h-5 w-5" />
-              ) : (
-                <Sun className="h-5 w-5" />
-              )}
-            </span>
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="lg:hidden">
-                  <Menu className="h-4 w-4" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left">
-                <Sidebar />
-              </SheetContent>
-            </Sheet>
           </div>
         </div>
         <div className="grid">
