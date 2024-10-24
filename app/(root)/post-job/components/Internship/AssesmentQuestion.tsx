@@ -1,6 +1,5 @@
 'use client';
 
-import { InputField } from '@/components/common';
 import TextArea from '@/components/common/text-area';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,8 +11,11 @@ import {
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export default function AssesmentQuestion() {
+  const [phone, setPhone] = useState('');
   const [assessmentQuestions, setAssessmentQuestions] = useState<string[]>([
     '',
   ]);
@@ -110,15 +112,36 @@ export default function AssesmentQuestion() {
               regarding this listing only. Primary account number will not be
               updated.
             </p>
-            <div className="flex gap-2">
-              <InputField
-                inputClassName="w-20"
-                className="w-20 rounded"
-                placeholder="+880"
-              />
-              <InputField
-                placeholder="1789141408"
-                className="flex-grow rounded"
+            <div className="">
+              <PhoneInput
+                country={'us'}
+                value={phone}
+                onChange={(phone) => setPhone(phone)}
+                inputProps={{
+                  required: true,
+                }}
+                containerStyle={{
+                  width: '100%', // Full width of the container
+                  backgroundColor: '#2d3748', // bg-gray-800 equivalent
+                  border: '1px solid #4a5568', // border-gray-700 equivalent
+                  borderRadius: '4px', // Slight rounded corners for modern look
+                }}
+                inputStyle={{
+                  width: '100%',
+                  backgroundColor: '#2d3748', // bg-gray-800
+                  color: '#a0aec0', // text-gray-300
+                  border: 'none', // Remove default border
+                  paddingLeft: '50px', // Space for country code flag
+                }}
+                buttonStyle={{
+                  backgroundColor: '#2d3748', // Match button background with input field
+                  border: 'none', // Remove button border
+                  borderRight: '1px solid #4a5568', // Add subtle border to the right
+                }}
+                dropdownStyle={{
+                  backgroundColor: '#2d3748', // Match dropdown with dark background
+                  color: '#a0aec0', // Text color inside dropdown
+                }}
               />
             </div>
           </div>
