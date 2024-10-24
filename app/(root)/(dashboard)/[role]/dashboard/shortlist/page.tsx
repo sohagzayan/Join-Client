@@ -181,7 +181,7 @@ export default function CandidateShortlist() {
             placeholder="Search candidates..."
             className="pl-10"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: any) => setSearch(e.target.value)}
           />
         </div>
         <div className="flex flex-wrap items-center gap-4">
