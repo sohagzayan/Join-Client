@@ -297,7 +297,7 @@ export default function CandidateShortlist() {
                   onClick={() =>
                     setCurrentPage((prev) => Math.max(prev - 1, 1))
                   }
-                  disabled={currentPage === 1}
+                  // disabled={currentPage === 1}
                 />
               </PaginationItem>
               {[...Array(totalPages)].map((_, i) => (
@@ -315,7 +315,7 @@ export default function CandidateShortlist() {
                   onClick={() =>
                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                   }
-                  disabled={currentPage === totalPages}
+                  // disabled={currentPage === totalPages}
                 />
               </PaginationItem>
             </PaginationContent>
