@@ -67,6 +67,7 @@
     "@tiptap/starter-kit": "^2.2.4",
     "@types/react-big-calendar": "^1.8.12",
     "@uploadthing/react": "^6.0.2",
+    "apexcharts": "^3.54.1",
     "awesome-react-stepper": "^1.1.1",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
