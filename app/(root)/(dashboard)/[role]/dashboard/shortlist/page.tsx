@@ -114,6 +114,8 @@ export default function CandidateShortlist() {
     ...new Set(candidates.map((c) => c.jobPosition)),
   ];
 
+  console.log('first');
+
   const resetFilters = () => {
     setSearch('');
     setSortBy('newest');
