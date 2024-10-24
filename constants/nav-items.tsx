@@ -24,6 +24,18 @@ const navItems = (role: any) => {
 
   const recruitNavItem = [
     {
+      label: 'Create new',
+      key: `/${role}/dashboard`,
+      icon: <LuLayoutDashboard />,
+      subMenu: [
+        {
+          label: 'Post Job',
+          key: `/${role}/dashboard`,
+          icon: <LuLayoutDashboard />,
+        },
+      ],
+    },
+    {
       label: 'Dashboard',
       key: `/${role}/dashboard`,
       icon: <LuLayoutDashboard />,
