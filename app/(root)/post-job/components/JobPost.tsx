@@ -38,7 +38,7 @@ const JobPost = () => {
       {/* job details  */}
       <div className="mt-6">
         <h3 className="text-lg font-bold">Internship Details</h3>
-        <div className="mt-3 h-full w-full rounded-lg border border-gray-700">
+        <div className="mt-3 h-full w-full">
           {/* here */}
           <InternShipForm />
           <AssesmentQuestion />

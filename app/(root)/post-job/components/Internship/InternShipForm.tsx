@@ -1,7 +1,8 @@
 'use client';
+import { InputField } from '@/components/common';
+import TextArea from '@/components/common/text-area';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
@@ -11,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 
 export default function InternShipForm() {
@@ -21,7 +21,7 @@ export default function InternShipForm() {
   const [stipendType, setStipendType] = useState('fixed');
 
   return (
-    <div className="mt-6 space-y-6">
+    <div className="mt-6 space-y-6 border-none">
       <Card>
         <CardHeader>
           <CardTitle>Internship Details</CardTitle>
@@ -29,12 +29,20 @@ export default function InternShipForm() {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="profile">Internship profile</Label>
-            <Input id="profile" placeholder="e.g. Android App Development" />
+            <InputField
+              id="profile"
+              placeholder="e.g. Android App Development"
+              className="rounded border border-gray-700 bg-black8 text-gray-300"
+            />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="skills">Skills required (Optional)</Label>
-            <Input id="skills" placeholder="e.g. Java" />
+            <InputField
+              id="skills"
+              placeholder="e.g. Java"
+              className="bg- gray-800 rounded border border-gray-700 text-gray-300"
+            />
           </div>
 
           <div className="space-y-2">
@@ -79,7 +87,11 @@ export default function InternShipForm() {
 
           <div className="space-y-2">
             <Label htmlFor="openings">Number of openings</Label>
-            <Input id="openings" placeholder="e.g. 4" />
+            <InputField
+              id="openings"
+              placeholder="e.g. 4"
+              className="rounded border border-gray-700 bg-black8 text-gray-300"
+            />
           </div>
 
           <div className="space-y-2">
@@ -134,10 +146,10 @@ export default function InternShipForm() {
             <Label htmlFor="responsibilities">
               Intern&apos;s responsibilities
             </Label>
-            <Textarea
+            <TextArea
               id="responsibilities"
               placeholder="Selected intern's day-to-day responsibilities include:"
-              className="h-[100px]"
+              className="h-[100px] rounded border border-gray-700 bg-black8 text-gray-300 focus:border-none focus:border-gray-700 focus:bg-black8 focus:outline-none"
             />
           </div>
 
@@ -145,10 +157,10 @@ export default function InternShipForm() {
             <Label htmlFor="preferences">
               Additional candidate preferences:
             </Label>
-            <Textarea
+            <TextArea
               id="preferences"
               placeholder="e.g. Candidates pursuing Computer Science Engineering Preferred"
-              className="h-[100px]"
+              className="h-[100px] rounded border border-gray-700 bg-black8 text-gray-300 focus:border-none focus:border-gray-700 focus:bg-black8 focus:outline-none"
             />
           </div>
 
@@ -205,7 +217,14 @@ export default function InternShipForm() {
                 <SelectItem value="gbp">£</SelectItem>
               </SelectContent>
             </Select>
-            <Input placeholder="e.g. 10000" className="flex-grow" />
+            {/* <Input
+              placeholder="e.g. 10000"
+              className="flex-grow border border-gray-700 bg-black8 text-gray-300 focus:border-none focus:border-gray-700 focus:bg-black8 focus:outline-none"
+            /> */}
+            <InputField
+              placeholder="e.g. 10000"
+              className="flex-grow rounded border border-gray-700 bg-black8 py-2 text-gray-300"
+            />
             <Select>
               <SelectTrigger className="w-[120px]">
                 <SelectValue placeholder="/month" />
