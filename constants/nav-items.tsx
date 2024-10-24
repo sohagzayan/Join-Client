@@ -1,7 +1,10 @@
+import { AiOutlineUserAdd } from 'react-icons/ai';
 import { BsBookmarkStar } from 'react-icons/bs';
-import { FiFileText, FiVideo } from 'react-icons/fi';
-import { LuLayoutDashboard, LuPencilLine } from 'react-icons/lu';
-import { TbMessageDots, TbShoppingBagExclamation } from 'react-icons/tb';
+import { FiFileText } from 'react-icons/fi';
+import { IoBriefcaseOutline } from 'react-icons/io5';
+import { LuCalendarDays } from 'react-icons/lu';
+import { MdEventNote } from 'react-icons/md';
+import { TbBrandGoogleAnalytics, TbMessageDots } from 'react-icons/tb';
 
 const navItems = (role: any) => {
   const defaultNavItems = [
@@ -24,22 +27,29 @@ const navItems = (role: any) => {
 
   const recruitNavItem = [
     {
-      label: 'Create new',
+      label: 'Analytics',
       key: `/${role}/dashboard`,
-      icon: <LuLayoutDashboard />,
-      subMenu: [
-        {
-          label: 'Post Job',
-          key: `/${role}/dashboard`,
-          icon: <LuLayoutDashboard />,
-        },
-      ],
+      icon: <TbBrandGoogleAnalytics />,
+      group: 1,
     },
     {
-      label: 'Dashboard',
+      label: 'Submit Job',
       key: `/${role}/dashboard`,
-      icon: <LuLayoutDashboard />,
+      icon: <IoBriefcaseOutline />,
+      group: 2,
     },
+    {
+      label: 'Add User',
+      key: `/${role}/dashboard`,
+      icon: <AiOutlineUserAdd />,
+      group: 2,
+    },
+    // {
+    //   label: 'Hiring Event',
+    //   key: `/${role}/dashboard`,
+    //   icon: <IoBriefcaseOutline />,
+    //   group: 2,
+    // },
     // {
     //   label: 'Manage Projects',
     //   key: `/manage-projects`,
@@ -49,22 +59,20 @@ const navItems = (role: any) => {
       label: 'Manage Jobs',
       key: `/${role}/dashboard/manage-jobs`,
       icon: <FiFileText />,
-    },
-    {
-      label: 'Submit Job',
-      key: `/${role}/dashboard/manage-jobs`,
-      icon: <LuPencilLine />,
+      group: 3,
     },
     {
       label: 'Shortlist',
       key: `/${role}/dashboard/manage-jobs`,
       icon: <BsBookmarkStar />,
+      group: 3,
     },
-    {
-      label: 'Membership',
-      key: `/${role}/dashboard/manage-jobs`,
-      icon: <TbShoppingBagExclamation />,
-    },
+    // {
+    //   label: 'Membership',
+    //   key: `/${role}/dashboard/manage-jobs`,
+    //   icon: <TbShoppingBagExclamation />,
+    //   group: 3,
+    // },
     // {
     //   label: 'Bought Services',
     //   key: `/bought-services`,
@@ -85,15 +93,25 @@ const navItems = (role: any) => {
     //   key: `/my-package`,
     //   icon: <FiPackage />,
     // },
+
     {
       label: 'Messages',
       key: `/${role}/dashboard/messages`,
       icon: <TbMessageDots />,
+      group: 3,
+    },
+
+    {
+      label: 'All Interviews',
+      key: `/${role}/dashboard/meetings`,
+      icon: <MdEventNote />,
+      group: 4,
     },
     {
-      label: 'Meetings',
+      label: 'Interviews availability',
       key: `/${role}/dashboard/meetings`,
-      icon: <FiVideo />,
+      icon: <LuCalendarDays />,
+      group: 4,
     },
   ];
 
