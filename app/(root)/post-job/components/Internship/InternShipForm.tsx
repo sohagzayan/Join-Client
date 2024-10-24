@@ -32,7 +32,7 @@ export default function InternShipForm() {
             <InputField
               id="profile"
               placeholder="e.g. Android App Development"
-              className="rounded border border-gray-700 bg-black8 text-gray-300"
+              className="rounded border border-gray-700 text-gray-300"
             />
           </div>
 
@@ -41,7 +41,7 @@ export default function InternShipForm() {
             <InputField
               id="skills"
               placeholder="e.g. Java"
-              className="bg- gray-800 rounded border border-gray-700 text-gray-300"
+              className="rounded border border-gray-700 text-gray-300"
             />
           </div>
 
@@ -90,7 +90,7 @@ export default function InternShipForm() {
             <InputField
               id="openings"
               placeholder="e.g. 4"
-              className="rounded border border-gray-700 bg-black8 text-gray-300"
+              className="rounded border border-gray-700 text-gray-300"
             />
           </div>
 
@@ -149,7 +149,7 @@ export default function InternShipForm() {
             <TextArea
               id="responsibilities"
               placeholder="Selected intern's day-to-day responsibilities include:"
-              className="h-[100px] rounded border border-gray-700 bg-black8 text-gray-300 focus:border-none focus:border-gray-700 focus:bg-black8 focus:outline-none"
+              className="focus: h-[100px] rounded border border-gray-700 text-gray-300 focus:border-none focus:border-gray-700 focus:outline-none"
             />
           </div>
 
@@ -160,7 +160,7 @@ export default function InternShipForm() {
             <TextArea
               id="preferences"
               placeholder="e.g. Candidates pursuing Computer Science Engineering Preferred"
-              className="h-[100px] rounded border border-gray-700 bg-black8 text-gray-300 focus:border-none focus:border-gray-700 focus:bg-black8 focus:outline-none"
+              className="focus: h-[100px] rounded border border-gray-700 text-gray-300 focus:border-none focus:border-gray-700 focus:outline-none"
             />
           </div>
 
@@ -219,11 +219,11 @@ export default function InternShipForm() {
             </Select>
             {/* <Input
               placeholder="e.g. 10000"
-              className="flex-grow border border-gray-700 bg-black8 text-gray-300 focus:border-none focus:border-gray-700 focus:bg-black8 focus:outline-none"
+              className="flex-grow border border-gray-700  text-gray-300 focus:border-none focus:border-gray-700 focus: focus:outline-none"
             /> */}
             <InputField
               placeholder="e.g. 10000"
-              className="flex-grow rounded border border-gray-700 bg-black8 py-2 text-gray-300"
+              className="flex-grow rounded border border-gray-700 py-2 text-gray-300"
             />
             <Select>
               <SelectTrigger className="w-[120px]">

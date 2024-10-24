@@ -1,5 +1,7 @@
 'use client';
 
+import { InputField } from '@/components/common';
+import TextArea from '@/components/common/text-area';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -8,9 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 
 export default function AssesmentQuestion() {
@@ -44,18 +44,18 @@ export default function AssesmentQuestion() {
           <div className="space-y-4">
             <div>
               <Label htmlFor="cover-letter">Cover letter</Label>
-              <Textarea
+              <TextArea
                 id="cover-letter"
                 placeholder="Why should you be hired for this role?"
-                className="mt-1"
+                className="mt-1 rounded"
               />
             </div>
             <div>
               <Label htmlFor="availability">Availability</Label>
-              <Textarea
+              <TextArea
                 id="availability"
                 placeholder="Are you available for 1 month, starting immediately, for a full-time work from home internship? If not, what is the time period you are available for and the earliest date you can start this internship on?"
-                className="mt-1"
+                className="mt-1 rounded"
               />
             </div>
           </div>
@@ -76,7 +76,8 @@ export default function AssesmentQuestion() {
                   </Button>
                 )}
               </div>
-              <Textarea
+              <TextArea
+                className="rounded"
                 id={`assessment-${index}`}
                 placeholder="Type your question here"
                 value={question}
@@ -110,8 +111,15 @@ export default function AssesmentQuestion() {
               updated.
             </p>
             <div className="flex gap-2">
-              <Input defaultValue="+880" className="w-20" />
-              <Input placeholder="1789141408" className="flex-grow" />
+              <InputField
+                inputClassName="w-20"
+                className="w-20 rounded"
+                placeholder="+880"
+              />
+              <InputField
+                placeholder="1789141408"
+                className="flex-grow rounded"
+              />
             </div>
           </div>
         </CardContent>
