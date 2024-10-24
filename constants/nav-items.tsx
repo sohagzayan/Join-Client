@@ -63,7 +63,7 @@ const navItems = (role: any) => {
     },
     {
       label: 'Shortlist',
-      key: `/${role}/dashboard/manage-jobs`,
+      key: `/${role}/dashboard/shortlist`,
       icon: <BsBookmarkStar />,
       group: 3,
     },
