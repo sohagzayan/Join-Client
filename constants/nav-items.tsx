@@ -1,7 +1,10 @@
-import { BsBookmarkStar } from 'react-icons/bs';
-import { FiFileText, FiVideo } from 'react-icons/fi';
-import { LuLayoutDashboard, LuPencilLine } from 'react-icons/lu';
-import { TbMessageDots, TbShoppingBagExclamation } from 'react-icons/tb';
+import { FiFileText } from 'react-icons/fi';
+import { HiOutlineTemplate } from 'react-icons/hi';
+import { IoBriefcaseOutline } from 'react-icons/io5';
+import { LiaTeamspeak } from 'react-icons/lia';
+import { LuCalendarDays } from 'react-icons/lu';
+import { MdEventNote, MdOutlineInsights } from 'react-icons/md';
+import { TbBrandGoogleAnalytics, TbMessageDots } from 'react-icons/tb';
 
 const navItems = (role: any) => {
   const defaultNavItems = [
@@ -24,64 +27,67 @@ const navItems = (role: any) => {
 
   const recruitNavItem = [
     {
-      label: 'Dashboard',
+      label: 'Analytics',
       key: `/${role}/dashboard`,
-      icon: <LuLayoutDashboard />,
+      icon: <TbBrandGoogleAnalytics />,
+      group: 1,
     },
-    // {
-    //   label: 'Manage Projects',
-    //   key: `/manage-projects`,
-    //   icon: <FiFileText />,
-    // },
+    {
+      label: 'Submit Job',
+      key: `/${role}/dashboard`,
+      icon: <IoBriefcaseOutline />,
+      group: 2,
+    },
+    {
+      label: 'Job Insights',
+      key: `/${role}/dashboard/job-insights`,
+      icon: <MdOutlineInsights />,
+      group: 2,
+    },
+    {
+      label: 'Team Collaboration',
+      key: `/${role}/dashboard/team-collaboration`,
+      icon: <LiaTeamspeak />,
+      group: 2,
+    },
+
     {
       label: 'Manage Jobs',
       key: `/${role}/dashboard/manage-jobs`,
       icon: <FiFileText />,
-    },
-    {
-      label: 'Submit Job',
-      key: `/${role}/dashboard/manage-jobs`,
-      icon: <LuPencilLine />,
-    },
-    {
-      label: 'Shortlist',
-      key: `/${role}/dashboard/manage-jobs`,
-      icon: <BsBookmarkStar />,
-    },
-    {
-      label: 'Membership',
-      key: `/${role}/dashboard/manage-jobs`,
-      icon: <TbShoppingBagExclamation />,
+      group: 3,
     },
     // {
-    //   label: 'Bought Services',
-    //   key: `/bought-services`,
-    //   icon: <FiShoppingBag />,
+    //   label: 'Shortlist',
+    //   key: `/${role}/dashboard/shortlist`,
+    //   icon: <BsBookmarkStar />,
+    //   group: 3,
     // },
-    // {
-    //   label: 'My Company',
-    //   key: `/my-company`,
-    //   icon: <FiUsers />,
-    // },
-    // {
-    //   label: 'Follow',
-    //   key: `/follow`,
-    //   icon: <FiUsers />,
-    // },
-    // {
-    //   label: 'My Package',
-    //   key: `/my-package`,
-    //   icon: <FiPackage />,
-    // },
+
     {
       label: 'Messages',
       key: `/${role}/dashboard/messages`,
       icon: <TbMessageDots />,
+      group: 3,
+    },
+
+    {
+      label: 'All Interviews',
+      key: `/${role}/dashboard/meetings`,
+      icon: <MdEventNote />,
+      group: 4,
     },
     {
-      label: 'Meetings',
+      label: 'Interviews availability',
       key: `/${role}/dashboard/meetings`,
-      icon: <FiVideo />,
+      icon: <LuCalendarDays />,
+      group: 4,
+    },
+    {
+      label: 'Template Library',
+      key: `/${role}/dashboard/template-library`,
+      icon: <HiOutlineTemplate />,
+      group: 4,
     },
   ];
 
