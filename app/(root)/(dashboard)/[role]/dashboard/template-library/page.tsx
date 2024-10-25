@@ -1,5 +1,6 @@
 'use client';
 
+import TextArea from '@/components/common/text-area';
 import {
   Accordion,
   AccordionContent,
@@ -35,7 +36,6 @@ import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Tooltip,
   TooltipContent,
@@ -118,35 +118,35 @@ const categories = [
 ];
 
 export default function EnhancedTemplateLibrary() {
-  const [templates, setTemplates] = React.useState(mockTemplates);
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [templates, setTemplates] = React.useState<any>(mockTemplates);
+  const [searchTerm, setSearchTerm] = React.useState<any>('');
   const [selectedCategory, setSelectedCategory] =
-    React.useState('Job Descriptions');
-  const [isAddingTemplate, setIsAddingTemplate] = React.useState(false);
-  const [editingTemplate, setEditingTemplate] = React.useState(null);
-  const [newTemplate, setNewTemplate] = React.useState({
+    React.useState<any>('Job Descriptions');
+  const [isAddingTemplate, setIsAddingTemplate] = React.useState<any>(false);
+  const [editingTemplate, setEditingTemplate] = React.useState<any>(null);
+  const [newTemplate, setNewTemplate] = React.useState<any>({
     name: '',
     category: '',
     description: '',
     content: '',
     tags: [],
   });
-  const [selectedTags, setSelectedTags] = React.useState([]);
+  const [selectedTags, setSelectedTags] = React.useState<any>([]);
   const [showPreview, setShowPreview] = React.useState(false);
-  const [previewTemplate, setPreviewTemplate] = React.useState(null);
+  const [previewTemplate, setPreviewTemplate] = React.useState<any>(null);
   const { toast } = useToast();
 
   const filteredTemplates = templates.filter(
-    (template) =>
+    (template: any) =>
       (selectedCategory === 'All' || template.category === selectedCategory) &&
       (searchTerm === '' ||
         template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         template.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        template.tags.some((tag) =>
+        template.tags.some((tag: any) =>
           tag.toLowerCase().includes(searchTerm.toLowerCase()),
         )) &&
       (selectedTags.length === 0 ||
-        selectedTags.every((tag) => template.tags.includes(tag))),
+        selectedTags.every((tag: any) => template.tags.includes(tag))),
   );
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,8 +186,8 @@ export default function EnhancedTemplateLibrary() {
     }
   };
 
-  const handleEditTemplate = (template) => {
-    const updatedTemplates = templates.map((t) =>
+  const handleEditTemplate = (template: any) => {
+    const updatedTemplates = templates.map((t: any) =>
       t.id === template.id
         ? {
             ...template,
@@ -204,23 +204,23 @@ export default function EnhancedTemplateLibrary() {
     });
   };
 
-  const handleDeleteTemplate = (id) => {
-    setTemplates(templates.filter((t) => t.id !== id));
+  const handleDeleteTemplate = (id: any) => {
+    setTemplates(templates.filter((t: any) => t.id !== id));
     toast({
       title: 'Success',
       description: 'Template deleted successfully.',
     });
   };
 
-  const handleTagSelect = (tag) => {
-    setSelectedTags((prevTags) =>
+  const handleTagSelect = (tag: any) => {
+    setSelectedTags((prevTags: any) =>
       prevTags.includes(tag)
-        ? prevTags.filter((t) => t !== tag)
+        ? prevTags.filter((t: any) => t !== tag)
         : [...prevTags, tag],
     );
   };
 
-  const getCategoryIcon = (category) => {
+  const getCategoryIcon = (category: any) => {
     switch (category) {
       case 'Job Descriptions':
         return <FileText className="h-4 w-4" />;
@@ -235,7 +235,7 @@ export default function EnhancedTemplateLibrary() {
     }
   };
 
-  const allTags = Array.from(new Set(templates.flatMap((t) => t.tags)));
+  const allTags = Array.from(new Set(templates.flatMap((t: any) => t.tags)));
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -253,9 +253,9 @@ export default function EnhancedTemplateLibrary() {
               <AccordionContent>
                 <ul className="space-y-2">
                   {templates
-                    .sort((a, b) => b.usageCount - a.usageCount)
+                    .sort((a: any, b: any) => b.usageCount - a.usageCount)
                     .slice(0, 5)
-                    .map((template) => (
+                    .map((template: any) => (
                       <li
                         key={template.id}
                         className="rounded p-1 text-sm hover:bg-gray-200"
@@ -276,8 +276,8 @@ export default function EnhancedTemplateLibrary() {
               <AccordionContent>
                 <ul className="space-y-2">
                   {templates
-                    .filter((t) => t.usageCount > 20)
-                    .map((template) => (
+                    .filter((t: any) => t.usageCount > 20)
+                    .map((template: any) => (
                       <li
                         key={template.id}
                         className="rounded p-1 text-sm hover:bg-gray-200"
@@ -355,7 +355,7 @@ export default function EnhancedTemplateLibrary() {
                       <Input
                         id="name"
                         value={newTemplate.name}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewTemplate({
                             ...newTemplate,
                             name: e.target.value,
@@ -371,7 +371,7 @@ export default function EnhancedTemplateLibrary() {
                       <select
                         id="category"
                         value={newTemplate.category}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewTemplate({
                             ...newTemplate,
                             category: e.target.value,
@@ -394,7 +394,7 @@ export default function EnhancedTemplateLibrary() {
                       <Input
                         id="description"
                         value={newTemplate.description}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewTemplate({
                             ...newTemplate,
                             description: e.target.value,
@@ -407,7 +407,7 @@ export default function EnhancedTemplateLibrary() {
                       <Label htmlFor="content" className="text-right">
                         Content
                       </Label>
-                      <Textarea
+                      <TextArea
                         id="content"
                         value={newTemplate.content}
                         onChange={(e) =>
@@ -427,12 +427,12 @@ export default function EnhancedTemplateLibrary() {
                         id="tags"
                         placeholder="Enter tags separated by commas"
                         value={newTemplate.tags.join(', ')}
-                        onChange={(e) =>
+                        onChange={(e: any) =>
                           setNewTemplate({
                             ...newTemplate,
                             tags: e.target.value
                               .split(',')
-                              .map((tag) => tag.trim()),
+                              .map((tag: any) => tag.trim()),
                           })
                         }
                         className="col-span-3"
@@ -452,7 +452,7 @@ export default function EnhancedTemplateLibrary() {
           <div className="mb-4">
             <Label>Filter by Tags:</Label>
             <div className="mt-2 flex flex-wrap gap-2">
-              {allTags.map((tag) => (
+              {allTags.map((tag: any) => (
                 <Badge
                   key={tag}
                   variant={selectedTags.includes(tag) ? 'default' : 'outline'}
@@ -480,7 +480,7 @@ export default function EnhancedTemplateLibrary() {
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredTemplates.map((template) => (
+            {filteredTemplates.map((template: any) => (
               <Card key={template.id} className="flex flex-col">
                 <CardHeader>
                   <CardTitle className="flex items-start justify-between">
@@ -516,7 +516,7 @@ export default function EnhancedTemplateLibrary() {
                     </ScrollArea>
                   )}
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {template.tags.map((tag, index) => (
+                    {template.tags.map((tag: any, index: any) => (
                       <Badge key={index} variant="secondary">
                         {tag}
                       </Badge>
@@ -622,7 +622,7 @@ export default function EnhancedTemplateLibrary() {
         >
           <DialogContent className="sm:max-w-[625px]">
             <DialogHeader>
-              <DialogTitle>{previewTemplate.name}</DialogTitle>
+              <DialogTitle>{previewTemplate?.name}</DialogTitle>
               <DialogDescription>
                 Category: {previewTemplate.category} | Version:{' '}
                 {previewTemplate.version}
@@ -674,7 +674,7 @@ export default function EnhancedTemplateLibrary() {
                 <Input
                   id="edit-name"
                   value={editingTemplate.name}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEditingTemplate({
                       ...editingTemplate,
                       name: e.target.value,
@@ -690,7 +690,7 @@ export default function EnhancedTemplateLibrary() {
                 <Input
                   id="edit-description"
                   value={editingTemplate.description}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEditingTemplate({
                       ...editingTemplate,
                       description: e.target.value,
@@ -703,10 +703,10 @@ export default function EnhancedTemplateLibrary() {
                 <Label htmlFor="edit-content" className="text-right">
                   Content
                 </Label>
-                <Textarea
+                <TextArea
                   id="edit-content"
                   value={editingTemplate.content}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEditingTemplate({
                       ...editingTemplate,
                       content: e.target.value,
@@ -722,10 +722,12 @@ export default function EnhancedTemplateLibrary() {
                 <Input
                   id="edit-tags"
                   value={editingTemplate.tags.join(', ')}
-                  onChange={(e) =>
+                  onChange={(e: any) =>
                     setEditingTemplate({
                       ...editingTemplate,
-                      tags: e.target.value.split(',').map((tag) => tag.trim()),
+                      tags: e.target.value
+                        .split(',')
+                        .map((tag: any) => tag.trim()),
                     })
                   }
                   className="col-span-3"
