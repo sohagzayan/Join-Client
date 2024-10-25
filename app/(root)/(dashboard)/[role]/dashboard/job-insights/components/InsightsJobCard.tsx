@@ -13,15 +13,15 @@ interface InsightsJobCardProps {
 
 const InsightsJobCard: FC<InsightsJobCardProps> = ({ job }) => {
   return (
-    <Card className="w-full">
+    <Card className="w-full border border-[rgba(255,255,255,0.14)]">
       <CardHeader>
         <CardTitle>{job.title}</CardTitle>
-        <p className="text-muted-foreground text-sm">{job.location}</p>
-        <p className="text-muted-foreground text-sm">{job.department}</p>
+        <p className="text-sm text-text5">{job.location}</p>
+        <p className="text-sm text-theme1">{job.department}</p>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="views" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-3 text-text5">
             <TabsTrigger value="views">Views</TabsTrigger>
             <TabsTrigger value="applications">Applications</TabsTrigger>
             <TabsTrigger value="timeToFill">Time to Fill</TabsTrigger>
@@ -33,14 +33,14 @@ const InsightsJobCard: FC<InsightsJobCardProps> = ({ job }) => {
                 <Line
                   type="monotone"
                   dataKey="value"
-                  stroke="#8884d8"
+                  stroke="#3771fe"
                   strokeWidth={2}
                   dot={false}
                 />
               </LineChart>
             </ResponsiveContainer>
           </TabsContent>
-          <TabsContent value="applications">
+          <TabsContent value="applications ">
             <div className="mb-2 text-2xl font-bold">{job.applications}</div>
             <ResponsiveContainer width="100%" height={100}>
               <BarChart data={job.applicationsData}>
@@ -63,7 +63,7 @@ const InsightsJobCard: FC<InsightsJobCardProps> = ({ job }) => {
           </TabsContent>
         </Tabs>
         <div className="mt-4 flex items-center justify-between text-sm">
-          <span className="flex items-center">
+          <span className="flex items-center text-text5">
             {job.views > 1000 ? (
               <ArrowUpIcon className="text-green-500 mr-1 h-4 w-4" />
             ) : (
@@ -71,7 +71,7 @@ const InsightsJobCard: FC<InsightsJobCardProps> = ({ job }) => {
             )}
             {job.views > 1000 ? 'High visibility' : 'Low visibility'}
           </span>
-          <span className="flex items-center">
+          <span className="flex items-center text-text5">
             {job.applications > 30 ? (
               <ArrowUpIcon className="text-green-500 mr-1 h-4 w-4" />
             ) : (
