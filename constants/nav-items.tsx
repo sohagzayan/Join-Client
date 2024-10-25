@@ -1,9 +1,9 @@
-import { AiOutlineUserAdd } from 'react-icons/ai';
-import { BsBookmarkStar } from 'react-icons/bs';
 import { FiFileText } from 'react-icons/fi';
+import { HiOutlineTemplate } from 'react-icons/hi';
 import { IoBriefcaseOutline } from 'react-icons/io5';
+import { LiaTeamspeak } from 'react-icons/lia';
 import { LuCalendarDays } from 'react-icons/lu';
-import { MdEventNote } from 'react-icons/md';
+import { MdEventNote, MdOutlineInsights } from 'react-icons/md';
 import { TbBrandGoogleAnalytics, TbMessageDots } from 'react-icons/tb';
 
 const navItems = (role: any) => {
@@ -39,59 +39,29 @@ const navItems = (role: any) => {
       group: 2,
     },
     {
-      label: 'Add User',
-      key: `/${role}/dashboard`,
-      icon: <AiOutlineUserAdd />,
+      label: 'Job Insights',
+      key: `/${role}/dashboard/job-insights`,
+      icon: <MdOutlineInsights />,
       group: 2,
     },
-    // {
-    //   label: 'Hiring Event',
-    //   key: `/${role}/dashboard`,
-    //   icon: <IoBriefcaseOutline />,
-    //   group: 2,
-    // },
-    // {
-    //   label: 'Manage Projects',
-    //   key: `/manage-projects`,
-    //   icon: <FiFileText />,
-    // },
+    {
+      label: 'Team Collaboration',
+      key: `/${role}/dashboard/team-collaboration`,
+      icon: <LiaTeamspeak />,
+      group: 2,
+    },
+
     {
       label: 'Manage Jobs',
       key: `/${role}/dashboard/manage-jobs`,
       icon: <FiFileText />,
       group: 3,
     },
-    {
-      label: 'Shortlist',
-      key: `/${role}/dashboard/shortlist`,
-      icon: <BsBookmarkStar />,
-      group: 3,
-    },
     // {
-    //   label: 'Membership',
-    //   key: `/${role}/dashboard/manage-jobs`,
-    //   icon: <TbShoppingBagExclamation />,
+    //   label: 'Shortlist',
+    //   key: `/${role}/dashboard/shortlist`,
+    //   icon: <BsBookmarkStar />,
     //   group: 3,
-    // },
-    // {
-    //   label: 'Bought Services',
-    //   key: `/bought-services`,
-    //   icon: <FiShoppingBag />,
-    // },
-    // {
-    //   label: 'My Company',
-    //   key: `/my-company`,
-    //   icon: <FiUsers />,
-    // },
-    // {
-    //   label: 'Follow',
-    //   key: `/follow`,
-    //   icon: <FiUsers />,
-    // },
-    // {
-    //   label: 'My Package',
-    //   key: `/my-package`,
-    //   icon: <FiPackage />,
     // },
 
     {
@@ -111,6 +81,12 @@ const navItems = (role: any) => {
       label: 'Interviews availability',
       key: `/${role}/dashboard/meetings`,
       icon: <LuCalendarDays />,
+      group: 4,
+    },
+    {
+      label: 'Template Library',
+      key: `/${role}/dashboard/template-library`,
+      icon: <HiOutlineTemplate />,
       group: 4,
     },
   ];
