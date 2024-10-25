@@ -13,3 +13,8 @@ export interface JobListing {
   viewsData: DataPoint[];
   applicationsData: DataPoint[];
 }
+
+export interface SelectOption {
+  label: string;
+  value: string;
+}

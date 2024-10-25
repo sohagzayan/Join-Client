@@ -62,3 +62,17 @@ export const jobListings: JobListing[] = [
     })),
   },
 ];
+
+export const AllDepartments = [
+  { value: 'All', label: 'All Departments' },
+  { value: 'Engineering', label: 'Engineering' },
+  { value: 'Product', label: 'Product' },
+  { value: 'Design', label: 'Design' },
+  { value: 'Data', label: 'Data' },
+];
+
+export const InsightsSorting = [
+  { value: 'views', label: 'Views' },
+  { value: 'applications', label: 'Applications' },
+  { value: 'timeToFill', label: 'Time to Fill' },
+];
