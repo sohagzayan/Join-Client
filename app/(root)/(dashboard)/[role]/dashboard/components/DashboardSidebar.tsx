@@ -36,7 +36,7 @@ const DashboardSideBar = () => {
                 </span>
               </Link>
             ))}
-          <div className="mt-2 border-b border-text1"></div>
+          <div className="mt-2 border-b border-[rgba(255,255,255,0.14)]"></div>
         </div>
       ))}
     </div>

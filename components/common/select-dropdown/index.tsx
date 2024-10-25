@@ -1,7 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils'; // Adjust the import path as necessary
-import { AnimatePresence, motion } from 'framer-motion'; // Import AnimatePresence
-import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
 interface SelectOption {
@@ -18,8 +18,8 @@ interface SelectDropdownProps {
   label?: string;
   showLabel?: boolean;
   labelClassName?: string;
-  icon?: React.ElementType | null; // Optional icon
-  onSelect?: (selectedOption: SelectOption | null) => void; // New onSelect prop
+  icon?: React.ElementType | null;
+  onSelect?: (selectedOption: SelectOption | null) => void;
 }
 
 const SelectDropdown: React.FC<SelectDropdownProps> = ({
@@ -29,25 +29,42 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
   selectedClassName = '',
   dropdownClassName = '',
   label = 'Label',
-  showLabel = false, // Label visibility is controlled by this prop
+  showLabel = false,
   labelClassName = '',
-  icon: Icon = null, // Optional icon, default is null
-  onSelect, // Destructure onSelect from props
+  icon: Icon = null,
+  onSelect,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<SelectOption | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (option: SelectOption) => {
     setSelected(option);
     setIsOpen(false);
     if (onSelect) {
-      onSelect(option); // Call the onSelect prop function when an option is selected
+      onSelect(option);
     }
   };
 
+  // Close the dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={cn('relative w-full', className)}>
-      {/* Conditionally render the label if showLabel is true */}
+    <div ref={dropdownRef} className={cn('relative w-full', className)}>
       {showLabel && (
         <label
           className={cn('mb-2 block font-semibold text-white', labelClassName)}
@@ -56,7 +73,6 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
         </label>
       )}
 
-      {/* Selected value box */}
       <div
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
@@ -65,7 +81,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
         )}
       >
         <span>{selected ? selected.label : placeholder}</span>
-        {Icon && <Icon className="ml-2" />} {/* Optional icon */}
+        {Icon && <Icon className="ml-2" />}
         <div
           className={cn(
             'flex h-7 w-7 items-center justify-center rounded-full transition-all duration-300',
@@ -81,7 +97,6 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
         </div>
       </div>
 
-      {/* Dropdown options with Framer Motion animation and AnimatePresence */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
