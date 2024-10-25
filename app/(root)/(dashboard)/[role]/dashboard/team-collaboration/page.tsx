@@ -1,5 +1,6 @@
 'use client';
 
+import TextArea from '@/components/common/text-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -24,7 +25,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Bell,
   Book,
@@ -274,7 +274,7 @@ export default function TeamCollaboration() {
                         <Input
                           id="name"
                           value={newMember.name}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setNewMember({ ...newMember, name: e.target.value })
                           }
                           className="col-span-3"
@@ -287,7 +287,7 @@ export default function TeamCollaboration() {
                         <Input
                           id="role"
                           value={newMember.role}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setNewMember({ ...newMember, role: e.target.value })
                           }
                           className="col-span-3"
@@ -300,7 +300,7 @@ export default function TeamCollaboration() {
                         <Input
                           id="salary"
                           value={newMember.salary}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setNewMember({
                               ...newMember,
                               salary: e.target.value,
@@ -335,7 +335,7 @@ export default function TeamCollaboration() {
                   <Input
                     placeholder="Search rules..."
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e: any) => setSearchTerm(e.target.value)}
                     className="w-full"
                   />
                 </div>
@@ -392,7 +392,7 @@ export default function TeamCollaboration() {
                         <Input
                           id="title"
                           value={newRule.title}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setNewRule({ ...newRule, title: e.target.value })
                           }
                           className="col-span-3"
@@ -402,10 +402,10 @@ export default function TeamCollaboration() {
                         <Label htmlFor="description" className="text-right">
                           Description
                         </Label>
-                        <Textarea
+                        <TextArea
                           id="description"
                           value={newRule.description}
-                          onChange={(e) =>
+                          onChange={(e: any) =>
                             setNewRule({
                               ...newRule,
                               description: e.target.value,
@@ -459,10 +459,12 @@ export default function TeamCollaboration() {
                       <TabsTrigger value="actions">Actions</TabsTrigger>
                     </TabsList>
                     <TabsContent value="notes">
-                      <Textarea
+                      <TextArea
                         placeholder="Add a note about this candidate..."
                         value={candidateComment}
-                        onChange={(e) => setCandidateComment(e.target.value)}
+                        onChange={(e: any) =>
+                          setCandidateComment(e.target.value)
+                        }
                       />
                       <Button
                         className="mt-2"
@@ -517,7 +519,7 @@ export default function TeamCollaboration() {
                 <CardTitle>Discussion Board</CardTitle>
               </CardHeader>
               <CardContent>
-                <Textarea
+                <TextArea
                   placeholder="Start a new discussion..."
                   className="mb-4"
                 />
