@@ -1,5 +1,6 @@
 'use client';
 
+import { InputField } from '@/components/common';
 import TextArea from '@/components/common/text-area';
 import {
   Accordion,
@@ -238,7 +239,7 @@ export default function EnhancedTemplateLibrary() {
   const allTags = Array.from(new Set(templates.flatMap((t: any) => t.tags)));
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden text-white">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" className="fixed right-4 top-4">
@@ -302,13 +303,13 @@ export default function EnhancedTemplateLibrary() {
             <h1 className="text-2xl font-bold">Template Library</h1>
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <Search className="absolute left-2 top-1/2 -translate-y-1/2 transform text-gray-400" />
-                <Input
+                <InputField
                   type="text"
                   placeholder="Search templates..."
-                  className="pl-8"
+                  className="rounded-md"
                   value={searchTerm}
                   onChange={handleSearch}
+                  icon={Search}
                 />
               </div>
               <DropdownMenu>
@@ -450,13 +451,13 @@ export default function EnhancedTemplateLibrary() {
           </header>
 
           <div className="mb-4">
-            <Label>Filter by Tags:</Label>
+            <Label className="text-text6">Filter by Tags:</Label>
             <div className="mt-2 flex flex-wrap gap-2">
               {allTags.map((tag: any) => (
                 <Badge
                   key={tag}
                   variant={selectedTags.includes(tag) ? 'default' : 'outline'}
-                  className="cursor-pointer"
+                  className="cursor-pointer border border-[rgba(0,123,255,0.2)] bg-[rgba(0,123,255,0.1)] py-1 text-theme1"
                   onClick={() => handleTagSelect(tag)}
                 >
                   {tag}
