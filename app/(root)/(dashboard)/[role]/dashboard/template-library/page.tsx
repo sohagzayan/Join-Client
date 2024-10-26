@@ -1,6 +1,6 @@
 'use client';
 
-import { InputField } from '@/components/common';
+import { InputField, SelectDropdown } from '@/components/common';
 import TextArea from '@/components/common/text-area';
 import {
   Accordion,
@@ -26,12 +26,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -47,7 +41,6 @@ import { useToast } from '@/hooks/use-toast';
 import {
   Calendar,
   CheckCircle2,
-  ChevronDown,
   Copy,
   Edit,
   Eye,
@@ -112,10 +105,10 @@ const mockTemplates = [
 ];
 
 const categories = [
-  'Job Descriptions',
-  'Emails',
-  'Interview Questions',
-  'Task Templates',
+  { value: 'Job Descriptions', label: 'Job Descriptions' },
+  { value: 'Emails', label: 'Emails' },
+  { value: 'Interview Questions', label: 'Interview Questions' },
+  { value: 'Task Templates', label: 'Task Templates' },
 ];
 
 export default function EnhancedTemplateLibrary() {
@@ -312,26 +305,8 @@ export default function EnhancedTemplateLibrary() {
                   icon={Search}
                 />
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
-                    Filter by Category <ChevronDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onSelect={() => setSelectedCategory('All')}>
-                    All Categories
-                  </DropdownMenuItem>
-                  {categories.map((category) => (
-                    <DropdownMenuItem
-                      key={category}
-                      onSelect={() => setSelectedCategory(category)}
-                    >
-                      {category}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <SelectDropdown options={categories} className="w-[200px]" />
+
               <Dialog
                 open={isAddingTemplate}
                 onOpenChange={setIsAddingTemplate}
@@ -369,24 +344,7 @@ export default function EnhancedTemplateLibrary() {
                       <Label htmlFor="category" className="text-right">
                         Category
                       </Label>
-                      <select
-                        id="category"
-                        value={newTemplate.category}
-                        onChange={(e: any) =>
-                          setNewTemplate({
-                            ...newTemplate,
-                            category: e.target.value,
-                          })
-                        }
-                        className="col-span-3"
-                      >
-                        <option value="">Select a category</option>
-                        {categories.map((category) => (
-                          <option key={category} value={category}>
-                            {category}
-                          </option>
-                        ))}
-                      </select>
+                      <SelectDropdown options={categories} />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label htmlFor="description" className="text-right">
