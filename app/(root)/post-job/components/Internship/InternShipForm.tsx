@@ -1,6 +1,6 @@
 'use client';
 import { InputField } from '@/components/common';
-import TextArea from '@/components/common/text-area';
+import RichTextEditor from '@/components/common/QuillEditor/RichTextEditor';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -142,26 +142,9 @@ export default function InternShipForm() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="responsibilities">
-              Intern&apos;s responsibilities
-            </Label>
-            <TextArea
-              id="responsibilities"
-              placeholder="Selected intern's day-to-day responsibilities include:"
-              className="focus: h-[100px] rounded border border-gray-700 text-gray-300 focus:border-none focus:border-gray-700 focus:outline-none"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="preferences">
-              Additional candidate preferences:
-            </Label>
-            <TextArea
-              id="preferences"
-              placeholder="e.g. Candidates pursuing Computer Science Engineering Preferred"
-              className="focus: h-[100px] rounded border border-gray-700 text-gray-300 focus:border-none focus:border-gray-700 focus:outline-none"
-            />
+          <div className="mt-3 space-y-2">
+            <div className="w-64">Candidate&apos;s responsibilities</div>
+            <RichTextEditor apiKey="3njyp0uscyk6k6nmj9gmcuy6222j3fh5r69xn307lilkz5y0" />
           </div>
 
           <div className="flex items-center space-x-2">
