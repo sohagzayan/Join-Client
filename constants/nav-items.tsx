@@ -34,7 +34,7 @@ const navItems = (role: any) => {
     },
     {
       label: 'Submit Job',
-      key: `/${role}/dashboard`,
+      key: `/${role}/dashboard/post-job`,
       icon: <IoBriefcaseOutline />,
       group: 2,
     },

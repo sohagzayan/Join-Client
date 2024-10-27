@@ -20,6 +20,11 @@ export default function InternShipForm() {
   const [startDate, setStartDate] = useState('immediate');
   const [stipendType, setStipendType] = useState('fixed');
 
+  const handleEditorChange = (content: string) => {
+    console.log('Editor Content:', content);
+    // You can send `content` to your backend API or use it as needed here
+  };
+
   return (
     <div className="mt-6 space-y-6 border-none">
       <Card>
@@ -144,7 +149,10 @@ export default function InternShipForm() {
 
           <div className="mt-3 space-y-2">
             <div className="w-64">Candidate&apos;s responsibilities</div>
-            <RichTextEditor apiKey="3njyp0uscyk6k6nmj9gmcuy6222j3fh5r69xn307lilkz5y0" />
+            <RichTextEditor
+              onChange={handleEditorChange}
+              apiKey="3njyp0uscyk6k6nmj9gmcuy6222j3fh5r69xn307lilkz5y0"
+            />
           </div>
 
           <div className="flex items-center space-x-2">
