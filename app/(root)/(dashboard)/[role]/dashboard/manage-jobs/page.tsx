@@ -18,7 +18,13 @@ import React, { useState } from 'react';
 
 // Types
 type Skill = string;
-type JobStatus = 'Sourced' | 'In_Progress' | 'Interview' | 'Hired';
+type JobStatus =
+  | 'Applied'
+  | 'Screening'
+  | 'Interview'
+  | 'Offer'
+  | 'Hired'
+  | 'Rejected';
 
 interface Column {
   id: JobStatus;
@@ -27,9 +33,9 @@ interface Column {
 }
 
 const initialColumns: { [key in JobStatus]: Column } = {
-  Sourced: {
-    id: 'Sourced',
-    title: 'Sourced',
+  Applied: {
+    id: 'Applied',
+    title: 'Applied',
     candidateIds: [
       'candidate-1',
       'candidate-2',
@@ -39,9 +45,9 @@ const initialColumns: { [key in JobStatus]: Column } = {
       'candidate-6',
     ],
   },
-  In_Progress: {
-    id: 'In_Progress',
-    title: 'In_Progress',
+  Screening: {
+    id: 'Screening',
+    title: 'Screening',
     candidateIds: [],
   },
   Interview: {
@@ -49,7 +55,17 @@ const initialColumns: { [key in JobStatus]: Column } = {
     title: 'Interview',
     candidateIds: [],
   },
+  Offer: {
+    id: 'Offer',
+    title: 'Offer',
+    candidateIds: [],
+  },
   Hired: {
+    id: 'Hired',
+    title: 'Hired',
+    candidateIds: [],
+  },
+  Rejected: {
     id: 'Hired',
     title: 'Hired',
     candidateIds: [],
@@ -193,7 +209,7 @@ export default function Job_manage() {
 
   return (
     <div className={`min-h-screen`}>
-      <div className="container mx-auto p-4">
+      <div className="mx-auto p-4">
         <div className="mb-4 flex items-center justify-between">
           <div className="hidden lg:block">
             <Sidebar />
@@ -243,7 +259,7 @@ export default function Job_manage() {
 
             {/* Drag and Drop context */}
             <DragDropContext onDragEnd={onDragEnd}>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-4 lg:grid-cols-6">
                 {Object.values(columns).map((column) => (
                   <div
                     key={column.id}

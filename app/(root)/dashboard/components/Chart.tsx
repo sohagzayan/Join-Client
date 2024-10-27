@@ -1,6 +1,4 @@
 'use client';
-
-// @ts-expect-error The error is expected because ApexOptions is not defined in the current scope.
 import { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
 
