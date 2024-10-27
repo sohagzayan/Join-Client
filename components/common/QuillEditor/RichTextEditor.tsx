@@ -3,6 +3,7 @@ import React from 'react';
 
 interface RichTextEditorProps {
   apiKey: string;
+  onChange: (content: string) => void;
 }
 
 interface RespondWith {
@@ -33,13 +34,10 @@ const editorConfig = {
   statusbar: false,
 };
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({ apiKey }) => {
-  // Handle editor change and log the content
-  const handleEditorChange = (content: string) => {
-    console.log('Editor Content:', content);
-    // This is where you'd typically send `content` to your backend API
-  };
-
+const RichTextEditor: React.FC<RichTextEditorProps> = ({
+  apiKey,
+  onChange,
+}) => {
   return (
     <div>
       <Editor
@@ -50,7 +48,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ apiKey }) => {
           menubar: false,
         }}
         initialValue=""
-        onEditorChange={handleEditorChange} // Trigger on content change
+        onEditorChange={onChange} // Trigger on content change
       />
     </div>
   );
