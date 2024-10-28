@@ -142,19 +142,44 @@ export default function InternShipForm({
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Choose duration" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">1</SelectItem>
-                    <SelectItem value="2">2</SelectItem>
-                    <SelectItem value="3">3</SelectItem>
+                  <SelectContent className="bg-black8 text-gray-300">
+                    <SelectItem
+                      className="cursor-pointer hover:bg-gray-700"
+                      value="1"
+                    >
+                      1
+                    </SelectItem>
+                    <SelectItem
+                      className="cursor-pointer hover:bg-gray-700"
+                      value="2"
+                    >
+                      2
+                    </SelectItem>
+                    <SelectItem
+                      className="cursor-pointer hover:bg-gray-700"
+                      value="3"
+                    >
+                      3
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <Select>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="months" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="months">months</SelectItem>
-                    <SelectItem value="years">years</SelectItem>
+                  <SelectContent className="bg-black8 text-gray-300">
+                    <SelectItem
+                      className="cursor-pointer hover:bg-gray-700"
+                      value="months"
+                    >
+                      months
+                    </SelectItem>
+                    <SelectItem
+                      className="cursor-pointer hover:bg-gray-700"
+                      value="years"
+                    >
+                      years
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -220,10 +245,25 @@ export default function InternShipForm({
                 <SelectTrigger className="w-[100px]">
                   <SelectValue placeholder="e.g. $" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="usd">$</SelectItem>
-                  <SelectItem value="eur">€</SelectItem>
-                  <SelectItem value="gbp">£</SelectItem>
+                <SelectContent className="bg-black8 text-gray-300">
+                  <SelectItem
+                    className="cursor-pointer hover:bg-gray-700"
+                    value="usd"
+                  >
+                    $
+                  </SelectItem>
+                  <SelectItem
+                    className="cursor-pointer hover:bg-gray-700"
+                    value="eur"
+                  >
+                    €
+                  </SelectItem>
+                  <SelectItem
+                    className="cursor-pointer hover:bg-gray-700"
+                    value="gbp"
+                  >
+                    £
+                  </SelectItem>
                 </SelectContent>
               </Select>
               {/* <Input
@@ -238,10 +278,25 @@ export default function InternShipForm({
                 <SelectTrigger className="w-[120px]">
                   <SelectValue placeholder="/month" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="month">/month</SelectItem>
-                  <SelectItem value="week">/week</SelectItem>
-                  <SelectItem value="day">/day</SelectItem>
+                <SelectContent className="bg-black8 text-gray-300">
+                  <SelectItem
+                    className="cursor-pointer hover:bg-gray-700"
+                    value="month"
+                  >
+                    /month
+                  </SelectItem>
+                  <SelectItem
+                    className="cursor-pointer hover:bg-gray-700"
+                    value="week"
+                  >
+                    /week
+                  </SelectItem>
+                  <SelectItem
+                    className="cursor-pointer hover:bg-gray-700"
+                    value="day"
+                  >
+                    /day
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -288,10 +343,25 @@ export default function InternShipForm({
               <SelectTrigger className="w-[100px]">
                 <SelectValue placeholder="e.g. $" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="usd">$</SelectItem>
-                <SelectItem value="eur">€</SelectItem>
-                <SelectItem value="gbp">£</SelectItem>
+              <SelectContent className="bg-black8 text-gray-300">
+                <SelectItem
+                  className="cursor-pointer hover:bg-gray-700"
+                  value="usd"
+                >
+                  $
+                </SelectItem>
+                <SelectItem
+                  className="cursor-pointer hover:bg-gray-700"
+                  value="eur"
+                >
+                  €
+                </SelectItem>
+                <SelectItem
+                  className="cursor-pointer hover:bg-gray-700"
+                  value="gbp"
+                >
+                  £
+                </SelectItem>
               </SelectContent>
             </Select>
             <div className="flex w-full items-center justify-between gap-3">
@@ -308,10 +378,25 @@ export default function InternShipForm({
               <SelectTrigger className="w-[120px]">
                 <SelectValue placeholder="/month" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="month">/month</SelectItem>
-                <SelectItem value="week">/week</SelectItem>
-                <SelectItem value="day">/day</SelectItem>
+              <SelectContent className="bg-black8 text-gray-300">
+                <SelectItem
+                  className="cursor-pointer hover:bg-gray-700"
+                  value="month"
+                >
+                  /month
+                </SelectItem>
+                <SelectItem
+                  className="cursor-pointer hover:bg-gray-700"
+                  value="week"
+                >
+                  /week
+                </SelectItem>
+                <SelectItem
+                  className="cursor-pointer hover:bg-gray-700"
+                  value="day"
+                >
+                  /day
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
