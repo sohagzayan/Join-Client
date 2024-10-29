@@ -46,7 +46,7 @@ const navItems = (role: any) => {
     },
     {
       label: 'Team Collaboration',
-      key: `/${role}/dashboard/team-collaboration`,
+      key: `/${role}/dashboard/collaboration`,
       icon: <LiaTeamspeak />,
       group: 2,
     },
