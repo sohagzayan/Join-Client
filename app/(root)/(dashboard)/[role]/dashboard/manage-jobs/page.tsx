@@ -15,6 +15,7 @@ import {
 } from '@hello-pangea/dnd';
 import { Bell, ChevronDown, Edit2, Plus, Search, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
+import { DrawerDemo } from './components/DrawerDemo';
 
 // Types
 type Skill = string;
@@ -66,8 +67,8 @@ const initialColumns: { [key in JobStatus]: Column } = {
     candidateIds: [],
   },
   Rejected: {
-    id: 'Hired',
-    title: 'Hired',
+    id: 'Rejected',
+    title: 'Rejected',
     candidateIds: [],
   },
 };
@@ -127,7 +128,7 @@ export default function Job_manage() {
   };
 
   const Sidebar = React.memo(() => (
-    <div className="flex items-center space-x-5 rounded-lg border-2 border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] px-4 py-1 shadow">
+    <div className="flex items-center space-x-5 rounded-lg bg-[rgba(255,255,255,0.05)] px-4 py-2 shadow">
       <div className=" ">
         <div className="flex items-center space-x-2">
           <Popover>
@@ -210,6 +211,7 @@ export default function Job_manage() {
   return (
     <div className={`min-h-screen`}>
       <div className="mx-auto p-4">
+        <DrawerDemo />
         <div className="mb-4 flex items-center justify-between">
           <div className="hidden lg:block">
             <Sidebar />
@@ -218,11 +220,9 @@ export default function Job_manage() {
         <div className="grid">
           <div
             style={{
-              borderColor: 'rgba(255, 255, 255, 0.14)',
-              backgroundColor: 'rgba(255, 255, 255, 0.06)',
-              boxShadow: '0px 20px 50px rgba(1, 5, 43, 0.2)',
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
             }}
-            className="rounded-lg border p-4 text-white shadow lg:col-span-3"
+            className="rounded-lg p-4 text-white shadow lg:col-span-3"
           >
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-xl font-semibold">{selectedJob}</h2>
