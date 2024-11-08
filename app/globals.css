@@ -4,6 +4,20 @@
 
 /* @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"); */
 
+/* 
+--color-primary: 55, 113, 254; 
+--color-secondary: rgb(255, 255, 255); 
+--color-tertiary: rgb(255, 255, 255);
+--color-accent: rgb(255, 255, 255); 
+--color-neutral: rgb(255, 255, 255); 
+--color-white: 255, 255, 255;
+--color-text1:168, 176, 195;
+--color-background1: 5, 9, 43; 
+--color-background2: 255, 255, 255;
+--color-success: 60, 184, 108; 
+--color-warning: 254, 218, 3; 
+--color-error: 255, 72, 93;  */
+
 @layer base {
   :root {
     --tp-common-white-rgb: rgb(255, 255, 255); /* #ffffff */
