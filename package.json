@@ -86,6 +86,7 @@
     "formik": "^2.4.5",
     "framer-motion": "^11.0.3",
     "froala-editor": "^4.1.4",
+    "google-auth-library": "^9.14.2",
     "gsap": "^3.12.5",
     "gsap-trial": "^3.12.5",
     "hamburger-react": "^2.5.0",
