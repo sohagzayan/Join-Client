@@ -1,24 +1,23 @@
-import { AiOutlineBell } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi';
-import { BsLock } from 'react-icons/bs';
-import { CiBookmark, CiPaperplane } from 'react-icons/ci';
 import { FcFeedback } from 'react-icons/fc';
+import { FiFileText } from 'react-icons/fi';
 import { GoHome } from 'react-icons/go';
+import { HiOutlineTemplate } from 'react-icons/hi';
 import { IoBriefcaseOutline } from 'react-icons/io5';
+import { LiaTeamspeak, LiaUserAltSolid } from 'react-icons/lia';
+import { LuCalendarDays, LuInbox } from 'react-icons/lu';
 import {
-  LiaBoxOpenSolid,
-  LiaFileInvoiceSolid,
-  LiaUserAltSolid,
-  LiaUserTieSolid,
-} from 'react-icons/lia';
-import { LuInbox } from 'react-icons/lu';
-import { MdFavoriteBorder, MdManageAccounts } from 'react-icons/md';
+  MdEventNote,
+  MdFavoriteBorder,
+  MdManageAccounts,
+  MdOutlineInsights,
+} from 'react-icons/md';
+import { RiLuggageCartFill } from 'react-icons/ri';
 import {
-  RiDeleteBin6Line,
-  RiLogoutCircleRLine,
-  RiLuggageCartFill,
-} from 'react-icons/ri';
-import { TbMessage, TbMessages } from 'react-icons/tb';
+  TbBrandGoogleAnalytics,
+  TbMessageDots,
+  TbMessages,
+} from 'react-icons/tb';
 
 export const sidebarItems = (role: string) => {
   const defaultSidebarItems = [
@@ -37,80 +36,68 @@ export const sidebarItems = (role: string) => {
   // common admin route
   const recruiterSidebarItems = [
     {
-      label: 'Dashboard',
-      icon: <GoHome />,
-      key: `/dashboard`,
+      label: 'Analytics',
+      key: `/${role}/dashboard`,
+      icon: <TbBrandGoogleAnalytics />,
+      group: 1,
     },
     {
-      label: 'Company Profile',
-      icon: <LiaUserTieSolid />,
-      key: `/${role}/company-profile`,
-    },
-    {
-      label: 'Post a New Job',
-      icon: <CiPaperplane />,
-      key: `/${role}/post-a-new-job`,
-    },
-    {
-      label: 'Manage jobs',
+      label: 'Submit Job',
+      key: `/${role}/dashboard/post-job`,
       icon: <IoBriefcaseOutline />,
-      key: `/${role}/manage-jobs`,
+      group: 2,
     },
     {
-      label: 'All Applicants',
-      icon: <LiaFileInvoiceSolid />,
-      key: `/${role}/all-applicants`,
+      label: 'Job Insights',
+      key: `/${role}/dashboard/job-insights`,
+      icon: <MdOutlineInsights />,
+      group: 2,
     },
     {
-      label: 'Shortlisted Resumes',
-      icon: <CiBookmark />,
-      key: `/${role}/shortlisted-resumes`,
+      label: 'Team Collaboration',
+      key: `/${role}/dashboard/team-collaboration`,
+      icon: <LiaTeamspeak />,
+      group: 2,
     },
+
     {
-      label: 'Packages',
-      icon: <LiaBoxOpenSolid />,
-      key: `/${role}/packages`,
-    },
-    {
-      label: 'Messages',
-      icon: <TbMessage />,
-      key: `/${role}/messages`,
-    },
-    {
-      label: 'Change Password',
-      icon: <BsLock />,
-      key: `/${role}/change-password`,
-    },
-    {
-      label: 'Resume Alerts',
-      icon: <AiOutlineBell />,
-      key: `/${role}/resume-alerts`,
-    },
-    {
-      label: 'Logout',
-      icon: <RiLogoutCircleRLine />,
-      key: `/${role}/logout`,
-    },
-    {
-      label: 'Delete Profile',
-      icon: <RiDeleteBin6Line />,
-      key: `/${role}/delete-profile`,
+      label: 'Manage Jobs',
+      key: `/${role}/dashboard/manage-jobs`,
+      icon: <FiFileText />,
+      group: 3,
     },
     // {
-    //     label: 'Manage Content',
-    //     key: 'management',
-    //     icon: <BiBookContent />,
-    //     children: [
-    //         {
-    //             label: <Link href={`/dashboard/manage-blog`}>Blog</Link>,
-    //             key: `/${role}/manage-blog`,
-    //         },
-    //         {
-    //             label: <Link href={`/dashboard/manage-faq`}>FAQ</Link>,
-    //             key: `/${role}/manage-faq`,
-    //         },
-    //     ],
+    //   label: 'Shortlist',
+    //   key: `/${role}/dashboard/shortlist`,
+    //   icon: <BsBookmarkStar />,
+    //   group: 3,
     // },
+
+    {
+      label: 'Messages',
+      key: `/${role}/dashboard/messages`,
+      icon: <TbMessageDots />,
+      group: 3,
+    },
+
+    {
+      label: 'All Interviews',
+      key: `/${role}/dashboard/meetings`,
+      icon: <MdEventNote />,
+      group: 4,
+    },
+    {
+      label: 'Interviews availability',
+      key: `/${role}/dashboard/meetings`,
+      icon: <LuCalendarDays />,
+      group: 4,
+    },
+    {
+      label: 'Template Library',
+      key: `/${role}/dashboard/template-library`,
+      icon: <HiOutlineTemplate />,
+      group: 4,
+    },
   ];
 
   const candidateSidebarItems = [
@@ -161,25 +148,6 @@ export const sidebarItems = (role: string) => {
       key: `/dashboard/feedback`,
     },
   ];
-
-  // admin route
-
-  // const candidateSidebarItems = [
-  //     ...defaultSidebarItems,
-  //     ...recruiterSidebarItems,
-  // ]
-
-  // Super admin route
-
-  // const recruiterSidebarItems = [
-  //     ...defaultSidebarItems,
-  //     ...recruiterSidebarItems,
-  //     // {
-  //     //   label: <Link href={`/dashboard/manage-admin`}>Manage Admin</Link>,
-  //     //   icon: <BsPersonFillGear />,
-  //     //   key: `/dashboard/manage-admin`,
-  //     // },
-  // ]
 
   if (role === 'recruiter') return recruiterSidebarItems;
   else if (role === 'candidate') return candidateSidebarItems;

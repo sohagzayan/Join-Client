@@ -1,15 +1,15 @@
-import navItems from '@/constants/nav-items';
+import { sidebarItems } from '@/constants/sidebaritems';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const DashboardSideBar = () => {
   const pathname = usePathname();
-  const sideBarItems = navItems('recruiter');
+  const sideBarItems = sidebarItems('recruiter');
   const uniqueGroups = Array.from(
     new Set(
       sideBarItems
-        .filter((item) => 'group' in item)
-        .map((item) => (item as any).group),
+        .filter((item: any) => 'group' in item)
+        .map((item: any) => (item as any).group),
     ),
   );
   console.log();

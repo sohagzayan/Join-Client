@@ -1,5 +1,5 @@
 function page() {
-  return <div>featured</div>;
+  return <div className="text-white">Coming very soon</div>;
 }
 
 export default page;

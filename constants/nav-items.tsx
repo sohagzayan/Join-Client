@@ -1,10 +1,16 @@
 import { FiFileText } from 'react-icons/fi';
+import { GrOverview } from 'react-icons/gr';
 import { HiOutlineTemplate } from 'react-icons/hi';
-import { IoBriefcaseOutline } from 'react-icons/io5';
+import { IoIosPricetag } from 'react-icons/io';
+import { IoBriefcase, IoBriefcaseOutline } from 'react-icons/io5';
 import { LiaTeamspeak } from 'react-icons/lia';
 import { LuCalendarDays } from 'react-icons/lu';
-import { MdEventNote, MdOutlineInsights } from 'react-icons/md';
-import { TbBrandGoogleAnalytics, TbMessageDots } from 'react-icons/tb';
+import {
+  MdEventNote,
+  MdOutlineFindReplace,
+  MdOutlineInsights,
+} from 'react-icons/md';
+import { TbBrandGoogleAnalytics, TbMessageDots, TbRobot } from 'react-icons/tb';
 
 const navItems = (role: any) => {
   const defaultNavItems = [
@@ -91,11 +97,46 @@ const navItems = (role: any) => {
     },
   ];
 
+  const recruiterNavItem = [
+    {
+      label: 'Overview',
+      key: `/${role}/dashboard`,
+      icon: <GrOverview />,
+      group: 1,
+    },
+    {
+      label: 'Find talent',
+      key: `/${role}/dashboard/post-job`,
+      icon: <MdOutlineFindReplace />,
+      group: 2,
+    },
+    {
+      label: 'Post a job',
+      key: `/${role}/dashboard/job-insights`,
+      icon: <IoBriefcase />,
+      group: 2,
+    },
+    {
+      label: 'Free ATS',
+      key: `/${role}/dashboard/team-collaboration`,
+      icon: <TbRobot />,
+      group: 2,
+    },
+
+    {
+      label: 'Pricing',
+      key: `/${role}/dashboard/manage-jobs`,
+      icon: <IoIosPricetag />,
+      group: 3,
+    },
+    {
+      label: 'For candidates',
+      key: `/candidates/overview`,
+      icon: null,
+    },
+  ];
+
   const candidateNavItem = [
-    // {
-    //     label: 'Discover',
-    //     key: `/discover`,
-    // },
     {
       label: 'Overview',
       key: `/candidates/overview`,
@@ -104,7 +145,7 @@ const navItems = (role: any) => {
 
     {
       label: 'Jobs',
-      key: `/jobs`,
+      key: `/candidates/find-jobs`,
       icon: null,
     },
     {
@@ -119,7 +160,7 @@ const navItems = (role: any) => {
     },
     {
       label: 'For companies',
-      key: `/recruit/overview`,
+      key: `/recruiter/overview`,
       icon: null,
     },
   ];
@@ -140,7 +181,7 @@ const navItems = (role: any) => {
   console.log('role >', role);
 
   // Ensure that the role dynamically adds correct routes
-  if (role === 'recruiter') return recruitNavItem;
+  if (role === 'recruiter') return recruiterNavItem;
   else if (role === 'candidates') return candidateNavItem;
   else if (role === 'admin') return adminNavItem;
   else return defaultNavItems;
