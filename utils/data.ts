@@ -2577,3 +2577,48 @@ export const cardsData = [
     ],
   },
 ];
+
+export const initialCandidates = [
+  {
+    id: 'candidate-1',
+    name: 'Irene Sacchi',
+    role: 'Java Team Lead',
+    image: '/candidate-1.webp',
+    skills: ['Java', 'Developer', '.NET', 'CSS'],
+  },
+  {
+    id: 'candidate-2',
+    name: 'John Doe',
+    role: 'Frontend Developer',
+    image: '/candidate-1.webp',
+    skills: ['React', 'JavaScript', 'HTML', 'CSS'],
+  },
+  {
+    id: 'candidate-3',
+    name: 'Jane Smith',
+    role: 'UI/UX Designer',
+    image: '/candidate-1.webp',
+    skills: ['Figma', 'Sketch', 'Photoshop', 'CSS'],
+  },
+  {
+    id: 'candidate-4',
+    name: 'Michael Brown',
+    role: 'Backend Developer',
+    image: '/candidate-1.webp',
+    skills: ['Node.js', 'Express', 'MongoDB', 'SQL'],
+  },
+  {
+    id: 'candidate-5',
+    name: 'Lisa Taylor',
+    role: 'Product Manager',
+    image: '/candidate-1.webp',
+    skills: ['Agile', 'Scrum', 'Project Management', 'Leadership'],
+  },
+  {
+    id: 'candidate-6',
+    name: 'James Wilson',
+    role: 'QA Engineer',
+    image: '/candidate-1.webp',
+    skills: ['Testing', 'Cypress', 'Selenium', 'Automation'],
+  },
+];

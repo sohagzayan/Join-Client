@@ -1,6 +1,4 @@
 'use client';
-import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -10,6 +8,7 @@ import {
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
+import React from 'react';
 
 const review = [
   {
@@ -57,8 +56,8 @@ const ReviewFromOurUsers = () => {
     <div className="p-6">
       <div className="container px-5 lg:px-16 xl:px-20">
         <div>
-          <p className="text-primary mb-5 font-bold">Feedback</p>
-          <h2 className="text-blue-midnight_blue mb-2 text-2xl font-medium tracking-[-1.5px] sm:text-3xl xl:text-4xl">
+          <p className="mb-5 font-bold text-theme1">Feedback</p>
+          <h2 className="mb-2 text-2xl font-medium tracking-[-1.5px] text-white sm:text-3xl xl:text-4xl">
             From our users
           </h2>
         </div>
@@ -69,7 +68,7 @@ const ReviewFromOurUsers = () => {
               loop: true,
             }}
             plugins={[plugin.current]}
-            className="w-full"
+            className="w-full text-white"
           >
             <CarouselContent>
               {review.map((review, index) => (
