@@ -55,7 +55,9 @@ const Header = ({ variant }: HeaderType) => {
                 <HeaderController />
               ) : (
                 <div>
-                  <h3>Here to hire talent?</h3>
+                  <h3 className="font-semibold text-theme1">
+                    Here to hire talent?
+                  </h3>
                 </div>
               )}
             </div>
