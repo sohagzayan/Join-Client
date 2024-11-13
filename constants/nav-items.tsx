@@ -26,7 +26,7 @@ const navItems = (role: any) => {
     },
     {
       label: 'For companies',
-      key: `/recruit/overview`,
+      key: `/recruiter/overview`,
       icon: null,
     },
   ];

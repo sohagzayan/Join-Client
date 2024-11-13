@@ -1,9 +1,9 @@
 'use client';
-import { UserHire, UserSeeker } from '@/components/icons/user/user';
-import React from 'react';
-import { motion } from 'framer-motion';
 import { Button } from '@/components/common';
+import { UserHire, UserSeeker } from '@/components/icons/user/user';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
+import React from 'react';
 
 interface RoleSelectorType {
   selectRole: string | null;
@@ -44,7 +44,7 @@ const RoleSelector = ({
     <motion.div initial="hidden" animate="visible" variants={containerVariants}>
       <div className="mx-auto w-[700px]">
         <div>
-          <h3 className="font-white text-3xl text-white">
+          <h3 className="font-white mt-8 text-center text-3xl text-white">
             Join today to post jobs or find your next gig!
           </h3>
           <div className="mt-14">
