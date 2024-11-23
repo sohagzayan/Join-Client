@@ -2,66 +2,73 @@
 import { Divider, SocialLogin } from '@/components/common';
 import LoadingCircle from '@/components/shared/loading-circle/LoadingCircle';
 import { Button } from '@/components/ui/button';
+import { useLoginMutation } from '@/redux/features/auth/authentication';
 import { loginValidationSchema } from '@/utils/validation-schemas';
 import { Formik, FormikHelpers } from 'formik';
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { toast, Toaster } from 'sonner';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 const SignInForm = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
+  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const searchParams = useSearchParams();
   const onSubmit = async (values: any, actions: FormikHelpers<any>) => {
+    const redirect = searchParams.get('redirect');
     setLoading(true);
+
     const loadingToast = toast.loading('Signing in...', {
       position: 'top-left',
-      // autoClose: false
     });
 
     try {
       const { email, password } = values;
-      console.log('login values', values);
+      const credentials = { email, password };
+      const res: any = await login(credentials);
 
-      const res = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-        // callbackUrl: '/',
-      });
-
-      if (res?.error) {
-        toast.error(res.error, {
-          className: 'text-primary',
-          duration: 4000,
-        });
+      if (res?.data?.success) {
+        toast.dismiss(loadingToast);
+        toast.success('Login successful', { duration: 4000 });
+        router.push(redirect || '/');
+      } else if (res.error) {
+        if ('data' in res.error) {
+          const { message, errorMessages } = res.error.data;
+          toast.dismiss(loadingToast);
+          toast.error(message || 'An unknown error occurred', {
+            className: 'text-primary',
+            duration: 4000,
+          });
+          errorMessages.forEach((err: any) =>
+            console.error(`Path: ${err.path}, Message: ${err.message}`),
+          );
+        } else {
+          toast.dismiss(loadingToast);
+          toast.error('An unexpected error occurred.', {
+            duration: 4000,
+          });
+          console.error('Error:', res.error);
+        }
       }
-      if (res?.ok) {
-        toast.success('Login successful');
-        router.push('/');
-      }
-      toast.dismiss(loadingToast);
-      setLoading(false);
     } catch (error: any) {
-      setLoading(false);
-      toast.error(error.message, {
-        duration: 5000, // Time in milliseconds (5000ms = 5 seconds)
-      });
+      toast.dismiss(loadingToast);
+      toast.error(error.message || 'Something went wrong', { duration: 5000 });
       actions.setErrors({ email: error.message || 'An error occurred' });
+    } finally {
+      setLoading(false);
+      actions.setSubmitting(false);
     }
-    actions.setSubmitting(false);
   };
 
   return (
     <>
-      <Toaster richColors position="top-center" duration={4000} />
+      {/* <Toaster richColors position="top-center" duration={4000} /> */}
       <div className="w-full">
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={loginValidationSchema}
-          validateOnChange={false}
+          validateOnChange={true}
           validateOnBlur={false}
           onSubmit={(values, actions) => {
             onSubmit(values, actions);
@@ -103,8 +110,6 @@ const SignInForm = () => {
                   <Divider text="Or with email" />
 
                   <div className="mb-4">
-                    {/* <label
-                                        htmlFor="email" className='block text-primary  text-sm font-apercu-medium  mb-1'>Email</label> */}
                     <input
                       id="email"
                       name="email"
@@ -117,7 +122,7 @@ const SignInForm = () => {
                     />
                     <p
                       data-state="show"
-                      className="text-red-500 data-show:animate-slide-down-normal data-hide:animate-slide-up-normal mt-1 text-sm transition-all"
+                      className="data-show:animate-slide-down-normal data-hide:animate-slide-up-normal mt-1 text-sm text-red transition-all"
                     >
                       {errors.email}
                     </p>
@@ -138,7 +143,7 @@ const SignInForm = () => {
                     />
                     <p
                       data-state="show"
-                      className="text-red-500 data-show:animate-slide-down-normal data-hide:animate-slide-up-normal mt-1 text-sm transition-all"
+                      className="data-show:animate-slide-down-normal data-hide:animate-slide-up-normal mt-1 text-sm text-red transition-all"
                     >
                       {errors.password}
                     </p>

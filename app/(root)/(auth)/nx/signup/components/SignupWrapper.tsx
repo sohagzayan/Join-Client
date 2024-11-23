@@ -1,7 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import RoleSelector from './RoleSelector';
-import SignUpForm from '@/components/containers/job_seeker/SignUpForm';
+import SignUpForm from './SignUpForm';
 
 const SignupWrapper = () => {
   const [selectRole, setSelectRole] = useState<string | null>(null);

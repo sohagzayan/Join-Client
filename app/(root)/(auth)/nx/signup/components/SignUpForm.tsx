@@ -3,11 +3,13 @@ import { Divider } from '@/components/common';
 import SocialLogin from '@/components/common/auth/social-login';
 import MiniLoadingCircle from '@/components/shared/mini-loading-circle/MiniLoadingCircle';
 import { Button } from '@/components/ui/button';
+import { RegisterRequest, RegisterResponse } from '@/data/models/auth';
+import { useRegisterMutation } from '@/redux/features/auth/authentication';
 import { registerValidationAsCandidateSchema } from '@/utils/validation-schemas';
 import { Formik, FormikHelpers } from 'formik';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { MdErrorOutline } from 'react-icons/md';
@@ -19,11 +21,13 @@ interface SignUpFormType {
 
 const SignUpForm = ({ selectRole }: SignUpFormType) => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
   const [termsCondition, setTermsCondition] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [register, { isLoading: registerLoading }] = useRegisterMutation();
 
   const handleTermsChange = (e: any) => {
     setTermsCondition(e.target.checked);
@@ -56,39 +60,27 @@ const SignUpForm = ({ selectRole }: SignUpFormType) => {
   };
 
   const onSubmit = async (values: any, actions: FormikHelpers<any>) => {
-    setLoading(true);
     try {
+      const redirect = searchParams.get('redirect');
       const { email, password, fullName } = values;
-      const response: any = await fetch('/api/auth/signup', {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-          fullName,
-          selectRole,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message);
+      const userInfo: RegisterRequest = {
+        email,
+        password,
+        name: fullName,
+        role: 'candidate',
+      };
+      const res: RegisterResponse = await register(userInfo).unwrap();
+      console.log('res', res);
+      if (res?.success) {
+        toast.success(res.message);
+        router.push(redirect || '/ab/account-security/login');
       }
-      // await signIn('credentials', {
-      //     redirect: false,
-      //     email,
-      //     password,
-      //     // role: 'role',
-      //     // callbackUrl: '/',
-      // })
-      setLoading(false);
-      toast.success(data.message);
-      router.push('/ab/account-security/login');
     } catch (error: any) {
-      setLoading(false);
-      toast.error(error.message, {
-        duration: 4000, // Time in milliseconds (5000ms = 5 seconds)
+      console.log('error', error);
+      toast.error(error?.data?.message, {
+        duration: 4000,
       });
-
-      actions.setErrors({ email: error.message || 'An error occurred' });
+      actions.setErrors({ email: error?.data?.message || 'An error occurred' });
     }
     actions.setSubmitting(false);
   };
@@ -123,7 +115,7 @@ const SignUpForm = ({ selectRole }: SignUpFormType) => {
           isSubmitting,
         }) => {
           const isPasswordMatching = values.password === values.cPassword;
-          const isFormDisabled = loading || !isPasswordMatching;
+          const isFormDisabled = registerLoading || !isPasswordMatching;
 
           return (
             <div className=" ">
@@ -153,7 +145,6 @@ const SignUpForm = ({ selectRole }: SignUpFormType) => {
 
                   <div className="mb-6">
                     <div className="relative">
-                      {/* <label htmlFor="fullName" className='block text-primary font-apercu-regular text-sm mb-1'>Full Name</label> */}
                       <input
                         autoFocus={true}
                         autoComplete="fullName"
@@ -212,7 +203,6 @@ const SignUpForm = ({ selectRole }: SignUpFormType) => {
 
                   <div className="mb-4">
                     <div className="relative">
-                      {/* <label htmlFor="password" className='block text-primary font-apercu-regular text-sm mb-1'>Password</label> */}
                       <input
                         autoFocus={true}
                         autoComplete="new-password"
@@ -354,11 +344,11 @@ const SignUpForm = ({ selectRole }: SignUpFormType) => {
                   <Button
                     disabled={isFormDisabled}
                     type="submit"
-                    className={`font-regular hover:bg-primary border-brand relative flex cursor-pointer items-center gap-2 space-x-2 rounded-full bg-theme1 text-center font-600 text-white opacity-50 shadow-sm outline-none outline-0 transition-all duration-200 ease-out focus-visible:outline-4 focus-visible:outline-offset-1 ${
-                      loading ? 'bg-theme1 opacity-40' : ''
+                    className={`font-regular hover:bg-primary border-brand relative flex cursor-pointer items-center gap-2 space-x-2 rounded-full bg-theme1 text-center font-600 text-white shadow-sm outline-none outline-0 transition-all duration-200 ease-out focus-visible:outline-4 focus-visible:outline-offset-1 ${
+                      registerLoading ? 'bg-theme1 opacity-40' : ''
                     }`}
                   >
-                    {loading && <MiniLoadingCircle width="20" />}
+                    {registerLoading && <MiniLoadingCircle width="20" />}
                     Register
                   </Button>
 
