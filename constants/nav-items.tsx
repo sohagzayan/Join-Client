@@ -165,6 +165,35 @@ const navItems = (role: any) => {
     },
   ];
 
+  const candidateProfileNavItem = [
+    {
+      label: 'Overview',
+      key: `/candidates/overview`,
+      icon: null,
+    },
+
+    {
+      label: 'Jobs',
+      key: `/candidates/find-jobs`,
+      icon: null,
+    },
+    {
+      label: 'Featured',
+      key: `/candidates/featured`,
+      icon: null,
+    },
+    {
+      label: 'Remote',
+      key: `/candidates/remote`,
+      icon: null,
+    },
+    {
+      label: 'For companies',
+      key: `/recruiter/overview`,
+      icon: null,
+    },
+  ];
+
   const adminNavItem = [
     {
       label: 'Discover',

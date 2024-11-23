@@ -5,14 +5,9 @@ import { useEffect, useState } from 'react';
 import HeaderController from '../header-controller/HeaderController';
 import NavItems from './NavItems';
 
-interface HeaderType {
-  variant?: string;
-}
-
-const Header = ({ variant }: HeaderType) => {
+const Header = () => {
   const [scrollY, setScrollY] = useState(0);
   const pathname = usePathname();
-  console.log('variant', variant);
 
   useEffect(() => {
     const handleScroll = () => {
