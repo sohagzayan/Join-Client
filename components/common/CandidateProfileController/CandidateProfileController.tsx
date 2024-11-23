@@ -27,18 +27,12 @@ const menuItems = [
     id: 'job-tracker',
     label: 'Job tracker',
     path: '/candidates/portal/job-tracker',
-    // subMenu: [
-    //   { label: 'Active', path: '/applications/active' },
-    //   { label: 'Archived', path: '/applications/archived' },
-    //   { label: 'Drafts', path: '/applications/drafts' },
-    // ],
   },
   {
     id: 'calender',
     label: 'Calender',
     path: '/candidates/portal/calender',
   },
-  // { id: 'messages', label: 'Messages', path: '/candidates/portal/messages' },
 ];
 
 const CandidateProfileController = () => {
@@ -87,8 +81,8 @@ const CandidateProfileController = () => {
           <motion.button
             className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
               activeMenuItem === item.id
-                ? 'bg-blue-100 text-blue-600'
-                : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'
+                ? 'bg-theme1 text-white'
+                : 'text-gray-600 hover:bg-theme1 hover:text-white'
             }`}
             onClick={() => handleMenuItemClick(item.id, item.path)}
             whileHover={{ scale: 1.05 }}
