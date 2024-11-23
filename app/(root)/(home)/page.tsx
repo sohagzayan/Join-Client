@@ -1,11 +1,11 @@
 import { LiveStatusBar, WebsiteReviews } from '@/components/common';
 import BottomNav from '@/components/shared/Nav/BottomNav';
 import Footer from '@/components/shared/footer/Footer';
-import HeroSection from './components/HeroSection';
-import SuccessHighlights from './components/SuccessHighlights';
-import OurMission from './components/OurMission';
 import BenefitsForJobSeekersAndRecruiters from './components/BenefitsForJobSeekersRecruiters';
+import HeroSection from './components/HeroSection';
 import MeetRecruiterCloud from './components/MeetRecruiterCloud';
+import OurMission from './components/OurMission';
+import SuccessHighlights from './components/SuccessHighlights';
 
 export default function HomePage() {
   return (

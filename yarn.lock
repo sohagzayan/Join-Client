@@ -6015,6 +6015,11 @@ react-paginate@^8.2.0:
   dependencies:
     prop-types "^15"
 
+react-parallax-tilt@^1.7.257:
+  version "1.7.257"
+  resolved "https://registry.yarnpkg.com/react-parallax-tilt/-/react-parallax-tilt-1.7.257.tgz#690147718a834cc3f0d5adcc2ab44a1e686b0c76"
+  integrity sha512-mWhQ3408cKhQxvphnzBTxJ1lhxp/Y6mKVpLGeOlmYANUL1hvuRspJ1Afu2S7DXZAItuOL5Zau6HP6y9jlwyLvw==
+
 react-phone-input-2@^2.15.1:
   version "2.15.1"
   resolved "https://registry.npmjs.org/react-phone-input-2/-/react-phone-input-2-2.15.1.tgz"

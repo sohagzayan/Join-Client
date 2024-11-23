@@ -1,6 +1,6 @@
 'use client';
-import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 
 const dynamicValues = [
   "Discover What's Next!",
@@ -9,23 +9,27 @@ const dynamicValues = [
   'Achieve Career Goals!',
 ];
 
-const variants = {
-  enter: {
-    opacity: 0,
-    y: -20,
-  },
-  center: {
+const letterVariants = {
+  initial: { opacity: 0, y: 50 },
+  animate: (i: number) => ({
     opacity: 1,
     y: 0,
-  },
-  exit: {
+    transition: {
+      delay: i * 0.05,
+    },
+  }),
+  exit: (i: number) => ({
     opacity: 0,
-    y: 20,
-  },
+    y: 50,
+    transition: {
+      delay: i * 0.05,
+    },
+  }),
 };
 
-const DynamicTitle: React.FC = () => {
+const EnhancedDynamicTitle: React.FC = () => {
   const [index, setIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,31 +40,80 @@ const DynamicTitle: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ textAlign: 'center', color: '#fff' }}>
-      <h1 className="mb-2 text-[60px] leading-10 text-white">
-        Dream Job{' '}
+    <div className="text-center text-white">
+      <h1 className="mb-2 text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
+        <motion.span
+          className="inline-block"
+          animate={{ rotate: [0, 5, 0] }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 5 }}
+        >
+          Dream
+        </motion.span>{' '}
+        <motion.span
+          className="inline-block"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 5 }}
+        >
+          Job
+        </motion.span>{' '}
         <span className="relative">
           Awaits!
-          <div className="absolute bottom-0 left-0 w-full">
-            <img src="/assets/images/slider-stoke-shape.svg" alt="stroke" />
-          </div>
+          <motion.div
+            className="absolute bottom-0 left-0 w-full"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1, ease: 'easeInOut' }}
+          >
+            <img
+              src="/assets/images/slider-stoke-shape.svg"
+              alt=""
+              className="w-full"
+            />
+          </motion.div>
         </span>
       </h1>
       <AnimatePresence mode="wait">
         <motion.h2
-          className="text-[60px] tracking-tight text-white"
+          className="h-20 overflow-hidden text-3xl font-bold tracking-tight sm:h-24 sm:text-4xl md:h-20 md:text-5xl lg:h-20 lg:text-6xl"
           key={index}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {dynamicValues[index]}
+          {dynamicValues[index].split('').map((char, i) => (
+            <motion.span
+              key={`${char}-${i}`}
+              variants={letterVariants}
+              custom={i}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="inline-block"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <motion.span
+                className="inline-block"
+                animate={isHovered ? { y: [0, -10, 0] } : {}}
+                transition={{ duration: 0.3 }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            </motion.span>
+          ))}
         </motion.h2>
       </AnimatePresence>
+      <motion.div
+        className="mt-4 text-xl text-blue-300 sm:text-2xl"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.5 }}
+      >
+        Your journey to success starts here!
+      </motion.div>
     </div>
   );
 };
 
-export default DynamicTitle;
+export default EnhancedDynamicTitle;
