@@ -3,7 +3,6 @@ import Marquee from '@/components/shared/Marquee/Marquee';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 //@ts-ignore
-import Tilt from 'react-parallax-tilt';
 import DynamicTitle from './DynamicTitle';
 import QuickSearch from './QuickSearch';
 
@@ -25,14 +24,7 @@ const AnimatedHeroSection: React.FC = () => {
       <BackgroundAnimation mousePosition={mousePosition} />
 
       <div className="container relative z-10 mx-auto px-4 py-10 sm:py-20">
-        <Tilt
-          tiltMaxAngleX={5}
-          tiltMaxAngleY={5}
-          perspective={1000}
-          className="hidden sm:block"
-        >
-          <AnimatedContent />
-        </Tilt>
+        <AnimatedContent />
         <div className="sm:hidden">
           <AnimatedContent />
         </div>
@@ -52,7 +44,7 @@ const AnimatedHeroSection: React.FC = () => {
 
 const AnimatedContent: React.FC = () => (
   <motion.div
-    className="rounded-3xl bg-gray-800 bg-opacity-50 p-4 shadow-2xl backdrop-blur-lg backdrop-filter sm:p-8"
+    className="rounded-3xl p-4 backdrop-blur-lg backdrop-filter sm:p-8"
     initial={{ y: 50, opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}
     transition={{ delay: 0.2, duration: 0.8 }}
