@@ -69,6 +69,14 @@ export const UserAuthApi = createApi({
       },
       invalidatesTags: ['User'], // Invalidate user data cache on logout
     }),
+    getCurrentUser: builder.query<UserAuth, { token: string }>({
+      query: ({ token }) => ({
+        url: '/v1/current-user',
+        method: 'POST',
+        body: { token }, // Send token in request body
+      }),
+      providesTags: ['User'], // Tag for caching
+    }),
   }),
 });
 
@@ -77,4 +85,5 @@ export const {
   useRegisterMutation,
   useFetchUserQuery,
   useLogoutMutation,
+  useGetCurrentUserQuery,
 } = UserAuthApi;

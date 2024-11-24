@@ -37,6 +37,7 @@
     ],
     "object-shorthand": "warn",
     "quote-props": ["warn", "as-needed"],
+    "@typescript-eslint/ban-ts-comment": "off", // Disable the rule
     "@typescript-eslint/array-type": [
       "warn",
       {

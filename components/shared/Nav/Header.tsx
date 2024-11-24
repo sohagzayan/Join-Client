@@ -1,6 +1,8 @@
 'use client';
 import { Logo } from '@/components/common';
+import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
 import { usePathname } from 'next/navigation';
+import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 import HeaderController from '../header-controller/HeaderController';
 import NavItems from './NavItems';
@@ -8,6 +10,17 @@ import NavItems from './NavItems';
 const Header = () => {
   const [scrollY, setScrollY] = useState(0);
   const pathname = usePathname();
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+
+  const { data, error, isLoading } = useGetCurrentUserQuery(
+    token ? { token } : { token: '' }, // Passing an empty string or valid object if token is not available
+    {
+      skip: !token, // Skip the query if the token is not available
+    },
+  );
+
+  console.log('data current user', data);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,13 +47,13 @@ const Header = () => {
       {!noNeedHeader && (
         <div
           style={{ backdropFilter: scrollY >= 70 ? 'blur(5px)' : '' }}
-          className={`z-[999] border-b border-[rgba(255,255,255,0.08)] bg-themeDark2 px-4 transition-all duration-300 ${
+          className={`bg-blur-lg z-[999] bg-gradient-to-b from-gray-900 to-gray-800 px-4 transition-all duration-300 ${
             !noStickyHeader && scrollY >= 70
               ? 'header sticky left-0 top-0'
               : 'relative left-0 right-0 top-0 z-40'
           }`}
         >
-          <div className="container relative flex h-[90px] items-center justify-between lg:px-16 xl:px-10">
+          <div className="container relative flex h-[70px] items-center justify-between lg:px-16 xl:px-10">
             <div className="flex items-center gap-10">
               <Logo />
               {!isAuthPage && <NavItems />}

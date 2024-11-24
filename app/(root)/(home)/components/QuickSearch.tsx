@@ -2,7 +2,6 @@
 import { Select } from '@/components/common';
 import { Category } from '@/components/icons/svg';
 import PopularSearches from '@/components/shared/popular-searches/PopularSearches';
-import React from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { HiBriefcase } from 'react-icons/hi';
 
