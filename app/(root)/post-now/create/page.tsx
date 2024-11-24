@@ -1,12 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Header from '@/components/shared/Nav/Header';
 import CreateJobPostForm from '@/components/containers/post-now/create-job-post-form/CreateJobPostForm';
+import Header from '@/components/shared/Nav/Header';
 
 const JobPostCreate = () => {
   return (
     <div>
-      <Header variant="primary" />
+      <Header />
       <CreateJobPostForm />
     </div>
   );

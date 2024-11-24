@@ -48,14 +48,14 @@ const RecruitHeroSection = () => {
             lineHeight: '6rem',
           }}
           id="candidates_overview_title"
-          className="candidates_overview_title text-[80px] font-bold"
+          className="candidates_overview_title text-[80px] font-bold text-white"
         >
           You have a job.
           <br />
           We have 10m+ job seekers.
         </h1>
         <div id="candidates_overview_hero_content" className="">
-          <p className="py-6 text-[22px]">
+          <p className="py-6 text-[22px] text-text6">
             Millions of startup-ready candidates, uniquely specific filters for
             finding niche talent, and all the tools you need to hire. Sign up
             now & have everything set up in 10 minutes, for free.
@@ -63,7 +63,7 @@ const RecruitHeroSection = () => {
           <div className="flex items-center justify-center gap-5">
             <Button
               id="candidates_overview_hero_btn"
-              className="bg-blue-midnight_blue text-white"
+              className="border-2 border-transparent bg-theme1 text-white hover:border-theme1 hover:bg-transparent"
             >
               Sign up now
             </Button>

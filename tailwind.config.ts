@@ -1,3 +1,4 @@
+import animate from 'tailwindcss-animate';
 import { withUt } from 'uploadthing/tw';
 
 module.exports = withUt({
@@ -16,12 +17,11 @@ module.exports = withUt({
         md: '100%',
         lg: '960px',
         xl: '1140px',
-        '2xl': '1230px', // Custom breakpoints for the default container
+        '2xl': '1230px',
       },
     },
     extend: {
       colors: {
-        /* Common Colors */
         white: 'var(--tp-common-white-rgb)',
         black: 'var(--tp-common-black-rgb)',
         black2: 'var(--tp-common-black-2-rgb)',
@@ -31,8 +31,6 @@ module.exports = withUt({
         black6: 'var(--tp-common-black-6-rgb)',
         black7: 'var(--tp-common-black-7-rgb)',
         black8: 'var(--tp-common-black-8-rgb)',
-
-        /* Primary Colors */
         green: 'var(--tp-common-green-rgb)',
         green2: 'var(--tp-common-green-2-rgb)',
         orange: 'var(--tp-common-orange-rgb)',
@@ -41,8 +39,6 @@ module.exports = withUt({
         yellow: 'var(--tp-common-yellow-rgb)',
         yellow2: 'var(--tp-common-yellow-2-rgb)',
         pink: 'var(--tp-common-pink-rgb)',
-
-        /* Heading and Text Colors */
         headingPrimary: 'var(--tp-heading-primary-rgb)',
         textBody: 'var(--tp-text-body-rgb)',
         text1: 'var(--tp-text-1-rgb)',
@@ -59,25 +55,17 @@ module.exports = withUt({
         text12: 'var(--tp-text-12-rgb)',
         text13: 'var(--tp-text-13-rgb)',
         text14: 'var(--tp-text-14-rgb)',
-
-        /* Gray Shades */
         gray1: 'var(--tp-grey-1-rgb)',
         gray2: 'var(--tp-grey-2-rgb)',
-
-        /* Theme Colors */
         theme1: 'var(--tp-theme-1-rgb)',
         theme2: 'var(--tp-theme-2-rgb)',
         themeDark: 'var(--tp-theme-dark-rgb)',
         themeDark2: 'var(--tp-theme-dark-2-rgb)',
         themeWhite: 'var(--tp-theme-white-rgb)',
-
-        /* Border Colors */
         border1: 'var(--tp-border-1-rgb)',
         border2: 'var(--tp-border-2-rgb)',
         border3: 'var(--tp-border-3-rgb)',
         border4: 'var(--tp-border-4-rgb)',
-
-        /* Light Theme (Optional Override) */
         light: {
           bodyColor: 'var(--bs-body-color-rgb)',
           bodyBg: 'var(--bs-body-bg-rgb)',
@@ -88,16 +76,22 @@ module.exports = withUt({
           warning: 'var(--bs-warning-rgb)',
           light: 'var(--bs-light-rgb)',
           dark: 'var(--bs-dark-rgb)',
-
-          /* Typography Colors */
           themeDark: 'var(--tp-theme-dark-rgb)',
           commonBlack: 'var(--tp-common-black-rgb)',
           textBody: 'var(--tp-text-body-rgb)',
         },
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))',
+        },
       },
       backgroundColor: {
-        /* Background Colors */
-
         customWhiteTransparent: 'rgba(255, 255, 255, 0.14)',
         white: 'var(--tp-common-white-rgb)',
         black: 'var(--tp-common-black-rgb)',
@@ -107,7 +101,6 @@ module.exports = withUt({
         black5: 'var(--tp-common-black-5-rgb)',
         black6: 'var(--tp-common-black-6-rgb)',
         black7: 'var(--tp-common-black-7-rgb)',
-
         green: 'var(--tp-common-green-rgb)',
         green2: 'var(--tp-common-green-2-rgb)',
         orange: 'var(--tp-common-orange-rgb)',
@@ -116,14 +109,11 @@ module.exports = withUt({
         yellow: 'var(--tp-common-yellow-rgb)',
         yellow2: 'var(--tp-common-yellow-2-rgb)',
         pink: 'var(--tp-common-pink-rgb)',
-
         theme1: 'var(--tp-theme-1-rgb)',
         theme2: 'var(--tp-theme-2-rgb)',
         themeDark: 'var(--tp-theme-dark-rgb)',
         themeDark2: 'var(--tp-theme-dark-2-rgb)',
         themeWhite: 'var(--tp-theme-white-rgb)',
-
-        /* Light Theme Background Colors */
         light: {
           bodyBg: 'var(--bs-body-bg-rgb)',
           primary: 'var(--bs-primary-rgb)',
@@ -139,11 +129,6 @@ module.exports = withUt({
         customGradient:
           'linear-gradient(-180deg, #61C6FF 1.9%, #283DFC 97.74%)',
       },
-      // fontFamily: {
-      //   body: ['"Be Vietnam Pro"', "sans-serif"],
-      //   heading: ['"Be Vietnam Pro"', "sans-serif"],
-      //   fontawesome: ["Font Awesome 6 Pro"],
-      // },
       fontWeight: {
         100: '100',
         200: '200',
@@ -157,5 +142,5 @@ module.exports = withUt({
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [animate],
 });

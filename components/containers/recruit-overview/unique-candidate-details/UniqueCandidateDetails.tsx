@@ -1,9 +1,9 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import React, { useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
+import { useLayoutEffect } from 'react';
 gsap.registerPlugin(ScrollTrigger);
 
 const UniqueCandidateDetails = () => {
@@ -77,25 +77,25 @@ const UniqueCandidateDetails = () => {
   }, []);
 
   return (
-    <div id="brand_yourselfBox" className="border-b bg-white p-6">
+    <div id="brand_yourselfBox" className="bg-theme2">
       <div className="container py-6 lg:px-16 xl:px-20">
         <div className="grid grid-cols-2 items-center gap-20">
           <div className="align-middle">
             <div>
               <h2
                 id="unique_candidate_details_title"
-                className="text-blue-midnight_blue text-2xl font-medium tracking-[-1.5px] sm:text-3xl xl:text-4xl"
+                className="text-2xl font-medium tracking-[-1.5px] text-white sm:text-3xl xl:text-4xl"
               >
                 Unique candidate details you cant find anywhere else
               </h2>
-              <p className="text-foreground-light mt-4 text-xs sm:text-sm md:w-5/6 lg:w-full lg:text-base">
+              <p className="mt-4 text-xs text-text5 sm:text-sm md:w-5/6 lg:w-full lg:text-base">
                 Create a profile that highlights your unique skills and
                 preferences, <br /> then apply to jobs with just one click
               </p>
               <div className="mt-10 max-w-[300px] sm:max-w-md lg:max-w-md">
-                <div className="border-primary w-4/12 border-t-2"></div>
+                <div className="w-4/12 border-t-2 border-black"></div>
 
-                <ul className="text-blue-midnight_blue mt-2 flex list-disc flex-col gap-3 px-4 font-medium">
+                <ul className="mt-2 flex list-disc flex-col gap-3 px-4 font-medium text-text5">
                   <li id="unique_candidate_details_list">
                     <h5 className="text-blue-midnight_blue mb-1 font-semibold">
                       Job search status
