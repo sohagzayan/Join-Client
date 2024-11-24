@@ -1,6 +1,8 @@
 'use client';
 import { Logo } from '@/components/common';
+import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
 import { usePathname } from 'next/navigation';
+import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 import HeaderController from '../header-controller/HeaderController';
 import NavItems from './NavItems';
@@ -8,6 +10,17 @@ import NavItems from './NavItems';
 const Header = () => {
   const [scrollY, setScrollY] = useState(0);
   const pathname = usePathname();
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+
+  const { data, error, isLoading } = useGetCurrentUserQuery(
+    token ? { token } : { token: '' }, // Passing an empty string or valid object if token is not available
+    {
+      skip: !token, // Skip the query if the token is not available
+    },
+  );
+
+  console.log('data current user', data);
 
   useEffect(() => {
     const handleScroll = () => {
