@@ -9,7 +9,7 @@ import SuccessHighlights from './components/SuccessHighlights';
 
 export default function HomePage() {
   return (
-    <main className="bg-themeDark">
+    <main className="bg-gradient-to-b from-gray-900 to-gray-800">
       <HeroSection />
       <LiveStatusBar />
       <SuccessHighlights />
