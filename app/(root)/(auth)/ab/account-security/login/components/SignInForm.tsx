@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 const SignInForm = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const searchParams = useSearchParams();
   const onSubmit = async (values: any, actions: FormikHelpers<any>) => {
     const redirect = searchParams.get('redirect');
@@ -68,7 +68,7 @@ const SignInForm = () => {
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={loginValidationSchema}
-          validateOnChange={true}
+          validateOnChange={false}
           validateOnBlur={false}
           onSubmit={(values, actions) => {
             onSubmit(values, actions);
