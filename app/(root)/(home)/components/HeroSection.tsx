@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import throttle from 'lodash/throttle';
 import React, { useState } from 'react';
 //@ts-ignore
+import BreadrumbShape from '@/components/common/BreadrumbShape/BreadrumbShape';
 import DynamicTitle from './DynamicTitle';
 import QuickSearch from './QuickSearch';
 
@@ -22,6 +23,7 @@ const AnimatedHeroSection: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      <BreadrumbShape />
       {/* <BackgroundAnimation mousePosition={mousePosition} /> */}
 
       <div className="container relative z-10 mx-auto px-4 py-10 sm:py-20">
