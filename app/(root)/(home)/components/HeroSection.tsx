@@ -1,6 +1,7 @@
 'use client';
 import Marquee from '@/components/shared/Marquee/Marquee';
 import { motion } from 'framer-motion';
+import throttle from 'lodash/throttle';
 import React, { useState } from 'react';
 //@ts-ignore
 import DynamicTitle from './DynamicTitle';
@@ -9,9 +10,9 @@ import QuickSearch from './QuickSearch';
 const AnimatedHeroSection: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = throttle((e: React.MouseEvent<HTMLDivElement>) => {
     setMousePosition({ x: e.clientX, y: e.clientY });
-  };
+  }, 50); // Limit updates to every 50ms
 
   return (
     <motion.div
@@ -21,7 +22,7 @@ const AnimatedHeroSection: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <BackgroundAnimation mousePosition={mousePosition} />
+      {/* <BackgroundAnimation mousePosition={mousePosition} /> */}
 
       <div className="container relative z-10 mx-auto px-4 py-10 sm:py-20">
         <AnimatedContent />
@@ -94,10 +95,15 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({
   return (
     <div className="absolute inset-0 overflow-hidden">
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 will-change-transform"
         style={{
-          background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0) 50%)`,
+          background:
+            'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0) 50%)',
         }}
+        animate={{
+          backgroundPosition: `${mousePosition.x}px ${mousePosition.y}px`,
+        }}
+        transition={{ duration: 0.1 }}
       />
       <svg
         className="absolute bottom-0 left-0 h-auto w-full"
@@ -116,7 +122,7 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({
           transition={{
             repeat: Infinity,
             repeatType: 'reverse',
-            duration: 20,
+            duration: 10,
             ease: 'easeInOut',
           }}
         />

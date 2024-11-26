@@ -14,19 +14,40 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { signOut, useSession } from 'next-auth/react';
+import {
+  useGetCurrentUserQuery,
+  UserAuthApi,
+} from '@/redux/features/auth/authentication';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { destroyCookie, parseCookies } from 'nookies';
 import { IoMdNotificationsOutline } from 'react-icons/io';
+import { useDispatch } from 'react-redux';
 import VisibilitySetting from '../visibility-setting/VisibilitySetting';
 
 const HeaderController = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    destroyCookie(null, 'auth_token');
+    dispatch(UserAuthApi.util.resetApiState());
+    router.push('/ab/account-security/login');
+  };
+
+  const { data: currentUser } = useGetCurrentUserQuery(
+    token ? { token } : { token: '' },
+    {
+      skip: !token,
+    },
+  );
+
   return (
     <div>
       <div className="flex items-center gap-2">
-        {session && (
+        {currentUser && (
           <>
             <div>
               <IoMdNotificationsOutline className="text-text5" size={25} />
@@ -94,11 +115,7 @@ const HeaderController = () => {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent className="border border-[rgba(255,255,255,0.14)] bg-[#181C3B] text-text6">
                       <DropdownMenuItem>Manage Account</DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={async () => {
-                          await signOut();
-                        }}
-                      >
+                      <DropdownMenuItem onClick={handleLogout}>
                         Logout
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
@@ -112,7 +129,7 @@ const HeaderController = () => {
           </>
         )}
 
-        {!session && (
+        {!currentUser && (
           <>
             <Button
               variant="outline"
