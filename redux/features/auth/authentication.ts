@@ -1,4 +1,4 @@
-import { clearUser } from '@/redux/slice/userSlice';
+import { clearUser, setUser } from '@/redux/slice/userSlice';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import {
@@ -9,7 +9,7 @@ import {
 } from './../../../data/models/auth';
 
 export const UserAuthApi = createApi({
-  reducerPath: 'UserAuthApi',
+  reducerPath: 'userAuth',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_DATABASE_URL,
     prepareHeaders: (headers) => {
@@ -33,7 +33,7 @@ export const UserAuthApi = createApi({
         try {
           const { data } = await queryFulfilled;
           setCookie(null, 'auth_token', data.token, { path: '/' });
-          // dispatch(setUser(data.user));
+          dispatch(setUser(data.user));
         } catch (error) {
           console.error('Login Error:', error);
         }
@@ -54,20 +54,19 @@ export const UserAuthApi = createApi({
       providesTags: ['User'], // Specify the tag for caching
     }),
     logout: builder.mutation<void, void>({
-      query: () => ({
-        url: '/auth/logout/',
-        method: 'POST',
-      }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      queryFn: async () => {
+        return { data: undefined };
+      },
+      async onQueryStarted(_, { dispatch }) {
         try {
-          await queryFulfilled;
           destroyCookie(null, 'auth_token');
           dispatch(clearUser());
+          // window.location.reload();
         } catch (error) {
           console.error('Logout Error:', error);
         }
       },
-      invalidatesTags: ['User'], // Invalidate user data cache on logout
+      invalidatesTags: ['User'],
     }),
     getCurrentUser: builder.query<UserAuth, { token: string }>({
       query: ({ token }) => ({
