@@ -1,374 +1,375 @@
-import React from 'react';
-import { InputField, SelectDropdown } from '@/components/common';
-import TextArea from '@/components/common/text-area';
-import { Github, Globe, Linkedin, Search, Twitter } from 'lucide-react';
-import Image from 'next/image';
+'use client';
 
-const roleOptions = [
-  { value: 'developer', label: 'Developer' },
-  { value: 'designer', label: 'Designer' },
-  { value: 'project_manager', label: 'Project Manager' },
-  { value: 'qa_engineer', label: 'QA Engineer' },
-  { value: 'data_analyst', label: 'Data Analyst' },
-  { value: 'product_owner', label: 'Product Owner' },
-  { value: 'hr_manager', label: 'HR Manager' },
-  { value: 'sales_executive', label: 'Sales Executive' },
-  { value: 'marketing_specialist', label: 'Marketing Specialist' },
-];
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Textarea } from '@/components/ui/textarea';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  Camera,
+  Github,
+  Globe,
+  Linkedin,
+  Plus,
+  Trash2,
+  Twitter,
+} from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-const exYearOptions = [
-  { value: '0', label: '< 1 year' },
-  { value: '1', label: '1 year' },
-  { value: '2', label: '2 years' },
-  { value: '3', label: '3 years' },
-  { value: '4', label: '4 years' },
-  { value: '5', label: '5 years' },
-  { value: '6', label: '6 years' },
-  { value: '7', label: '7 years' },
-  { value: '8', label: '8 years' },
-  { value: '9', label: '9 years' },
-];
+const ProfileEdit = () => {
+  const [activeTab, setActiveTab] = useState('personal');
+  const [profileData, setProfileData] = useState({
+    name: '',
+    location: '',
+    role: '',
+    bio: '',
+    website: '',
+    linkedin: '',
+    github: '',
+    twitter: '',
+    experiences: [],
+    skills: [],
+    achievements: '',
+  });
+  const [profileCompletion, setProfileCompletion] = useState(0);
 
-const pronounsOptions = [
-  { value: 'He / Him', label: 'He / Him' },
-  { value: 'She / Her', label: 'She / Her' },
-  { value: 'They / Them', label: 'They / Them' },
-  { value: 'self-describe', label: 'Self-describe' },
-  { value: 'prefer not to say', label: 'Prefer not to say' },
-];
+  useEffect(() => {
+    updateProfileCompletion();
+  }, [profileData]);
 
-const genderIdentOptions = [
-  { value: 'man', label: 'Man' },
-  { value: 'woman', label: 'Woman' },
-  { value: 'non-binary', label: 'Non-binary' },
-  { value: 'self-describe', label: 'Self-describe' },
-  { value: 'prefer not to say', label: 'Prefer not to say' },
-];
+  const updateProfileCompletion = () => {
+    const fields = Object.keys(profileData);
+    const completedFields = fields.filter((field) => {
+      if (Array.isArray(profileData[field])) {
+        return profileData[field].length > 0;
+      }
+      return profileData[field] !== '';
+    });
+    const completionPercentage = (completedFields.length / fields.length) * 100;
+    setProfileCompletion(Math.round(completionPercentage));
+  };
 
-const ethnicityOptions = [
-  { value: 'black_african_american', label: 'Black / African-American' },
-  {
-    value: 'east_asian',
-    label: 'East Asian (including Chinese, Japanese, Korean, and Mongolian)',
-  },
-  { value: 'hispanic_latino', label: 'Hispanic or Latino/a/x' },
-  { value: 'middle_eastern', label: 'Middle Eastern' },
-  {
-    value: 'native_american_alaskan_native',
-    label: 'Native American or Alaskan Native',
-  },
-  { value: 'pacific_islander', label: 'Pacific Islander' },
-  {
-    value: 'south_asian',
-    label:
-      'South Asian (including Bangladeshi, Bhutanese, Indian, Nepali, Pakistani, and Sri Lankan)',
-  },
-  {
-    value: 'southeast_asian',
-    label:
-      'Southeast Asian (including Burmese, Cambodian, Filipino, Hmong, Indonesian, Laotian, Malaysian, Mien, Singaporean, Thai, and Vietnamese)',
-  },
-  { value: 'white', label: 'White' },
-  { value: 'prefer_not_to_say', label: 'Prefer not to say' },
-  { value: 'self_describe', label: 'Self-describe' },
-];
+  const handleInputChange = (field, value) => {
+    setProfileData((prev) => ({ ...prev, [field]: value }));
+  };
 
-const EditProfile = () => {
+  const addExperience = () => {
+    setProfileData((prev) => ({
+      ...prev,
+      experiences: [
+        ...prev.experiences,
+        { title: '', company: '', period: '' },
+      ],
+    }));
+  };
+
+  const removeExperience = (index) => {
+    setProfileData((prev) => ({
+      ...prev,
+      experiences: prev.experiences.filter((_, i) => i !== index),
+    }));
+  };
+
+  const addSkill = () => {
+    const skill = prompt('Enter a new skill:');
+    if (skill) {
+      setProfileData((prev) => ({
+        ...prev,
+        skills: [...prev.skills, skill],
+      }));
+    }
+  };
+
+  const removeSkill = (skill) => {
+    setProfileData((prev) => ({
+      ...prev,
+      skills: prev.skills.filter((s) => s !== skill),
+    }));
+  };
+
   return (
-    <div>
-      <div className="mx-auto mt-6 rounded-xl bg-[rgba(255,255,255,0.06)] p-6">
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 md:col-span-2 lg:col-span-4">
-            <div className="w-[90%] lg:w-[330px]">
-              <h2 className="text-xl font-600 text-white">About</h2>
-              <p className="mb-3 text-text6 md:mb-0 lg:mb-0">
-                Tell us about yourself so startups know who you are.
-              </p>
-            </div>
-          </div>
-          <div className="col-span-12 md:col-span-10 lg:col-span-8">
-            <div>
-              <InputField label="Your name" showLabel={true} />
-            </div>
-            <div className="mt-4">
-              <InputField label="Where are you based?" showLabel={true} />
-            </div>
-            <div className="mt-4">
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-6 lg:col-span-8">
-                  <SelectDropdown
-                    options={roleOptions}
-                    label="Select your primary role"
-                    showLabel={true}
-                  />
-                </div>
-                <div className="col-span-6 lg:col-span-4">
-                  <SelectDropdown
-                    options={exYearOptions}
-                    label="Years of experience"
-                    showLabel={true}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mt-4">
-              <SelectDropdown
-                options={roleOptions}
-                label="Open to the following roles"
-                showLabel={true}
-              />
-            </div>
-            <div className="mt-4">
-              <TextArea label="Your bio" showLabel={true} />
-            </div>
+    <div className="container mx-auto space-y-8 p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="to-purple-600 relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 p-8 text-white"
+      >
+        <div className="absolute left-0 top-0 h-full w-full bg-black opacity-20"></div>
+        <div className="relative z-10 flex items-center space-x-4">
+          <Avatar className="h-24 w-24 border-4 border-white">
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <div>
+            <h1 className="mb-2 text-4xl font-bold">
+              {profileData.name || 'Your Name'}
+            </h1>
+            <p className="text-xl">{profileData.role || 'Your Role'}</p>
           </div>
         </div>
-        <hr className="my-8 border-text1" />
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 md:col-span-2 lg:col-span-4">
-            <h2 className="text-xl font-600 text-white">Social Profiles</h2>
-            <p className="mb-3 text-text6 md:mb-0 lg:mb-0">
-              Where can people find you online?
-            </p>
-          </div>
-          <div className="col-span-12 md:col-span-10 lg:col-span-8">
-            <div>
-              <InputField
-                label="Website"
-                showLabel={true}
-                placeholder="https://"
-                icon={Globe}
-              />
-            </div>
-            <div className="mt-4">
-              <InputField
-                label="LinkedIn"
-                showLabel={true}
-                icon={Linkedin}
-                placeholder="https://linkedin.com/in/username"
-              />
-            </div>
-            <div className="mt-4">
-              <InputField
-                label="GitHub"
-                showLabel={true}
-                icon={Github}
-                placeholder="https://github.com/username"
-              />
-            </div>
-            <div className="mt-4">
-              <InputField
-                label="Twitter"
-                showLabel={true}
-                icon={Twitter}
-                placeholder="https://twitter.com/username"
-              />
-            </div>
-          </div>
+        <div className="relative z-10 mt-4">
+          <p className="mb-2 text-lg">Profile Completion</p>
+          <Progress value={profileCompletion} className="h-3 w-full" />
+          <p className="mt-2 text-sm">{profileCompletion}% complete</p>
         </div>
-        <hr className="my-8 border-text1" />
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 md:col-span-2 lg:col-span-4">
-            <h2 className="text-xl font-600 text-white">
-              Your work experience
-            </h2>
-            <p className="mb-3 text-text6 md:mb-0 lg:mb-0">
-              What other positions have you held?
-            </p>
-          </div>
-          <div className="col-span-12 md:col-span-10 lg:col-span-8">
-            <div>
-              <div className="grid grid-cols-12 gap-3 rounded-md bg-themeDark p-4">
-                <div className="col-span-1">
-                  <Image
-                    src={'/assets/images/promotion.png'}
-                    width={70}
-                    height={70}
-                    alt="office"
-                  />
-                </div>
-                <div className="col-span-11 flex justify-between">
-                  <div>
-                    <h3 className="text-lg font-500 text-white">
-                      As software engineer
-                    </h3>
-                    <p className="text-theme1">500 Global</p>
-                    <p className="text-text6">Feb 2024 to Present</p>
-                  </div>
-                  <div>
-                    <button className="text-xl text-theme1">Edit</button>
-                  </div>
-                </div>
-              </div>
-              <button className="mt-1 text-theme1">
-                + Add work experience
-              </button>
-            </div>
-          </div>
-        </div>
-        <hr className="my-8 border-text1" />
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 md:col-span-2 lg:col-span-4">
-            <h2 className="text-xl font-600 text-white">Education</h2>
-            <p className="mb:mb-0 mb-3 text-text6 lg:mb-0">
-              What schools have you studied at?
-            </p>
-          </div>
-          <div className="col-span-12 md:col-span-10 lg:col-span-8">
-            <div>
-              <div className="grid grid-cols-12 gap-3 rounded-md bg-themeDark p-3">
-                <div className="col-span-1">
-                  <Image
-                    src={'/assets/images/educational.png'}
-                    width={70}
-                    height={70}
-                    alt="office"
-                  />
-                </div>
-                <div className="col-span-11 flex justify-between">
-                  <div>
-                    <h3 className="text-lg font-500 text-white">
-                      City College of New York
-                    </h3>
-                    <p className="text-text6">34 and fd, BA</p>
-                    <p className="text-theme1">5.0/5.0 GPA</p>
-                    <p className="text-text6">2024</p>
-                  </div>
-                  <div>
-                    <button className="text-xl text-theme1">Edit</button>
-                  </div>
-                </div>
-              </div>
-              <button className="mt-1 text-theme1">+ Add education</button>
-            </div>
-          </div>
-        </div>
-        <hr className="my-8 border-text1" />
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 md:col-span-2 lg:col-span-4">
-            <div className="w-[90%] lg:w-[330px]">
-              <h2 className="text-xl font-600 text-white">Your Skills</h2>
-              <p className="mb:mb-0 mb-3 text-text6 lg:mb-0">
-                This will help startups hone in on your strengths.
-              </p>
-            </div>
-          </div>
-          <div className="col-span-12 md:col-span-10 lg:col-span-8">
-            <div>
-              <div>
-                <div className="flex items-center gap-3">
-                  <span className="rounded-lg bg-themeDark px-4 py-1 text-sm text-white">
-                    python
-                  </span>
-                  <span className="rounded-lg bg-themeDark px-4 py-1 text-sm text-white">
-                    javascript
-                  </span>
-                  <span className="rounded-lg bg-themeDark px-4 py-1 text-sm text-white">
-                    nodejs
-                  </span>
-                  <span className="rounded-lg bg-themeDark px-4 py-1 text-sm text-white">
-                    nextjs
-                  </span>
-                </div>
-                <div className="mt-4">
-                  <InputField icon={Search} placeholder="e.g. Python, React" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr className="my-8 border-text1" />
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 md:col-span-2 lg:col-span-4">
-            <div className="w-[90%] lg:w-[330px]">
-              <h2 className="text-xl font-600 text-white">Achievements</h2>
-              <p className="text-text6">
-                Sharing more details about yourself will help you stand out
-                more.
-              </p>
-            </div>
-          </div>
-          <div className="col-span-12 md:col-span-10 lg:col-span-8">
-            <div>
-              <div>
-                <div className="mt-4">
-                  <TextArea
-                    icon={Search}
-                    placeholder="It's perfectly fine to showcase your achievements! For example, I developed and launched three successful Facebook apps that collectively reached over 2 million users and generated more than $100k in revenue. I was responsible for everything from front-end to back-end development and all aspects in between."
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr className="my-8 border-text1" />
-        <div className="mb-32 grid grid-cols-12">
-          <div className="col-span-12 md:col-span-2 lg:col-span-4">
-            <div className="w-[90%] lg:w-[330px]">
-              <h2 className="mb-2 text-xl font-600 text-white">Identity</h2>
-              <p className="mb-3 text-text6">
-                At Jobjoy, we{"'"}re dedicated to helping companies hire in a
-                more inclusive and diverse way. As part of this mission, we
-                encourage candidates to voluntarily share demographic
-                information to help recruiters build a more well-rounded hiring
-                pipeline.
-              </p>
-              <p className="mb-3 text-text6 md:mb-0 lg:mb-0">
-                Providing this information is completely optional, and we{"'"}ll
-                ensure your data is handled with the utmost care. Your responses
-                regarding gender and ethnicity will not be visible on your
-                profile, and displaying your pronouns is also entirely up to
-                you.
-              </p>
-            </div>
-          </div>
-          <div className="col-span-12 md:col-span-10 lg:col-span-8">
-            <div>
-              <div>
-                <div className="mt-4">
-                  <SelectDropdown
-                    options={pronounsOptions}
-                    label="Pronouns"
-                    showLabel={true}
-                  />
-                </div>
-                <div className="mt-4 flex items-center gap-3 text-white">
-                  <label className="inline-flex cursor-pointer items-center">
-                    <input type="checkbox" value="" className="peer sr-only" />
-                    <div className="peer relative h-6 w-11 rounded-full border bg-themeDark after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:bg-theme1 after:transition-all after:content-[''] peer-checked:bg-theme1 peer-checked:after:translate-x-full peer-checked:after:border-white peer-checked:after:bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-theme1 rtl:peer-checked:after:-translate-x-full"></div>
-                  </label>
-                  Display pronouns on my profile
-                </div>
-                <div className="mt-4">
-                  <SelectDropdown
-                    options={genderIdentOptions}
-                    label="Gender Identity"
-                    showLabel={true}
-                  />
-                </div>
-                <div className="mt-4">
-                  <h3 className="text-xl font-500 text-white">
-                    Race/Ethnicity
-                  </h3>
-                  <p className="mb-3 text-sm text-text6">
-                    You can select multiple
-                  </p>
-                  <div>
-                    {ethnicityOptions?.map((e, index) => (
-                      <div key={e.label} className="space-x-4 text-white">
-                        <input type="checkbox" />
-                        <label htmlFor="">{e.label}</label>
+        <motion.div
+          className="absolute bottom-0 right-0 h-64 w-64"
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+          }}
+          transition={{
+            duration: 20,
+            ease: 'linear',
+            repeat: Infinity,
+          }}
+        >
+          <div className="h-full w-full rounded-full bg-white opacity-10"></div>
+        </motion.div>
+      </motion.div>
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4">
+          <TabsTrigger value="personal">Personal</TabsTrigger>
+          <TabsTrigger value="social">Social</TabsTrigger>
+          <TabsTrigger value="experience">Experience</TabsTrigger>
+          <TabsTrigger value="skills">Skills</TabsTrigger>
+        </TabsList>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <TabsContent value="personal">
+              <Card>
+                <CardContent className="space-y-4 p-6">
+                  <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0">
+                    <Avatar className="group h-24 w-24 cursor-pointer">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>CN</AvatarFallback>
+                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 transition-opacity group-hover:opacity-100">
+                        <Camera className="text-white" />
                       </div>
-                    ))}
+                    </Avatar>
+                    <div className="flex-1 space-y-2">
+                      <Input
+                        placeholder="Full Name"
+                        value={profileData.name}
+                        onChange={(e) =>
+                          handleInputChange('name', e.target.value)
+                        }
+                      />
+                      <Input
+                        placeholder="Location"
+                        value={profileData.location}
+                        onChange={(e) =>
+                          handleInputChange('location', e.target.value)
+                        }
+                      />
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                  <Select
+                    value={profileData.role}
+                    onValueChange={(value) => handleInputChange('role', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="developer">Developer</SelectItem>
+                      <SelectItem value="designer">Designer</SelectItem>
+                      <SelectItem value="manager">Manager</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Textarea
+                    placeholder="Tell us about yourself..."
+                    value={profileData.bio}
+                    onChange={(e) => handleInputChange('bio', e.target.value)}
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="social">
+              <Card>
+                <CardContent className="space-y-4 p-6">
+                  <div className="flex items-center space-x-2">
+                    <Globe className="text-muted-foreground h-5 w-5" />
+                    <Input
+                      placeholder="https://yourwebsite.com"
+                      value={profileData.website}
+                      onChange={(e) =>
+                        handleInputChange('website', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Linkedin className="text-muted-foreground h-5 w-5" />
+                    <Input
+                      placeholder="LinkedIn profile URL"
+                      value={profileData.linkedin}
+                      onChange={(e) =>
+                        handleInputChange('linkedin', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Github className="text-muted-foreground h-5 w-5" />
+                    <Input
+                      placeholder="GitHub profile URL"
+                      value={profileData.github}
+                      onChange={(e) =>
+                        handleInputChange('github', e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Twitter className="text-muted-foreground h-5 w-5" />
+                    <Input
+                      placeholder="Twitter profile URL"
+                      value={profileData.twitter}
+                      onChange={(e) =>
+                        handleInputChange('twitter', e.target.value)
+                      }
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="experience">
+              <Card>
+                <CardContent className="space-y-4 p-6">
+                  <ScrollArea className="h-[300px] pr-4">
+                    {profileData.experiences.map((exp, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                        className="bg-muted mb-4 flex items-center justify-between rounded-lg p-4"
+                      >
+                        <div className="space-y-1">
+                          <Input
+                            placeholder="Job Title"
+                            value={exp.title}
+                            onChange={(e) => {
+                              const newExperiences = [
+                                ...profileData.experiences,
+                              ];
+                              newExperiences[index].title = e.target.value;
+                              handleInputChange('experiences', newExperiences);
+                            }}
+                            className="font-semibold"
+                          />
+                          <Input
+                            placeholder="Company"
+                            value={exp.company}
+                            onChange={(e) => {
+                              const newExperiences = [
+                                ...profileData.experiences,
+                              ];
+                              newExperiences[index].company = e.target.value;
+                              handleInputChange('experiences', newExperiences);
+                            }}
+                            className="text-muted-foreground text-sm"
+                          />
+                          <Input
+                            placeholder="Period"
+                            value={exp.period}
+                            onChange={(e) => {
+                              const newExperiences = [
+                                ...profileData.experiences,
+                              ];
+                              newExperiences[index].period = e.target.value;
+                              handleInputChange('experiences', newExperiences);
+                            }}
+                            className="text-muted-foreground text-sm"
+                          />
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => removeExperience(index)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </motion.div>
+                    ))}
+                  </ScrollArea>
+                  <Button onClick={addExperience}>
+                    <Plus className="mr-2 h-4 w-4" /> Add Experience
+                  </Button>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="skills">
+              <Card>
+                <CardContent className="space-y-4 p-6">
+                  <div className="flex flex-wrap gap-2">
+                    <AnimatePresence>
+                      {profileData.skills.map((skill) => (
+                        <motion.div
+                          key={skill}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.8 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <Badge
+                            variant="secondary"
+                            className="hover:bg-destructive hover:text-destructive-foreground cursor-pointer px-3 py-1 text-sm transition-colors"
+                            onClick={() => removeSkill(skill)}
+                          >
+                            {skill} <span className="ml-1">×</span>
+                          </Badge>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                  <Button variant="outline" onClick={addSkill}>
+                    <Plus className="mr-2 h-4 w-4" /> Add Skill
+                  </Button>
+                  <Textarea
+                    label="Achievements"
+                    placeholder="List your key achievements..."
+                    value={profileData.achievements}
+                    onChange={(e) =>
+                      handleInputChange('achievements', e.target.value)
+                    }
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </motion.div>
+        </AnimatePresence>
+      </Tabs>
+
+      <div className="flex justify-end space-x-4">
+        <Button variant="outline">Cancel</Button>
+        <Button>Save Changes</Button>
       </div>
     </div>
   );
 };
 
-export default EditProfile;
+export default ProfileEdit;

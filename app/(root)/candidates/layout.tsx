@@ -7,7 +7,7 @@ export default function RootLayouts({
   children: React.ReactNode;
 }) {
   return (
-    <div className="overflow-x-clip">
+    <div className="overflow-x-clip bg-gradient-to-b from-gray-900 to-gray-800">
       <UserProfileCard />
       <CandidateProfileController />
       {children}

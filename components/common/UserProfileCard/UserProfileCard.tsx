@@ -5,7 +5,7 @@ import { IoIosCamera } from 'react-icons/io';
 const UserProfileCard = () => {
   return (
     <motion.div
-      className="container mb-8 mt-8 flex flex-col items-center sm:flex-row sm:items-start"
+      className="container mb-8 flex flex-col items-center pt-14 sm:flex-row sm:items-start"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -36,7 +36,7 @@ const UserProfileCard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          John Doe
+          John Does
         </motion.h1>
         <motion.p
           className="text-text5"
