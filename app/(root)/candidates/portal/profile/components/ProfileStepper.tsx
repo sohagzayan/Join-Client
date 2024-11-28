@@ -1,19 +1,17 @@
 'use client';
-
 import { gsap } from 'gsap';
 import { useEffect, useRef, useState } from 'react';
-import { FiGlobe } from 'react-icons/fi'; // Replace this with your desired icon library
+import { FiGlobe } from 'react-icons/fi';
+import Experience from './Experience';
+import PersonalInfo from './PersonalInfo';
+import SocialInfo from './SocialInfo';
+import YourPreferences from './YourPreferences';
+import YourResume from './YourResume';
+import YourSkills from './YourSkills';
 
-const steps = [
-  'Personal',
-  'Social',
-  'Experience',
-  'Skills',
-  'Resume',
-  'Preferences',
-];
+const steps = ['Social', 'Experience', 'Skills', 'Resume', 'Preferences'];
 
-const ProfileMenu = () => {
+const CandidateProfileManager = () => {
   const [activeStep, setActiveStep] = useState(0);
   const stepperRef = useRef(null);
   const highlightRef = useRef(null);
@@ -45,13 +43,39 @@ const ProfileMenu = () => {
       );
     }
   }, []);
+  {
+    /* <PersonalInfo key="personal-info" />,
+  <SocialInfo key="social-info" />,
+  <Experience key="experience" />,
+  <YourSkills key="your-skills" />,
+  <YourResume key="your-resume" />,
+  <YourPreferences key="your-preferences" />, */
+  }
+  const getContent = (activeTab: number) => {
+    switch (activeTab) {
+      case 0:
+        return <PersonalInfo />;
+      case 1:
+        return <SocialInfo />;
+      case 2:
+        return <Experience />;
+      case 3:
+        return <YourSkills />;
+      case 4:
+        return <YourResume />;
+      case 5:
+        return <YourPreferences />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Menu Container */}
       <div
         ref={stepperRef}
-        className="no-scrollbar relative flex items-center gap-4 overflow-x-auto rounded-full bg-gray-100 p-2 shadow-md"
+        className="no-scrollbar relative flex items-center gap-4 overflow-x-auto rounded-full to-gray-800 p-2 shadow-md"
         style={{
           scrollbarWidth: 'none', // Firefox
           msOverflowStyle: 'none', // IE
@@ -96,6 +120,7 @@ const ProfileMenu = () => {
         <h2 className="text-2xl font-bold text-indigo-600">
           {steps[activeStep]} Content
         </h2>
+        {getContent(activeStep)}
         <p className="mt-4 text-gray-600">
           This is the content for the <strong>{steps[activeStep]}</strong> menu
           item.
@@ -105,4 +130,4 @@ const ProfileMenu = () => {
   );
 };
 
-export default ProfileMenu;
+export default CandidateProfileManager;
