@@ -64,59 +64,59 @@ const UserProfileCard = () => {
           />
 
           {/* Profile Content */}
-          <div className="relative flex flex-col items-center space-y-6">
+          <div className="relative flex flex-col items-center space-y-2">
             {/* Profile Image Container */}
-            <motion.div className="relative" whileHover={{ scale: 1.02 }}>
-              <div className="relative h-32 w-32 md:h-20 md:w-20">
-                <div className="animate-tilt absolute -inset-1 rounded-full bg-gradient-to-r from-rose-500 via-cyan-500 to-violet-500 opacity-30 blur-md transition-opacity duration-500 group-hover:opacity-50" />
-                <motion.img
-                  src="/candidate-1.webp"
-                  alt="John Does"
-                  className="ring-white/10 relative h-full w-full rounded-3xl object-cover ring-2"
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                />
 
-                {/* Profile completion indicator */}
-                <motion.div
-                  className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-xs font-medium text-white shadow-lg"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  <Trophy className="h-4 w-4" />
-                </motion.div>
-              </div>
-
-              {/* Camera Button */}
-              <AnimatePresence>
-                {isHovered && (
-                  <motion.div
-                    className="absolute -bottom-2 -right-2"
-                    initial={{ scale: 0, opacity: 0 }}
+            <div className="flex items-center gap-5">
+              <motion.div className="relative" whileHover={{ scale: 1.02 }}>
+                <div className="relative h-32 w-32 md:h-20 md:w-20">
+                  <div className="animate-tilt absolute -inset-1 rounded-full bg-gradient-to-r from-rose-500 via-cyan-500 to-violet-500 opacity-30 blur-md transition-opacity duration-500 group-hover:opacity-50" />
+                  <motion.img
+                    src="/candidate-1.webp"
+                    alt="John Does"
+                    className="ring-white/10 relative h-full w-full rounded-3xl object-cover ring-2"
+                    initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                  >
-                    <label
-                      htmlFor="profile-image"
-                      className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gradient-to-r from-rose-500 to-violet-500 shadow-lg transition-transform hover:scale-110"
-                    >
-                      <Camera className="h-4 w-4 text-white" />
-                      <input
-                        id="profile-image"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                      />
-                    </label>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+                    transition={{ duration: 0.5 }}
+                  />
 
-            {/* Profile Info */}
-            <div className="flex flex-1 flex-col items-center text-center">
+                  {/* Profile completion indicator */}
+                  <motion.div
+                    className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-xs font-medium text-white shadow-lg"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <Trophy className="h-4 w-4" />
+                  </motion.div>
+                </div>
+
+                {/* Camera Button */}
+                <AnimatePresence>
+                  {isHovered && (
+                    <motion.div
+                      className="absolute -bottom-2 -right-2"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                    >
+                      <label
+                        htmlFor="profile-image"
+                        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gradient-to-r from-rose-500 to-violet-500 shadow-lg transition-transform hover:scale-110"
+                      >
+                        <Camera className="h-4 w-4 text-white" />
+                        <input
+                          id="profile-image"
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                        />
+                      </label>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -132,18 +132,20 @@ const UserProfileCard = () => {
                 <p className="text-sm font-light text-gray-400">
                   Senior Software Engineer
                 </p>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-2 flex items-center gap-1.5 text-xs text-gray-400"
+                >
+                  <MapPin className="h-3 w-3" />
+                  <span>San Francisco, CA</span>
+                </motion.div>
               </motion.div>
+            </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="mt-2 flex items-center gap-1.5 text-xs text-gray-400"
-              >
-                <MapPin className="h-3 w-3" />
-                <span>San Francisco, CA</span>
-              </motion.div>
-
+            {/* Profile Info */}
+            <div className="flex flex-1 flex-col items-center text-center">
               {/* Profile Completion Bar */}
               <motion.div
                 className="mt-4 w-full space-y-2"
