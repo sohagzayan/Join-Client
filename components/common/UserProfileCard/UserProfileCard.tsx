@@ -39,7 +39,7 @@ const UserProfileCard = () => {
   }, [rotate]);
 
   return (
-    <div className="w-full p-4 md:p-8">
+    <div className="w-full p-4 md:p-4">
       <div className="relative">
         {/* Animated spotlight effect */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#071203] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />

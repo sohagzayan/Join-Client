@@ -116,10 +116,7 @@ const CandidateProfileManager = () => {
       </div>
 
       {/* Step Content */}
-      <div className="mt-8 rounded-lg bg-white p-6 shadow-md transition-all duration-300">
-        <h2 className="text-2xl font-bold text-indigo-600">
-          {steps[activeStep]} Content
-        </h2>
+      <div className="mt-8 rounded-lg p-6 shadow-md transition-all duration-300">
         {getContent(activeStep)}
         <p className="mt-4 text-gray-600">
           This is the content for the <strong>{steps[activeStep]}</strong> menu
