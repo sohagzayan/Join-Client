@@ -22,6 +22,11 @@ const menuItems = [
       { label: 'History', path: '/candidates/portal/profile/history' },
     ],
   },
+  {
+    id: 'preferences',
+    label: 'Preferences',
+    path: '/candidates/portal/preferences',
+  },
   { id: 'analytics', label: 'Analytics', path: '/candidates/portal/analytics' },
   {
     id: 'job-tracker',
@@ -71,7 +76,7 @@ const CandidateProfileController = () => {
   return (
     <motion.div
       ref={dropdownRef}
-      className="container mb-4 flex flex-wrap justify-center gap-2 sm:justify-start"
+      className="container mb-2 flex flex-wrap justify-center gap-2"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 }}
