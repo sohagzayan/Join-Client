@@ -9,7 +9,14 @@ import YourPreferences from './YourPreferences';
 import YourResume from './YourResume';
 import YourSkills from './YourSkills';
 
-const steps = ['Social', 'Experience', 'Skills', 'Resume', 'Preferences'];
+const steps = [
+  'Personal Info',
+  'Social',
+  'Experience',
+  'Skills',
+  'Resume',
+  'Preferences',
+];
 
 const CandidateProfileManager = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -43,14 +50,7 @@ const CandidateProfileManager = () => {
       );
     }
   }, []);
-  {
-    /* <PersonalInfo key="personal-info" />,
-  <SocialInfo key="social-info" />,
-  <Experience key="experience" />,
-  <YourSkills key="your-skills" />,
-  <YourResume key="your-resume" />,
-  <YourPreferences key="your-preferences" />, */
-  }
+
   const getContent = (activeTab: number) => {
     switch (activeTab) {
       case 0:
