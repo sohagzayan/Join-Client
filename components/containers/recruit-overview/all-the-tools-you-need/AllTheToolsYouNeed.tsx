@@ -4,8 +4,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
@@ -64,10 +62,10 @@ const AllTheToolsYouNeed = () => {
     <div className="p-6">
       <div className="container px-5 lg:px-16 xl:px-20">
         <div className="text-center">
-          <h2 className="text-blue-midnight_blue mb-2 text-2xl font-medium tracking-[-1.5px] sm:text-3xl xl:text-4xl">
+          <h2 className="mb-2 text-2xl font-medium tracking-[-1.5px] text-white sm:text-3xl xl:text-4xl">
             All the tools you need to hire, all in one place.
           </h2>
-          <p className="text-blue-midnight_blue mb-5">
+          <p className="mb-5 text-text5">
             Get everything set up within
             <strong> 10 minutes or less</strong>
           </p>
@@ -79,9 +77,9 @@ const AllTheToolsYouNeed = () => {
               loop: true,
             }}
             plugins={[plugin.current]}
-            className="border-light_gray w-full rounded-lg border"
+            className="w-full rounded-lg"
           >
-            <CarouselContent className="">
+            <CarouselContent className="text-white">
               {review.map((review, index) => (
                 <CarouselItem key={index} className="">
                   <div className="p-1">
@@ -102,12 +100,12 @@ const AllTheToolsYouNeed = () => {
                         </h2>
                         <p>{review.details}</p>
                         <div className="mt-8 flex items-center gap-6">
-                          <Button className="bg-blue-midnight_blue hover:bg-blue-midnight_blue/80">
+                          <Button className="hover:bg-blue-midnight_blue/80 bg-theme1">
                             Sign up
                           </Button>
                           <Button
                             variant="outline"
-                            className="border-blue-midnight_blue"
+                            className="border-theme1 text-theme1"
                           >
                             Learn more
                           </Button>
@@ -118,8 +116,8 @@ const AllTheToolsYouNeed = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            {/* <CarouselPrevious /> */}
+            {/* <CarouselNext /> */}
           </Carousel>
         </div>
       </div>

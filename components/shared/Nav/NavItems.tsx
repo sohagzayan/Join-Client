@@ -15,6 +15,7 @@ import { usePathname } from 'next/navigation';
 const NavItems = () => {
   const pathname = usePathname();
   const currentUser = pathname.split('/')[1];
+  console.log('currentUser', currentUser);
   const navItem = navItems(currentUser);
 
   return (

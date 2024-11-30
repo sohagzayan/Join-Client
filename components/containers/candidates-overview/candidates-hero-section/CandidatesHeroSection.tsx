@@ -1,8 +1,8 @@
 'use client';
-import React, { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import SplitType from 'split-type';
 import { Button } from '@/components/ui/button';
+import gsap from 'gsap';
+import { useLayoutEffect } from 'react';
+import SplitType from 'split-type';
 
 const CandidatesHeroSection = () => {
   useLayoutEffect(() => {
@@ -50,12 +50,12 @@ const CandidatesHeroSection = () => {
             lineHeight: '6rem',
           }}
           id="candidates_overview_title"
-          className="candidates_overview_title text-[80px] font-bold"
+          className="candidates_overview_title text-[80px] font-bold text-white"
         >
           Find the job made for you.
         </h1>
         <div id="candidates_overview_hero_content" className="">
-          <p className="py-6 text-[22px]">
+          <p className="py-6 text-[22px] text-text6">
             We make it easy to find whats next.
             <br />
             Browse over 100,000 jobs — from top companies to fast-growing
@@ -64,14 +64,14 @@ const CandidatesHeroSection = () => {
           <div className="flex items-center justify-center gap-5">
             <Button
               id="candidates_overview_hero_btn"
-              className="bg-blue-midnight_blue text-white"
+              className="border-2 border-transparent bg-theme1 text-white transition-all duration-200 ease-in-out hover:border-theme1 hover:bg-transparent"
             >
               Create your profile
             </Button>
             <Button
               id="candidates_overview_hero_btn"
               variant="outline"
-              className=""
+              className="border-2 border-theme1 bg-transparent text-theme1 hover:border-transparent hover:bg-theme1 hover:text-white"
             >
               Search jobs
             </Button>
