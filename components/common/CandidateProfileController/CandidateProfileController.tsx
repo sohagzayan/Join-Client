@@ -22,6 +22,11 @@ const menuItems = [
       { label: 'History', path: '/candidates/portal/profile/history' },
     ],
   },
+  {
+    id: 'preferences',
+    label: 'Preferences',
+    path: '/candidates/portal/preferences',
+  },
   { id: 'analytics', label: 'Analytics', path: '/candidates/portal/analytics' },
   {
     id: 'job-tracker',

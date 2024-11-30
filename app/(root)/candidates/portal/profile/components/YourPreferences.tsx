@@ -1,112 +1,165 @@
-'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import clsx from 'clsx';
+import { motion } from 'framer-motion';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { useState } from 'react';
+const preferenceSchema = z.object({
+  jobSearchStatus: z.string().min(1, 'Please select a job search status'),
+  usWorkAuth: z.boolean(),
+  usVisaSponsorship: z.boolean(),
+  jobType: z.string().min(1, 'Select a job type'),
+  salary: z.number().positive('Salary must be greater than 0'),
+  companySizes: z.array(z.boolean()).min(1, 'Select at least one company size'),
+});
 
-type Preferences = {
-  theme: string;
-  notifications: boolean;
-};
+type PreferenceFormData = z.infer<typeof preferenceSchema>;
 
-type ProfileData = {
-  name: string;
-  location: string;
-  role: string;
-  bio: string;
-  website: string;
-  linkedin: string;
-  github: string;
-  twitter: string;
-  experiences: string[];
-  skills: string[];
-  achievements: string;
-  preferences: Preferences;
-};
-
-const YourPreferences = () => {
-  const [profileData, setProfileData] = useState<ProfileData>({
-    name: '',
-    location: '',
-    role: '',
-    bio: '',
-    website: '',
-    linkedin: '',
-    github: '',
-    twitter: '',
-    experiences: [],
-    skills: [],
-    achievements: '',
-    preferences: {
-      theme: '',
-      notifications: false,
-    },
-  });
-
-  const handleInputChange = (
-    field: keyof ProfileData,
-    value: string | Preferences,
-  ) => {
-    setProfileData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handlePreferencesChange = (
-    key: keyof Preferences,
-    value: string | boolean,
-  ) => {
-    setProfileData((prev) => ({
-      ...prev,
-      preferences: {
-        ...prev.preferences,
-        [key]: value,
+const YourPreferences: React.FC = () => {
+  const { control, handleSubmit, register, formState } =
+    useForm<PreferenceFormData>({
+      resolver: zodResolver(preferenceSchema),
+      defaultValues: {
+        jobSearchStatus: 'Open to offers',
+        usWorkAuth: false,
+        usVisaSponsorship: false,
+        jobType: 'Full-time Employee',
+        salary: 70000,
+        companySizes: [],
       },
-    }));
+    });
+
+  const onSubmit = (data: PreferenceFormData) => {
+    console.log(data);
   };
 
   return (
-    <div>
-      <Card>
-        <CardContent className="space-y-6 p-6">
-          <div>
-            <h3 className="mb-2 text-lg font-semibold">Theme</h3>
-            <Select
-              value={profileData.preferences.theme}
-              onValueChange={(value) => handlePreferencesChange('theme', value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select theme" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mx-auto rounded-lg p-6 text-white"
+    >
+      <h1 className="mb-6 text-xl font-bold text-gray-800">User Preferences</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* Job Search Status */}
+        <div>
+          <label
+            htmlFor="jobSearchStatus"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Where are you in job search?
+          </label>
+          <select
+            id="jobSearchStatus"
+            className={clsx(
+              'w-full rounded-md border p-2',
+              formState.errors.jobSearchStatus
+                ? 'border-red-500'
+                : 'border-gray-300',
+            )}
+            {...register('jobSearchStatus')}
+          >
+            <option value="Open to offers">Open to offers</option>
+            <option value="Actively looking">Actively looking</option>
+          </select>
+          {formState.errors.jobSearchStatus && (
+            <p className="text-red-500 mt-1 text-sm">
+              {formState.errors.jobSearchStatus.message}
+            </p>
+          )}
+        </div>
+
+        {/* US Work Authorization */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            US Work Authorization
+          </label>
+          <div className="flex items-center space-x-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                value="yes"
+                className="form-radio text-blue-500"
+                {...register('usWorkAuth')}
+              />
+              <span className="ml-2 text-gray-700">Yes</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                value="no"
+                className="form-radio text-blue-500"
+                {...register('usWorkAuth')}
+              />
+              <span className="ml-2 text-gray-700">No</span>
+            </label>
           </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold">Notifications</h3>
-              <p className="text-muted-foreground text-sm">
-                Receive email notifications
-              </p>
-            </div>
-            <Switch
-              checked={profileData.preferences.notifications}
-              onCheckedChange={(checked) =>
-                handlePreferencesChange('notifications', checked)
-              }
-            />
+        </div>
+
+        {/* Desired Salary */}
+        <div>
+          <label
+            htmlFor="salary"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Desired Salary
+          </label>
+          <input
+            type="number"
+            id="salary"
+            className={clsx(
+              'w-full rounded-md border p-2',
+              formState.errors.salary ? 'border-red-500' : 'border-gray-300',
+            )}
+            {...register('salary', { valueAsNumber: true })}
+          />
+          {formState.errors.salary && (
+            <p className="text-red-500 mt-1 text-sm">
+              {formState.errors.salary.message}
+            </p>
+          )}
+        </div>
+
+        {/* Company Sizes */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Preferred Company Sizes
+          </label>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              'Seed',
+              'Early',
+              'Mid-size',
+              'Large',
+              'Very Large',
+              'Massive',
+            ].map((size, index) => (
+              <label key={index} className="flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox text-blue-500"
+                  {...register(`companySizes.${index}` as const)}
+                />
+                <span className="ml-2 text-gray-700">{size}</span>
+              </label>
+            ))}
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+
+        {/* Submit Button */}
+        <div>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            type="submit"
+            className="w-full rounded-md bg-blue-500 px-4 py-2 font-bold text-white"
+          >
+            Save Preferences
+          </motion.button>
+        </div>
+      </form>
+    </motion.div>
   );
 };
 

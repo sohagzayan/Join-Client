@@ -2,21 +2,11 @@
 import { gsap } from 'gsap';
 import { useEffect, useRef, useState } from 'react';
 import { FiGlobe } from 'react-icons/fi';
-import Experience from './Experience';
 import PersonalInfo from './PersonalInfo';
 import SocialInfo from './SocialInfo';
-import YourPreferences from './YourPreferences';
 import YourResume from './YourResume';
-import YourSkills from './YourSkills';
 
-const steps = [
-  'Personal Info',
-  'Social',
-  'Experience',
-  'Skills',
-  'Resume',
-  'Preferences',
-];
+const steps = ['Profile', 'Social', 'Resume', 'Preferences'];
 
 const CandidateProfileManager = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -52,19 +42,14 @@ const CandidateProfileManager = () => {
   }, []);
 
   const getContent = (activeTab: number) => {
+    console.log('active tab', activeTab);
     switch (activeTab) {
       case 0:
         return <PersonalInfo />;
       case 1:
         return <SocialInfo />;
       case 2:
-        return <Experience />;
-      case 3:
-        return <YourSkills />;
-      case 4:
         return <YourResume />;
-      case 5:
-        return <YourPreferences />;
       default:
         return null;
     }
