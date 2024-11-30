@@ -20,7 +20,7 @@ const steps = [
 
 const CandidateProfileManager = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const stepperRef = useRef(null);
+  const stepperRef = useRef<any>(null);
   const highlightRef = useRef(null);
 
   useEffect(() => {

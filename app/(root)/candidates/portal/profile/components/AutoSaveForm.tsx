@@ -6,7 +6,8 @@ import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 
 interface AutoSaveFormProps {
-  onSubmit: (data: FormData) => Promise<{ success: boolean; error?: string }>;
+  //   onSubmit: (data: FormData) => Promise<{ success: boolean; error?: string }>;
+  onSubmit: any;
   children: React.ReactNode;
 }
 
