@@ -28,16 +28,18 @@ const UserProfileCard = () => {
   // Gradient rotation animation
   const rotate = useMotionValue(0);
   const gradient = useTransform(rotate, [0, 360], ['0deg', '360deg']);
-
   useEffect(() => {
     const controls = animate(rotate, 360, {
       duration: 10,
       repeat: Infinity,
       ease: 'linear',
     });
-    return controls.stop;
-  }, [rotate]);
 
+    // Proper cleanup function
+    return () => {
+      controls.stop(); // Ensure `stop` is invoked
+    };
+  }, [rotate]);
   return (
     <div className="w-full p-4 md:p-4">
       <div className="relative">

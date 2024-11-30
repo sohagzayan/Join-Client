@@ -272,7 +272,7 @@ export default function JobPreferencesForm() {
                             type="number"
                             placeholder="Amount"
                             className="border-opacity-20 bg-gray-800 pl-8 text-white"
-                            onChange={(e) =>
+                            onChange={(e: any) =>
                               field.onChange({
                                 ...field.value,
                                 amount: e.target.value,
