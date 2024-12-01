@@ -1,9 +1,9 @@
 'use client';
 import { useState } from 'react';
 import ExtraInformation from './ExtraInformation';
-import Filtering from './Filtering';
 import JobListings from './JobListings';
 import JobModal from './JobModal';
+import JobSearch from './JobSearch';
 
 const FindJobsWrapper = () => {
   const [selectedJob, setSelectedJob] = useState<any>(null);
@@ -25,9 +25,9 @@ const FindJobsWrapper = () => {
         <div className="mb-5 border-b border-b-[rgba(255,255,255,0.08)]">
           <h3 className="py-2 text-4xl font-bold text-white">Explore jobs</h3>
         </div>
-        <Filtering
-        //   {...{ showJobModal, setShowJobModal, setSelectedJob, selectedJob }}
-        />
+        {/* {...{ showJobModal, setShowJobModal, setSelectedJob, selectedJob }} */}
+        {/* <Filtering /> */}
+        <JobSearch />
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-9">
             <JobListings
