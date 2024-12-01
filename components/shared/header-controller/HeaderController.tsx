@@ -74,9 +74,10 @@ const HeaderController = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem
-                    onClick={() => router.push('candidate/dashboard')}
+                    className="cursor-pointer"
+                    onClick={() => router.push('/candidates/portal/profile')}
                   >
-                    Dashboard
+                    My Profile
                     <DropdownMenuShortcut>⌘</DropdownMenuShortcut>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
