@@ -87,7 +87,7 @@ const CandidateProfileController = () => {
             className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
               activeMenuItem === item.id
                 ? 'bg-theme1 text-white'
-                : 'text-gray-600 hover:bg-theme1 hover:text-white'
+                : 'text-white hover:bg-theme1 hover:text-white'
             }`}
             onClick={() => handleMenuItemClick(item.id, item.path)}
             whileHover={{ scale: 1.05 }}
