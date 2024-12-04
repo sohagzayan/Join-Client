@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  Briefcase,
   Github,
   Globe,
   GraduationCap,
@@ -30,15 +29,44 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { ProfileFormData } from '@/data/models/profile';
+import { useGetCurrentUserQuery } from '@/redux/features/currentUser/currentUser';
+import { useGetAllExperiencesQuery } from '@/redux/features/profile/addExperience/addExperienceApi';
 import { revalidatePath } from 'next/cache';
 import { AutoSaveForm } from './AutoSaveForm';
 
+type WorkExperience = {
+  id: string;
+  companyName: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  candidateId: 0;
+};
+
 export default function ProfileForm() {
-  const [workExperience, setWorkExperience] = useState([{ id: '1' }]);
+  const { data: currentUser } = useGetCurrentUserQuery({});
+
+  console.log(currentUser, 'currentUserrr');
+
+  const [workExperience, setWorkExperience] = useState<WorkExperience[]>([
+    {
+      id: '1',
+      companyName: '',
+      title: '',
+      startDate: '',
+      endDate: '',
+      description: '',
+      candidateId: 0,
+    },
+  ]);
   const [education, setEducation] = useState([{ id: '1' }]);
   const [skills, setSkills] = useState<string[]>([]);
   const [currentSkill, setCurrentSkill] = useState('');
   const [isDark, setIsDark] = useState(false);
+
+  const { data: experienceData } = useGetAllExperiencesQuery({});
+  console.log(experienceData, 'experienceDataaaaaaaaa');
 
   async function saveProfile(data: Partial<ProfileFormData>) {
     try {
@@ -51,20 +79,46 @@ export default function ProfileForm() {
       revalidatePath('/profile');
       return { success: true };
     } catch (error) {
-      console.error('Error saving profile:', error);
-      return { success: false, error: 'Failed to save profile' };
+      // console.error('Error saving profile:', error);
+      return { success: false };
     }
   }
 
-  const addWorkExperience = () => {
-    setWorkExperience([
-      ...workExperience,
-      { id: String(workExperience.length + 1) },
+  const addWorkExperience = (e: React.FormEvent) => {
+    e.preventDefault();
+    setWorkExperience((prev) => [
+      ...prev,
+      {
+        id: String(prev.length + 1),
+        companyName: '',
+        title: '',
+        startDate: '',
+        endDate: '',
+        description: '',
+        candidateId: 0,
+      },
     ]);
   };
 
   const removeWorkExperience = (id: string) => {
-    setWorkExperience(workExperience.filter((exp) => exp.id !== id));
+    setWorkExperience((prev) => prev.filter((exp) => exp.id !== id));
+  };
+
+  const handleInputChange = (
+    id: string,
+    field: keyof WorkExperience,
+    value: string,
+  ) => {
+    setWorkExperience((prev) =>
+      prev.map((exp) =>
+        exp.id === id
+          ? {
+              ...exp,
+              [field]: value,
+            }
+          : exp,
+      ),
+    );
   };
 
   const addEducation = () => {
@@ -88,6 +142,13 @@ export default function ProfileForm() {
 
   const removeSkill = (skill: string) => {
     setSkills(skills.filter((s) => s !== skill));
+  };
+
+  //  Hendler functions
+  // save experience handler
+  const handleSaveExperience = (e: any) => {
+    e.preventDefault();
+    console.log(workExperience, 'local-experience');
   };
 
   return (
@@ -194,7 +255,6 @@ export default function ProfileForm() {
               <CardContent className="p-6">
                 <div className="mb-6 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Briefcase className="h-5 w-5" />
                     <h2 className="text-2xl font-bold">Work Experience</h2>
                   </div>
                   <Button
@@ -202,7 +262,6 @@ export default function ProfileForm() {
                     variant="outline"
                     size="sm"
                   >
-                    <Plus className="mr-2 h-4 w-4" />
                     Add Experience
                   </Button>
                 </div>
@@ -222,7 +281,7 @@ export default function ProfileForm() {
                           size="sm"
                           onClick={() => removeWorkExperience(exp.id)}
                         >
-                          <Trash2 className="h-4 w-4" />
+                          Remove
                         </Button>
                       </div>
                       <div className="grid gap-4 md:grid-cols-2">
@@ -230,6 +289,14 @@ export default function ProfileForm() {
                           <Label>Company</Label>
                           <InputField
                             placeholder="Company name"
+                            value={exp.companyName}
+                            onChange={(e) =>
+                              handleInputChange(
+                                exp.id,
+                                'companyName',
+                                e.target.value,
+                              )
+                            }
                             className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
                           />
                         </div>
@@ -237,6 +304,10 @@ export default function ProfileForm() {
                           <Label>Job Title</Label>
                           <InputField
                             placeholder="Your role"
+                            value={exp.title}
+                            onChange={(e) =>
+                              handleInputChange(exp.id, 'title', e.target.value)
+                            }
                             className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
                           />
                         </div>
@@ -244,6 +315,14 @@ export default function ProfileForm() {
                           <Label>Start Date</Label>
                           <InputField
                             type="month"
+                            value={exp.startDate}
+                            onChange={(e) =>
+                              handleInputChange(
+                                exp.id,
+                                'startDate',
+                                e.target.value,
+                              )
+                            }
                             className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
                           />
                         </div>
@@ -251,6 +330,14 @@ export default function ProfileForm() {
                           <Label>End Date</Label>
                           <InputField
                             type="month"
+                            value={exp.endDate}
+                            onChange={(e) =>
+                              handleInputChange(
+                                exp.id,
+                                'endDate',
+                                e.target.value,
+                              )
+                            }
                             placeholder="Present"
                             className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
                           />
@@ -260,6 +347,14 @@ export default function ProfileForm() {
                         <Label>Description</Label>
                         <TextArea
                           placeholder="Describe your responsibilities and achievements..."
+                          value={exp.description}
+                          onChange={(e) =>
+                            handleInputChange(
+                              exp.id,
+                              'description',
+                              e.target.value,
+                            )
+                          }
                           className="h-32 rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
                         />
                       </div>
@@ -267,6 +362,14 @@ export default function ProfileForm() {
                   ))}
                 </AnimatePresence>
               </CardContent>
+              <div className="flex w-full justify-end">
+                <Button
+                  onClick={handleSaveExperience}
+                  className="mb-3 mr-3 rounded-lg border-2 px-10 py-2"
+                >
+                  Save Experience
+                </Button>
+              </div>
             </Card>
 
             {/* Education Section */}
