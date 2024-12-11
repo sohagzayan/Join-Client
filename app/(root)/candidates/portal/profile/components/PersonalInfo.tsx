@@ -1,20 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
-import { Github, Globe, Linkedin, Trash2, Trophy } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-import { InputField } from '@/components/common';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { ProfileFormData } from '@/data/models/profile';
 import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
@@ -23,7 +11,11 @@ import { revalidatePath } from 'next/cache';
 import { parseCookies } from 'nookies';
 import { AutoSaveForm } from './AutoSaveForm';
 import BasicInfo from './userProfile/BasicInfo';
+import DemoGraph from './userProfile/DemoGraph';
 import Education from './userProfile/Education';
+import JobPreference from './userProfile/JobPreference';
+import Skill from './userProfile/Skill';
+import SocialLinks from './userProfile/SocialLinks';
 import {
   default as WorkExperience,
   default as WorkExperienceComponent,
@@ -174,7 +166,6 @@ export default function ProfileForm() {
           >
             {/* Basic Info Section */}
             <BasicInfo />
-
             {/* Work Experience Section */}
             <WorkExperienceComponent
               workExperience={workExperience}
@@ -183,164 +174,26 @@ export default function ProfileForm() {
               handleInputChange={handleInputChange}
               handleSaveExperience={handleSaveExperience}
             />
-
             {/* Education Section */}
             <Education
               education={education}
               addEducation={addEducation}
               removeEducation={removeEducation}
             />
-
             {/* Skills Section */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="mb-6 flex items-center gap-2">
-                  <Trophy className="h-5 w-5" />
-                  <h2 className="text-2xl font-bold">Skills & Expertise</h2>
-                </div>
-                <div>
-                  <Label htmlFor="skills">Add Skills</Label>
-                  <InputField
-                    id="skills"
-                    value={currentSkill}
-                    onChange={(e) => setCurrentSkill(e.target.value)}
-                    onKeyDown={addSkill}
-                    placeholder="Type a skill and press Enter (e.g. React, Node.js, Python)"
-                    className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
-                  />
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <AnimatePresence>
-                      {skills.map((skill) => (
-                        <motion.div
-                          key={skill}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.8 }}
-                        >
-                          <Badge
-                            variant="secondary"
-                            className="cursor-pointer"
-                            onClick={() => removeSkill(skill)}
-                          >
-                            {skill}
-                            <Trash2 className="ml-2 h-3 w-3" />
-                          </Badge>
-                        </motion.div>
-                      ))}
-                    </AnimatePresence>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
+            <Skill
+              currentSkill={currentSkill}
+              setCurrentSkill={setCurrentSkill}
+              addSkill={addSkill}
+              skills={skills}
+              removeSkill={removeSkill}
+            />
             {/* Job Preferences */}
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="mb-6 text-2xl font-bold">Job Preferences</h2>
-                <div className="space-y-6">
-                  <div>
-                    <Label>Salary Expectations (Annual)</Label>
-                    <div className="grid grid-cols-2 gap-4">
-                      <InputField
-                        type="number"
-                        placeholder="Minimum"
-                        className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
-                      />
-                      <InputField
-                        type="number"
-                        placeholder="Maximum"
-                        className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label>Work Type Preference</Label>
-                    <div className="mt-2 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span>Remote Only</span>
-                        <Switch />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span>Willing to Relocate</span>
-                        <Switch />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <Label>Notice Period</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select notice period" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="immediate">Immediate</SelectItem>
-                        <SelectItem value="1-week">1 Week</SelectItem>
-                        <SelectItem value="2-weeks">2 Weeks</SelectItem>
-                        <SelectItem value="1-month">1 Month</SelectItem>
-                        <SelectItem value="2-months">2 Months</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
+            <JobPreference />
             {/* Social Links */}
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="mb-6 text-2xl font-bold">Social Links</h2>
-                <div className="space-y-4">
-                  <div className="relative">
-                    <Linkedin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                    <InputField
-                      placeholder="LinkedIn URL"
-                      className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
-                    />
-                  </div>
-                  <div className="relative">
-                    <Github className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                    <InputField
-                      className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
-                      placeholder="GitHub URL"
-                    />
-                  </div>
-                  <div className="relative">
-                    <Globe className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                    <InputField
-                      className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
-                      placeholder="Portfolio URL"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
+            <SocialLinks />
             {/* Demographics Section */}
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="mb-6 text-2xl font-bold">Demographics</h2>
-                <div className="space-y-6">
-                  <div>
-                    <Label>Pronouns</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select pronouns" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="he/him">he/him</SelectItem>
-                        <SelectItem value="she/her">she/her</SelectItem>
-                        <SelectItem value="they/them">they/them</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Display demographics on profile</span>
-                    <Switch />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <DemoGraph />
           </motion.div>
         </AutoSaveForm>
       </div>
