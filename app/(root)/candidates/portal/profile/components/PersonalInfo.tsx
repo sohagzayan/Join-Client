@@ -6,16 +6,13 @@ import {
   Globe,
   GraduationCap,
   Linkedin,
-  MapPin,
   Plus,
   Trash2,
   Trophy,
-  Upload,
 } from 'lucide-react';
 import { useState } from 'react';
 
 import { InputField } from '@/components/common';
-import TextArea from '@/components/common/text-area';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -29,10 +26,16 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { ProfileFormData } from '@/data/models/profile';
-import { useGetCurrentUserQuery } from '@/redux/features/currentUser/currentUser';
+import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
 import { useGetAllExperiencesQuery } from '@/redux/features/profile/addExperience/addExperienceApi';
 import { revalidatePath } from 'next/cache';
+import { parseCookies } from 'nookies';
 import { AutoSaveForm } from './AutoSaveForm';
+import BasicInfo from './userProfile/BasicInfo';
+import {
+  default as WorkExperience,
+  default as WorkExperienceComponent,
+} from './userProfile/WorkExperienceComponent';
 
 type WorkExperience = {
   id: string;
@@ -45,9 +48,16 @@ type WorkExperience = {
 };
 
 export default function ProfileForm() {
-  const { data: currentUser } = useGetCurrentUserQuery({});
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+  const { data: currentUser } = useGetCurrentUserQuery(
+    token ? { token } : { token: '' },
+    {
+      skip: !token,
+    },
+  );
 
-  console.log(currentUser, 'currentUserrr');
+  // console.log(currentUser?.data?.id, 'current Userrrrrrr');
 
   const [workExperience, setWorkExperience] = useState<WorkExperience[]>([
     {
@@ -57,9 +67,11 @@ export default function ProfileForm() {
       startDate: '',
       endDate: '',
       description: '',
-      candidateId: 0,
+      // @ts-ignore
+      candidateId: currentUser?.data?.id,
     },
   ]);
+  console.log(workExperience, 'workExperience');
   const [education, setEducation] = useState([{ id: '1' }]);
   const [skills, setSkills] = useState<string[]>([]);
   const [currentSkill, setCurrentSkill] = useState('');
@@ -169,208 +181,16 @@ export default function ProfileForm() {
             className="space-y-8"
           >
             {/* Basic Info Section */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="mb-6 flex items-center gap-6">
-                  <div className="relative">
-                    <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                      <Upload className="h-8 w-8 text-gray-400" />
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      className="absolute -bottom-2 -right-2 rounded-full"
-                    >
-                      <Upload className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <div className="flex-1 space-y-4">
-                    <div>
-                      <Label htmlFor="name">Full Name</Label>
-                      <InputField
-                        id="name"
-                        placeholder="Your full name"
-                        className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="location">Location</Label>
-                      <div className="relative">
-                        <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                        <InputField
-                          id="location"
-                          className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
-                          placeholder="City, Country"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div>
-                    <Label htmlFor="primary-role">Primary Role</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select role" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="software-engineer">
-                          Software Engineer
-                        </SelectItem>
-                        <SelectItem value="frontend">
-                          Frontend Developer
-                        </SelectItem>
-                        <SelectItem value="backend">
-                          Backend Developer
-                        </SelectItem>
-                        <SelectItem value="fullstack">
-                          Fullstack Developer
-                        </SelectItem>
-                        <SelectItem value="devops">DevOps Engineer</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="experience">Years of Experience</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select experience" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="0-1">0-1 years</SelectItem>
-                        <SelectItem value="1-3">1-3 years</SelectItem>
-                        <SelectItem value="3-5">3-5 years</SelectItem>
-                        <SelectItem value="5-10">5-10 years</SelectItem>
-                        <SelectItem value="10+">10+ years</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <BasicInfo />
 
             {/* Work Experience Section */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="mb-6 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-2xl font-bold">Work Experience</h2>
-                  </div>
-                  <Button
-                    onClick={addWorkExperience}
-                    variant="outline"
-                    size="sm"
-                  >
-                    Add Experience
-                  </Button>
-                </div>
-
-                <AnimatePresence>
-                  {workExperience.map((exp) => (
-                    <motion.div
-                      key={exp.id}
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="mb-4 space-y-4 rounded-lg border p-4"
-                    >
-                      <div className="flex justify-end">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeWorkExperience(exp.id)}
-                        >
-                          Remove
-                        </Button>
-                      </div>
-                      <div className="grid gap-4 md:grid-cols-2">
-                        <div>
-                          <Label>Company</Label>
-                          <InputField
-                            placeholder="Company name"
-                            value={exp.companyName}
-                            onChange={(e) =>
-                              handleInputChange(
-                                exp.id,
-                                'companyName',
-                                e.target.value,
-                              )
-                            }
-                            className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
-                          />
-                        </div>
-                        <div>
-                          <Label>Job Title</Label>
-                          <InputField
-                            placeholder="Your role"
-                            value={exp.title}
-                            onChange={(e) =>
-                              handleInputChange(exp.id, 'title', e.target.value)
-                            }
-                            className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
-                          />
-                        </div>
-                        <div>
-                          <Label>Start Date</Label>
-                          <InputField
-                            type="month"
-                            value={exp.startDate}
-                            onChange={(e) =>
-                              handleInputChange(
-                                exp.id,
-                                'startDate',
-                                e.target.value,
-                              )
-                            }
-                            className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
-                          />
-                        </div>
-                        <div>
-                          <Label>End Date</Label>
-                          <InputField
-                            type="month"
-                            value={exp.endDate}
-                            onChange={(e) =>
-                              handleInputChange(
-                                exp.id,
-                                'endDate',
-                                e.target.value,
-                              )
-                            }
-                            placeholder="Present"
-                            className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <Label>Description</Label>
-                        <TextArea
-                          placeholder="Describe your responsibilities and achievements..."
-                          value={exp.description}
-                          onChange={(e) =>
-                            handleInputChange(
-                              exp.id,
-                              'description',
-                              e.target.value,
-                            )
-                          }
-                          className="h-32 rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
-                        />
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </CardContent>
-              <div className="flex w-full justify-end">
-                <Button
-                  onClick={handleSaveExperience}
-                  className="mb-3 mr-3 rounded-lg border-2 px-10 py-2"
-                >
-                  Save Experience
-                </Button>
-              </div>
-            </Card>
+            <WorkExperienceComponent
+              workExperience={workExperience}
+              addWorkExperience={addWorkExperience}
+              removeWorkExperience={removeWorkExperience}
+              handleInputChange={handleInputChange}
+              handleSaveExperience={handleSaveExperience}
+            />
 
             {/* Education Section */}
             <Card>

@@ -7,7 +7,7 @@ export const apiSlice = createApi({
 
     prepareHeaders: (headers, { getState }) => {
       let token;
-      const auth = localStorage.getItem('auth'); // Use a static key for localStorage
+      const auth = localStorage.getItem('auth');
 
       if (auth) {
         try {
