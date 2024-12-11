@@ -1,14 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-
 import { Switch } from '@/components/ui/switch';
 import { ProfileFormData } from '@/data/models/profile';
 import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
 import { useGetAllExperiencesQuery } from '@/redux/features/profile/addExperience/addExperienceApi';
+import { motion } from 'framer-motion';
 import { revalidatePath } from 'next/cache';
 import { parseCookies } from 'nookies';
+import { useState } from 'react';
 import { AutoSaveForm } from './AutoSaveForm';
 import BasicInfo from './userProfile/BasicInfo';
 import DemoGraph from './userProfile/DemoGraph';
