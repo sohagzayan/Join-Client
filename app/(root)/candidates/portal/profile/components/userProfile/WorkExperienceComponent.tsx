@@ -39,6 +39,7 @@ const WorkExperienceComponent: React.FC<WorkExperienceComponentProps> = ({
   handleInputChange,
   handleSaveExperience,
 }) => {
+  // console.log(workExperience?.length, 'just for test');
   return (
     <Card>
       <CardContent className="p-6">
@@ -61,13 +62,16 @@ const WorkExperienceComponent: React.FC<WorkExperienceComponentProps> = ({
               className="mb-4 space-y-4 rounded-lg border p-4"
             >
               <div className="flex justify-end">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => removeWorkExperience(exp.id)}
-                >
-                  Remove
-                </Button>
+                {workExperience?.length > 1 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    type="button" // Prevents the page reload
+                    onClick={() => removeWorkExperience(exp.id)}
+                  >
+                    Remove
+                  </Button>
+                )}
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
