@@ -55,7 +55,6 @@ export default function ProfileForm() {
     },
   ]);
   console.log(workExperience, 'workExperience');
-  const [education, setEducation] = useState([{ id: '1' }]);
   const [skills, setSkills] = useState<string[]>([]);
   const [currentSkill, setCurrentSkill] = useState('');
   const [isDark, setIsDark] = useState(false);
@@ -116,14 +115,6 @@ export default function ProfileForm() {
     );
   };
 
-  const addEducation = () => {
-    setEducation([...education, { id: String(education.length + 1) }]);
-  };
-
-  const removeEducation = (id: string) => {
-    setEducation(education.filter((edu) => edu.id !== id));
-  };
-
   const addSkill = (e: React.KeyboardEvent) => {
     if (
       e.key === 'Enter' &&
@@ -174,11 +165,7 @@ export default function ProfileForm() {
               handleSaveExperience={handleSaveExperience}
             />
             {/* Education Section */}
-            <Education
-              education={education}
-              addEducation={addEducation}
-              removeEducation={removeEducation}
-            />
+            <Education />
             {/* Skills Section */}
             <Skill
               currentSkill={currentSkill}
