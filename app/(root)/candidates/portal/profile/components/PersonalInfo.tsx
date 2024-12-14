@@ -55,8 +55,7 @@ export default function ProfileForm() {
     },
   ]);
   console.log(workExperience, 'workExperience');
-  const [skills, setSkills] = useState<string[]>([]);
-  const [currentSkill, setCurrentSkill] = useState('');
+
   const [isDark, setIsDark] = useState(false);
 
   const { data: experienceData } = useGetAllExperiencesQuery({});
@@ -115,21 +114,6 @@ export default function ProfileForm() {
     );
   };
 
-  const addSkill = (e: React.KeyboardEvent) => {
-    if (
-      e.key === 'Enter' &&
-      currentSkill.trim() &&
-      !skills.includes(currentSkill.trim())
-    ) {
-      setSkills([...skills, currentSkill.trim()]);
-      setCurrentSkill('');
-    }
-  };
-
-  const removeSkill = (skill: string) => {
-    setSkills(skills.filter((s) => s !== skill));
-  };
-
   //  Hendler functions
   // save experience handler
   const handleSaveExperience = (e: any) => {
@@ -167,13 +151,7 @@ export default function ProfileForm() {
             {/* Education Section */}
             <Education />
             {/* Skills Section */}
-            <Skill
-              currentSkill={currentSkill}
-              setCurrentSkill={setCurrentSkill}
-              addSkill={addSkill}
-              skills={skills}
-              removeSkill={removeSkill}
-            />
+            <Skill />
             {/* Job Preferences */}
             <JobPreference />
             {/* Social Links */}
