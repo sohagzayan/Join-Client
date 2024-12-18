@@ -1,30 +1,29 @@
 'use client';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { IoIosArrowDown } from 'react-icons/io';
 
 const menuItems = [
   { id: 'overview', label: 'Overview', path: '/candidates/portal/overview' },
   {
     id: 'profile',
-    label: 'Profile',
+    label: 'Edit Profile',
     path: '/candidates/portal/profile',
-    subMenu: [
-      {
-        label: 'Edit Profile',
-        path: '/candidates/portal/profile/edit-profile',
-      },
-      { label: 'Note', path: '/candidates/portal/profile/note' },
-      { label: 'Tests', path: '/candidates/portal/profile/tests' },
-      { label: 'Resume', path: '/candidates/portal/profile/resume' },
-      { label: 'Recommend', path: '/candidates/portal/profile/recommend' },
-      { label: 'History', path: '/candidates/portal/profile/history' },
-    ],
+    // subMenu: [
+    //   {
+    //     label: 'Edit Profile',
+    //     path: '/candidates/portal/profile/edit-profile',
+    //   },
+    //   { label: 'Note', path: '/candidates/portal/profile/note' },
+    //   { label: 'Tests', path: '/candidates/portal/profile/tests' },
+    //   { label: 'Resume', path: '/candidates/portal/profile/resume' },
+    //   { label: 'Recommend', path: '/candidates/portal/profile/recommend' },
+    //   { label: 'History', path: '/candidates/portal/profile/history' },
+    // ],
   },
   {
     id: 'preferences',
-    label: 'Preferences',
+    label: 'Edit Preferences',
     path: '/candidates/portal/preferences',
   },
   { id: 'analytics', label: 'Analytics', path: '/candidates/portal/analytics' },
@@ -94,11 +93,11 @@ const CandidateProfileController = () => {
             whileTap={{ scale: 0.95 }}
           >
             {item.label}
-            {item.subMenu && <IoIosArrowDown className="ml-1 inline-block" />}
+            {/* {item.subMenu && <IoIosArrowDown className="ml-1 inline-block" />} */}
           </motion.button>
           {activeMenuItem === item.id && (
             <motion.div
-              className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
+              className="absolute"
               layoutId="activeMenuItem"
               initial={false}
               transition={{
@@ -108,7 +107,7 @@ const CandidateProfileController = () => {
               }}
             />
           )}
-          {item.subMenu && activeMenuItem === item.id && (
+          {/* {item.subMenu && activeMenuItem === item.id && (
             <AnimatePresence>
               <motion.div
                 className="absolute left-0 z-50 mt-2 w-48 rounded-md bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5"
@@ -133,7 +132,7 @@ const CandidateProfileController = () => {
                 ))}
               </motion.div>
             </AnimatePresence>
-          )}
+          )} */}
         </div>
       ))}
     </motion.div>

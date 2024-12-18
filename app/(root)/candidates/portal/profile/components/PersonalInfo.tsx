@@ -12,7 +12,6 @@ import { AutoSaveForm } from './AutoSaveForm';
 import BasicInfo from './userProfile/BasicInfo';
 import DemoGraph from './userProfile/DemoGraph';
 import Education from './userProfile/Education';
-import JobPreference from './userProfile/JobPreference';
 import Skill from './userProfile/Skill';
 import SocialLinks from './userProfile/SocialLinks';
 import {
@@ -153,7 +152,7 @@ export default function ProfileForm() {
             {/* Skills Section */}
             <Skill />
             {/* Job Preferences */}
-            <JobPreference />
+            {/* <JobPreference /> */}
             {/* Social Links */}
             <SocialLinks />
             {/* Demographics Section */}
