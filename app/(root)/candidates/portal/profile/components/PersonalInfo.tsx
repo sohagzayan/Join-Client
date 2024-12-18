@@ -39,7 +39,7 @@ export default function ProfileForm() {
     },
   );
 
-  // console.log(currentUser?.data?.id, 'current Userrrrrrr');
+  console.log(currentUser, 'current Userrrrrrr');
 
   const [workExperience, setWorkExperience] = useState<WorkExperience[]>([
     {
