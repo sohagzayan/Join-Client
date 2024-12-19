@@ -1,27 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { parseCookies } from 'nookies';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_DATABASE_URL}/v1/`,
+    prepareHeaders: (headers) => {
+      const cookies = parseCookies();
+      const token = cookies['auth_token'];
 
-    prepareHeaders: (headers, { getState }) => {
-      let token;
-      const auth = localStorage.getItem('auth');
-
-      if (auth) {
-        try {
-          token = JSON.parse(auth).token;
-        } catch (e) {
-          console.error('Error parsing auth token from localStorage', e);
-        }
-      }
       if (token) {
-        headers.set('Authorization', `token ${token}`);
+        headers.set('Authorization', `Bearer ${token}`);
       }
       return headers;
     },
   }),
-  tagTypes: ['Experiences'],
+  tagTypes: ['Experiences', 'Profile'],
   endpoints: () => ({}),
 });

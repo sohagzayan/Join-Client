@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useGetProfileQuery } from '@/redux/features/profile/profileApi';
 
 // Define types
 interface FormData {
@@ -31,6 +32,9 @@ const BasicInfo = () => {
     primaryRole: '',
     experience: '',
   });
+
+  const { data: profileInfo } = useGetProfileQuery({});
+  console.log(profileInfo, 'profileInfo');
 
   // Handle input change
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
