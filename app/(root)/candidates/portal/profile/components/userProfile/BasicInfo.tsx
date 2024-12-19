@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
+import { toast } from 'sonner';
 
 // Define types
 interface FormData {
@@ -101,6 +102,7 @@ const BasicInfo = () => {
             yearsOfExperience: formData.yearsOfExperience,
           },
         });
+        toast.success('Profile Update Successful', { duration: 4000 });
       } else {
         // Add profile
         await addProfile({
@@ -112,6 +114,7 @@ const BasicInfo = () => {
             yearsOfExperience: formData.yearsOfExperience,
           },
         });
+        toast.success('Profile Update Successful', { duration: 4000 });
       }
     } catch (error) {
       console.error('Error saving profile:', error);
