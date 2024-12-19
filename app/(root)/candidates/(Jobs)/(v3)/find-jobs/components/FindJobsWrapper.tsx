@@ -12,7 +12,7 @@ const FindJobsWrapper = () => {
   const [showEarlyApplyModal, setShowEarlyApplyModal] = useState<any>(false);
 
   return (
-    <div className="relative mt-10">
+    <div className="relative">
       <JobModal
         {...{
           showJobModal,
@@ -21,13 +21,13 @@ const FindJobsWrapper = () => {
           setShowEarlyApplyModal,
         }}
       />
-      <div className="container">
+      <div className="container py-10">
         <div className="mb-5 border-b border-b-[rgba(255,255,255,0.08)]">
           <h3 className="py-2 text-4xl font-bold text-white">Explore jobs</h3>
         </div>
-        <Filtering
-        //   {...{ showJobModal, setShowJobModal, setSelectedJob, selectedJob }}
-        />
+        <Filtering />
+        {/* {...{ showJobModal, setShowJobModal, setSelectedJob, selectedJob }} */}
+
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-9">
             <JobListings
