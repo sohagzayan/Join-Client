@@ -1,7 +1,13 @@
 'use client';
 
+import {
+  useAddProfileMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from '@/redux/features/profile/profileApi';
 import { MapPin, Upload } from 'lucide-react';
-import { ChangeEvent, useState } from 'react';
+import { parseCookies } from 'nookies';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { InputField } from '@/components/common';
 import { Button } from '@/components/ui/button';
@@ -14,14 +20,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useGetProfileQuery } from '@/redux/features/profile/profileApi';
+import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
 
 // Define types
 interface FormData {
   name: string;
   location: string;
   primaryRole: string;
-  experience: string;
+  yearsOfExperience: number;
 }
 
 const BasicInfo = () => {
@@ -30,11 +36,38 @@ const BasicInfo = () => {
     name: '',
     location: '',
     primaryRole: '',
-    experience: '',
+    yearsOfExperience: 0,
   });
 
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+
   const { data: profileInfo } = useGetProfileQuery({});
-  console.log(profileInfo, 'profileInfo');
+  const { data: currentUser } = useGetCurrentUserQuery(
+    token ? { token } : { token: '' },
+    {
+      skip: !token,
+    },
+  );
+
+  const [addProfile] = useAddProfileMutation();
+  const [updateProfile] = useUpdateProfileMutation();
+
+  useEffect(() => {
+    if (
+      profileInfo?.data &&
+      Array.isArray(profileInfo.data) &&
+      profileInfo.data.length > 0
+    ) {
+      const profile = profileInfo.data[0];
+      setFormData({
+        name: profile.name || '',
+        location: profile.location || '',
+        primaryRole: profile.primaryRole || '',
+        yearsOfExperience: profile.yearsOfExperience || 0,
+      });
+    }
+  }, [profileInfo]);
 
   // Handle input change
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,13 +76,46 @@ const BasicInfo = () => {
   };
 
   // Handle Select change
-  const handleSelectChange = (field: keyof FormData, value: string) => {
+  const handleSelectChange = (
+    field: keyof FormData,
+    value: string | number,
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   // Handle save button click
-  const handleSaveExperience = () => {
-    console.log('Basic-Data:', formData);
+  const handleSaveExperience = async () => {
+    try {
+      if (
+        profileInfo?.data &&
+        Array.isArray(profileInfo.data) &&
+        profileInfo.data.length > 0
+      ) {
+        // Update profile
+        await updateProfile({
+          candidateId: profileInfo.data[0].id,
+          data: {
+            name: formData.name,
+            location: formData.location,
+            primaryRole: formData.primaryRole,
+            yearsOfExperience: formData.yearsOfExperience,
+          },
+        });
+      } else {
+        // Add profile
+        await addProfile({
+          data: {
+            candidateId: currentUser?.id,
+            name: formData.name,
+            location: formData.location,
+            primaryRole: formData.primaryRole,
+            yearsOfExperience: formData.yearsOfExperience,
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
   };
 
   return (
@@ -96,8 +162,9 @@ const BasicInfo = () => {
 
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <Label htmlFor="primary-role">Primary Role</Label>
+            <Label htmlFor="primaryRole">Primary Role</Label>
             <Select
+              value={formData.primaryRole}
               onValueChange={(value) =>
                 handleSelectChange('primaryRole', value)
               }
@@ -117,19 +184,22 @@ const BasicInfo = () => {
             </Select>
           </div>
           <div>
-            <Label htmlFor="experience">Years of Experience</Label>
+            <Label htmlFor="yearsOfExperience">Years of Experience</Label>
             <Select
-              onValueChange={(value) => handleSelectChange('experience', value)}
+              value={formData.yearsOfExperience.toString()}
+              onValueChange={(value) =>
+                handleSelectChange('yearsOfExperience', parseInt(value))
+              }
             >
               <SelectTrigger className="bg-transparent focus:ring-blue-500 focus:ring-offset-blue-500">
                 <SelectValue placeholder="Select experience" />
               </SelectTrigger>
               <SelectContent className="bg-gray-800 text-gray-300">
-                <SelectItem value="0-1">0-1 years</SelectItem>
-                <SelectItem value="1-3">1-3 years</SelectItem>
-                <SelectItem value="3-5">3-5 years</SelectItem>
-                <SelectItem value="5-10">5-10 years</SelectItem>
-                <SelectItem value="10+">10+ years</SelectItem>
+                <SelectItem value="0">0-1 years</SelectItem>
+                <SelectItem value="1">1-3 years</SelectItem>
+                <SelectItem value="3">3-5 years</SelectItem>
+                <SelectItem value="5">5-10 years</SelectItem>
+                <SelectItem value="10">10+ years</SelectItem>
               </SelectContent>
             </Select>
           </div>

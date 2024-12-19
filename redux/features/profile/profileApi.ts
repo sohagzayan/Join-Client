@@ -25,7 +25,7 @@ export const addExperienceApi = apiSlice.injectEndpoints({
     updateProfile: builder.mutation({
       query: ({ candidateId, data }: any) => ({
         url: `profile/${candidateId}`,
-        method: 'PUT',
+        method: 'PATCH',
         body: data,
       }),
       invalidatesTags: ['Profile'],
