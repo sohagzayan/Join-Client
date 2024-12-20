@@ -1,24 +1,77 @@
 'use client';
 
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from '@/redux/features/profile/profileApi';
 import { Github, Globe, Linkedin } from 'lucide-react';
-import { useState } from 'react';
+import { parseCookies } from 'nookies';
+import { useEffect, useState } from 'react';
 
 import { InputField } from '@/components/common';
 import { Card, CardContent } from '@/components/ui/card';
+import { toast } from 'sonner';
 
 const SocialLinks = () => {
   const [linkedin, setLinkedin] = useState('');
   const [github, setGithub] = useState('');
   const [portfolio, setPortfolio] = useState('');
 
-  const handleSave = () => {
-    const socialLinks = {
-      linkedin,
-      github,
-      portfolio,
-    };
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
 
-    console.log('Social Links:', socialLinks);
+  const { data: profileInfo } = useGetProfileQuery({});
+  const [updateProfile] = useUpdateProfileMutation();
+
+  useEffect(() => {
+    if (
+      profileInfo?.data &&
+      Array.isArray(profileInfo.data) &&
+      profileInfo.data.length > 0
+    ) {
+      const profile = profileInfo.data[0];
+      setLinkedin(profile.linkedin || '');
+      setGithub(profile.github || '');
+      // Portfolio is kept for UI purposes but not handled in backend for now
+    }
+  }, [profileInfo]);
+
+  const handleLinkedinSave = async () => {
+    if (
+      profileInfo?.data &&
+      Array.isArray(profileInfo.data) &&
+      profileInfo.data.length > 0
+    ) {
+      try {
+        await updateProfile({
+          candidateId: profileInfo.data[0].id,
+          data: { linkedin },
+        });
+        toast.success('LinkedIn updated successfully!');
+      } catch (error) {
+        toast.error('Error updating LinkedIn. Please try again.');
+        console.error('Error updating LinkedIn:', error);
+      }
+    }
+  };
+
+  const handleGithubSave = async () => {
+    if (
+      profileInfo?.data &&
+      Array.isArray(profileInfo.data) &&
+      profileInfo.data.length > 0
+    ) {
+      try {
+        await updateProfile({
+          candidateId: profileInfo.data[0].id,
+          data: { github },
+        });
+        toast.success('GitHub updated successfully!');
+      } catch (error) {
+        toast.error('Error updating GitHub. Please try again.');
+        console.error('Error updating GitHub:', error);
+      }
+    }
   };
 
   return (
@@ -33,6 +86,7 @@ const SocialLinks = () => {
               placeholder="LinkedIn URL"
               value={linkedin}
               onChange={(e) => setLinkedin(e.target.value)}
+              onBlur={handleLinkedinSave}
               className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
             />
           </div>
@@ -44,6 +98,7 @@ const SocialLinks = () => {
               placeholder="GitHub URL"
               value={github}
               onChange={(e) => setGithub(e.target.value)}
+              onBlur={handleGithubSave}
               className="rounded-lg border border-[#404142] bg-transparent pl-9 text-[#f5f5f5]"
             />
           </div>
@@ -60,17 +115,6 @@ const SocialLinks = () => {
           </div>
         </div>
       </CardContent>
-
-      {/* Save Button */}
-      <div className="mb-2 mr-2 flex justify-end">
-        <button
-          onClick={handleSave}
-          type="button"
-          className="rounded-md border px-4 py-2 text-white"
-        >
-          Save Social Links
-        </button>
-      </div>
     </Card>
   );
 };
