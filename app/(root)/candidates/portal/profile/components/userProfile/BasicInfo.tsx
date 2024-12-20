@@ -51,6 +51,7 @@ const BasicInfo = () => {
     },
   );
 
+  console.log(profileInfo, 'infoooo');
   const [addProfile] = useAddProfileMutation();
   const [updateProfile] = useUpdateProfileMutation();
 

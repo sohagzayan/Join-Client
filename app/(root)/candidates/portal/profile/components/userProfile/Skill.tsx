@@ -1,16 +1,50 @@
 'use client';
+
+import {
+  useAddProfileMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from '@/redux/features/profile/profileApi';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Trash2, Trophy } from 'lucide-react';
+import { parseCookies } from 'nookies';
+import { useEffect, useState } from 'react';
 
 import { InputField } from '@/components/common';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
+import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
+import { toast } from 'sonner';
 
 const Skill = () => {
   const [skills, setSkills] = useState<string[]>([]); // State to store all skills
   const [currentSkill, setCurrentSkill] = useState('');
+
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+
+  const { data: profileInfo } = useGetProfileQuery({});
+  const { data: currentUser } = useGetCurrentUserQuery(
+    token ? { token } : { token: '' },
+    {
+      skip: !token,
+    },
+  );
+
+  const [addProfile] = useAddProfileMutation();
+  const [updateProfile] = useUpdateProfileMutation();
+
+  useEffect(() => {
+    if (
+      profileInfo?.data &&
+      Array.isArray(profileInfo.data) &&
+      profileInfo.data.length > 0
+    ) {
+      const profile = profileInfo.data[0];
+      setSkills(profile.skills || []);
+    }
+  }, [profileInfo]);
 
   // Add skill when Enter key is pressed
   const addSkill = (e: React.KeyboardEvent) => {
@@ -30,8 +64,35 @@ const Skill = () => {
   };
 
   // Handle Save button click
-  const handleSave = () => {
-    console.log('Skills:', skills); // Log skills as an array of strings
+  const handleSave = async () => {
+    try {
+      if (
+        profileInfo?.data &&
+        Array.isArray(profileInfo.data) &&
+        profileInfo.data.length > 0
+      ) {
+        // Update profile
+        await updateProfile({
+          candidateId: profileInfo.data[0].id,
+          data: {
+            skills,
+          },
+        });
+        toast.success('Skills updated successfully!');
+      } else {
+        // Add profile
+        await addProfile({
+          data: {
+            candidateId: currentUser?.id,
+            skills,
+          },
+        });
+        toast.success('Skills added successfully!');
+      }
+    } catch (error) {
+      toast.error('Error saving skills. Please try again.');
+      console.error('Error saving skills:', error);
+    }
   };
 
   return (
@@ -80,7 +141,7 @@ const Skill = () => {
           className="mb-3 mr-3 rounded-lg border-2 px-10 py-2"
           type="button"
         >
-          Save Experience
+          Save Skills
         </Button>
       </div>
     </Card>
