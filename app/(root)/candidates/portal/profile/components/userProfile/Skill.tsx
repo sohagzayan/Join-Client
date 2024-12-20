@@ -11,10 +11,8 @@ import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 
 import { InputField } from '@/components/common';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
 import { toast } from 'sonner';
 
 const Skill = () => {
@@ -25,13 +23,6 @@ const Skill = () => {
   const token = cookies['auth_token'];
 
   const { data: profileInfo } = useGetProfileQuery({});
-  const { data: currentUser } = useGetCurrentUserQuery(
-    token ? { token } : { token: '' },
-    {
-      skip: !token,
-    },
-  );
-
   const [addProfile] = useAddProfileMutation();
   const [updateProfile] = useUpdateProfileMutation();
 
@@ -46,52 +37,69 @@ const Skill = () => {
     }
   }, [profileInfo]);
 
-  // Add skill when Enter key is pressed
-  const addSkill = (e: React.KeyboardEvent) => {
+  // Add skill and update profile immediately
+  const addSkill = async (e: React.KeyboardEvent) => {
     if (
       e.key === 'Enter' &&
       currentSkill.trim() &&
       !skills.includes(currentSkill.trim())
     ) {
-      setSkills([...skills, currentSkill.trim()]);
+      const updatedSkills = [...skills, currentSkill.trim()];
+      setSkills(updatedSkills);
       setCurrentSkill('');
-    }
-  };
 
-  // Remove skill from the list
-  const removeSkill = (skill: string) => {
-    setSkills(skills.filter((s) => s !== skill));
-  };
-
-  // Handle Save button click
-  const handleSave = async () => {
-    try {
       if (
         profileInfo?.data &&
         Array.isArray(profileInfo.data) &&
         profileInfo.data.length > 0
       ) {
-        // Update profile
+        try {
+          await updateProfile({
+            candidateId: profileInfo.data[0].id,
+            data: { skills: updatedSkills },
+          });
+          toast.success('Skill added and profile updated successfully!');
+        } catch (error) {
+          toast.error('Error updating profile. Please try again.');
+          console.error('Error updating profile:', error);
+        }
+      } else {
+        try {
+          await addProfile({
+            data: {
+              candidateId: profileInfo?.data?.[0]?.candidateId || '',
+              skills: updatedSkills,
+            },
+          });
+          toast.success('Skill added and profile created successfully!');
+        } catch (error) {
+          toast.error('Error creating profile. Please try again.');
+          console.error('Error creating profile:', error);
+        }
+      }
+    }
+  };
+
+  // Remove skill and update profile immediately
+  const removeSkill = async (skill: string) => {
+    const updatedSkills = skills.filter((s) => s !== skill);
+    setSkills(updatedSkills);
+
+    if (
+      profileInfo?.data &&
+      Array.isArray(profileInfo.data) &&
+      profileInfo.data.length > 0
+    ) {
+      try {
         await updateProfile({
           candidateId: profileInfo.data[0].id,
-          data: {
-            skills,
-          },
+          data: { skills: updatedSkills },
         });
-        toast.success('Skills updated successfully!');
-      } else {
-        // Add profile
-        await addProfile({
-          data: {
-            candidateId: currentUser?.id,
-            skills,
-          },
-        });
-        toast.success('Skills added successfully!');
+        toast.success('Skill removed and profile updated successfully!');
+      } catch (error) {
+        toast.error('Error updating profile. Please try again.');
+        console.error('Error updating profile:', error);
       }
-    } catch (error) {
-      toast.error('Error saving skills. Please try again.');
-      console.error('Error saving skills:', error);
     }
   };
 
@@ -135,15 +143,6 @@ const Skill = () => {
           </div>
         </div>
       </CardContent>
-      <div className="flex w-full justify-end">
-        <Button
-          onClick={handleSave}
-          className="mb-3 mr-3 rounded-lg border-2 px-10 py-2"
-          type="button"
-        >
-          Save Skills
-        </Button>
-      </div>
     </Card>
   );
 };
