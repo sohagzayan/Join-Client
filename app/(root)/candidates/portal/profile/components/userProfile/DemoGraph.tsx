@@ -9,18 +9,69 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useState } from 'react';
+import {
+  useAddProfileMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from '@/redux/features/profile/profileApi';
+import { parseCookies } from 'nookies';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 const DemoGraph = () => {
   const [pronouns, setPronouns] = useState('');
   const [showDemographics, setShowDemographics] = useState(false);
 
-  const handleSave = () => {
-    const demographicsData = {
-      pronouns,
-      showDemographics,
-    };
-    console.log('Demographics Data:', demographicsData);
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+
+  const { data: profileInfo } = useGetProfileQuery({});
+  const [addProfile] = useAddProfileMutation();
+  const [updateProfile] = useUpdateProfileMutation();
+
+  useEffect(() => {
+    if (
+      profileInfo?.data &&
+      Array.isArray(profileInfo.data) &&
+      profileInfo.data.length > 0
+    ) {
+      const profile = profileInfo.data[0];
+      setPronouns(profile.pronouns || '');
+    }
+  }, [profileInfo]);
+
+  const handlePronounsChange = async (value: string) => {
+    setPronouns(value);
+
+    if (
+      profileInfo?.data &&
+      Array.isArray(profileInfo.data) &&
+      profileInfo.data.length > 0
+    ) {
+      try {
+        await updateProfile({
+          candidateId: profileInfo.data[0].id,
+          data: { pronouns: value },
+        });
+        toast.success('Pronouns updated successfully!');
+      } catch (error) {
+        toast.error('Error updating pronouns. Please try again.');
+        console.error('Error updating pronouns:', error);
+      }
+    } else {
+      try {
+        await addProfile({
+          data: {
+            candidateId: profileInfo?.data?.[0]?.candidateId || '',
+            pronouns: value,
+          },
+        });
+        toast.success('Pronouns added successfully!');
+      } catch (error) {
+        toast.error('Error adding pronouns. Please try again.');
+        console.error('Error adding pronouns:', error);
+      }
+    }
   };
 
   return (
@@ -31,7 +82,10 @@ const DemoGraph = () => {
           {/* Pronouns Dropdown */}
           <div>
             <Label>Pronouns</Label>
-            <Select onValueChange={(value) => setPronouns(value)}>
+            <Select
+              value={pronouns}
+              onValueChange={(value) => handlePronounsChange(value)}
+            >
               <SelectTrigger className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]">
                 <SelectValue placeholder="Select pronouns" />
               </SelectTrigger>
@@ -59,17 +113,6 @@ const DemoGraph = () => {
           </div>
         </div>
       </CardContent>
-
-      {/* Save Button */}
-      <div className="mb-2 mr-2 flex justify-end">
-        <button
-          onClick={handleSave}
-          type="button"
-          className="rounded-md border px-4 py-2 text-white"
-        >
-          Save Demographics
-        </button>
-      </div>
     </Card>
   );
 };
