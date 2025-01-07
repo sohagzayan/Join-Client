@@ -43,7 +43,7 @@ const BasicInfo = () => {
   const cookies = parseCookies();
   const token = cookies['auth_token'];
 
-  const { data: profileInfo } = useGetProfileQuery({});
+  const { data: profileInfo } = useGetProfileQuery<any>({});
   const { data: currentUser } = useGetCurrentUserQuery(
     token ? { token } : { token: '' },
     {

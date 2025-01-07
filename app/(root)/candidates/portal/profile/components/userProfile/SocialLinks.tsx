@@ -20,7 +20,7 @@ const SocialLinks = () => {
   const cookies = parseCookies();
   const token = cookies['auth_token'];
 
-  const { data: profileInfo } = useGetProfileQuery({});
+  const { data: profileInfo } = useGetProfileQuery<any>({});
   const [updateProfile] = useUpdateProfileMutation();
 
   useEffect(() => {
