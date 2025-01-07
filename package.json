@@ -70,7 +70,7 @@
     "@tiptap/pm": "^2.2.4",
     "@tiptap/react": "^2.2.4",
     "@tiptap/starter-kit": "^2.2.4",
-    "@types/react-big-calendar": "^1.8.12",
+    "@types/react-big-calendar": "^1.16.0",
     "@uploadthing/react": "^6.0.2",
     "apexcharts": "^3.54.1",
     "awesome-react-stepper": "^1.1.1",

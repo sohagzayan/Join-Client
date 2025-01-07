@@ -1804,7 +1804,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-big-calendar@^1.8.12":
+"@types/react-big-calendar@^1.16.0":
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/@types/react-big-calendar/-/react-big-calendar-1.16.0.tgz#1740740281b75036034e6f5058a046278bc6cbf0"
   integrity sha512-1w2GXAJWlGmaPZOd9J9cyWA/XBNOGRZ4MmRNypEQhwEMIIL9cfd1UdcvzSrQsnBm0qYF/scqmsISNbUzPBE1vg==
