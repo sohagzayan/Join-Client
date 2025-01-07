@@ -17,7 +17,6 @@ const EnhancedDynamicTitle: React.FC = () => {
   const topTitleRefs = useRef<HTMLSpanElement[]>([]);
 
   useEffect(() => {
-    // Active Animation for Top Title
     const timeline = gsap.timeline({ repeat: -1, delay: 1 });
     topTitleRefs.current.forEach((el, i) => {
       timeline.to(
@@ -25,23 +24,22 @@ const EnhancedDynamicTitle: React.FC = () => {
         {
           scale: 1.1,
           rotate: 5,
-          color: '#3b82f6', // Light blue tint
+          color: '#3b82f6',
           duration: 1,
           yoyo: true,
           repeat: 1,
           ease: 'power2.inOut',
         },
-        i * 0.3, // Stagger effect
+        i * 0.3,
       );
     });
 
     return () => {
-      timeline.kill(); // Cleanup timeline
+      timeline.kill();
     };
   }, []);
 
   useEffect(() => {
-    // Animate Dynamic Subtitle Characters
     if (charRefs.current.length) {
       gsap.fromTo(
         charRefs.current,
@@ -68,7 +66,7 @@ const EnhancedDynamicTitle: React.FC = () => {
     gsap.to(el, {
       scale: 1.2,
       rotate: 10,
-      color: '#4ade80', // Green glow
+      color: '#4ade80',
       textShadow: '0px 0px 15px #4ade80',
       duration: 0.3,
       ease: 'power2.out',
@@ -88,13 +86,14 @@ const EnhancedDynamicTitle: React.FC = () => {
 
   return (
     <div className="text-center text-white">
-      {/* Main Title with Active Animation */}
       <h1
         ref={titleRef}
         className="mb-2 text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl"
       >
         <span
-          ref={(el) => (topTitleRefs.current[0] = el!)}
+          ref={(el) => {
+            if (el) topTitleRefs.current[0] = el;
+          }}
           className="inline-block cursor-pointer"
           onMouseEnter={(e) => handleHover(e.currentTarget)}
           onMouseLeave={(e) => handleHoverOut(e.currentTarget)}
@@ -102,7 +101,9 @@ const EnhancedDynamicTitle: React.FC = () => {
           Dream
         </span>{' '}
         <span
-          ref={(el) => (topTitleRefs.current[1] = el!)}
+          ref={(el) => {
+            if (el) topTitleRefs.current[1] = el;
+          }}
           className="inline-block cursor-pointer"
           onMouseEnter={(e) => handleHover(e.currentTarget)}
           onMouseLeave={(e) => handleHoverOut(e.currentTarget)}
@@ -110,7 +111,9 @@ const EnhancedDynamicTitle: React.FC = () => {
           Job
         </span>{' '}
         <span
-          ref={(el) => (topTitleRefs.current[2] = el!)}
+          ref={(el) => {
+            if (el) topTitleRefs.current[2] = el;
+          }}
           className="relative cursor-pointer"
           onMouseEnter={(e) => handleHover(e.currentTarget)}
           onMouseLeave={(e) => handleHoverOut(e.currentTarget)}
@@ -126,12 +129,13 @@ const EnhancedDynamicTitle: React.FC = () => {
         </span>
       </h1>
 
-      {/* Dynamic Subtitle */}
       <h2 className="h-20 overflow-hidden text-3xl font-bold tracking-tight sm:h-24 sm:text-4xl md:h-20 md:text-5xl lg:h-20 lg:text-6xl">
         {dynamicValues[index].split('').map((char, i) => (
           <span
             key={`${char}-${i}`}
-            ref={(el) => (charRefs.current[i] = el!)}
+            ref={(el) => {
+              if (el) charRefs.current[i] = el;
+            }}
             className="inline-block cursor-pointer"
             onMouseEnter={() => handleHover(charRefs.current[i])}
             onMouseLeave={() => handleHoverOut(charRefs.current[i])}
@@ -141,7 +145,6 @@ const EnhancedDynamicTitle: React.FC = () => {
         ))}
       </h2>
 
-      {/* Static Tagline */}
       <div ref={taglineRef} className="mt-4 text-xl text-blue-300 sm:text-2xl">
         Your journey to success starts here!
       </div>

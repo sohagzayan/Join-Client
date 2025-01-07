@@ -2,6 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
 import {
   AnimatePresence,
   motion,
@@ -10,6 +11,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import { Camera, ExternalLink, MapPin, Sparkles, Trophy } from 'lucide-react';
+import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 
 const UserProfileCard = () => {
@@ -17,6 +19,17 @@ const UserProfileCard = () => {
   const [progress, setProgress] = useState(0);
   const springProgress = useSpring(0, { stiffness: 100, damping: 30 });
   const skills = ['React', 'TypeScript', 'Node.js', 'Next.js', 'TailwindCSS'];
+
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+  const { data: currentUser } = useGetCurrentUserQuery(
+    token ? { token } : { token: '' },
+    {
+      skip: !token,
+    },
+  );
+
+  console.log(currentUser, 'usr prfle');
 
   // Profile completion percentage animation
   useEffect(() => {
@@ -127,7 +140,8 @@ const UserProfileCard = () => {
               >
                 <div className="flex items-center gap-2">
                   <h1 className="to-white/60 bg-gradient-to-r from-white bg-clip-text text-3xl font-light tracking-tight text-transparent md:text-4xl">
-                    Jose <span className="font-medium">Does</span>
+                    {/* @ts-ignore */}
+                    {currentUser?.data?.name}
                   </h1>
                   <Sparkles className="text-yellow-500 h-5 w-5" />
                 </div>
