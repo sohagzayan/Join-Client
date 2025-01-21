@@ -1,14 +1,14 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
-
 import { InputField } from '@/components/common';
 import TextArea from '@/components/common/text-area';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 
-// / Define WorkExperience type
+// Define WorkExperience type
 type WorkExperience = {
   id: string;
   companyName: string;
@@ -19,27 +19,61 @@ type WorkExperience = {
   candidateId: number;
 };
 
-// Define Props for WorkExperienceComponent
-type WorkExperienceComponentProps = {
-  addWorkExperience: (e: React.FormEvent) => void;
-  workExperience: WorkExperience[];
-  removeWorkExperience: (id: string) => void;
-  handleInputChange: (
+const WorkExperienceComponent: React.FC = () => {
+  const [workExperience, setWorkExperience] = useState<WorkExperience[]>([
+    {
+      id: '1',
+      companyName: '',
+      title: '',
+      startDate: '',
+      endDate: '',
+      description: '',
+      candidateId: 0,
+    },
+  ]);
+
+  const addWorkExperience = (e: React.FormEvent) => {
+    e.preventDefault();
+    setWorkExperience((prev) => [
+      ...prev,
+      {
+        id: String(prev.length + 1),
+        companyName: '',
+        title: '',
+        startDate: '',
+        endDate: '',
+        description: '',
+        candidateId: 0,
+      },
+    ]);
+  };
+
+  const removeWorkExperience = (id: string) => {
+    setWorkExperience((prev) => prev.filter((exp) => exp.id !== id));
+  };
+
+  const handleInputChange = (
     id: string,
     field: keyof WorkExperience,
     value: string,
-  ) => void;
-  handleSaveExperience: (e: React.FormEvent) => void;
-};
+  ) => {
+    setWorkExperience((prev) =>
+      prev.map((exp) =>
+        exp.id === id
+          ? {
+              ...exp,
+              [field]: value,
+            }
+          : exp,
+      ),
+    );
+  };
 
-const WorkExperienceComponent: React.FC<WorkExperienceComponentProps> = ({
-  addWorkExperience,
-  workExperience,
-  removeWorkExperience,
-  handleInputChange,
-  handleSaveExperience,
-}) => {
-  // console.log(workExperience?.length, 'just for test');
+  const handleSaveExperience = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(workExperience, 'local-experience');
+  };
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -66,7 +100,7 @@ const WorkExperienceComponent: React.FC<WorkExperienceComponentProps> = ({
                   <Button
                     variant="ghost"
                     size="sm"
-                    type="button" // Prevents the page reload
+                    type="button"
                     onClick={() => removeWorkExperience(exp.id)}
                   >
                     Remove

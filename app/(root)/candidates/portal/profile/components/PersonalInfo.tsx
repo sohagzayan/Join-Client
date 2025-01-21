@@ -140,13 +140,7 @@ export default function ProfileForm() {
             {/* Basic Info Section */}
             <BasicInfo />
             {/* Work Experience Section */}
-            <WorkExperienceComponent
-              workExperience={workExperience}
-              addWorkExperience={addWorkExperience}
-              removeWorkExperience={removeWorkExperience}
-              handleInputChange={handleInputChange}
-              handleSaveExperience={handleSaveExperience}
-            />
+            <WorkExperienceComponent />
             {/* Education Section */}
             <Education />
             {/* Skills Section */}

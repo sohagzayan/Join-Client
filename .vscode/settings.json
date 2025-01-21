@@ -26,7 +26,7 @@
   // ESLint Settings
   "eslint.enable": true,
   "eslint.run": "onSave",
-  "eslint.autoFixOnSave": true, // Auto-fix linting errors on save (ESLint)
+  // "eslint.autoFixOnSave": true, // Auto-fix linting errors on save (ESLint)
   "eslint.validate": [
     "javascript",
     "javascriptreact",

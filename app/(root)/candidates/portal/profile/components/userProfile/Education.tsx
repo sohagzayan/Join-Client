@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { GraduationCap, Plus, Trash2 } from 'lucide-react';
+import { useEffect } from 'react'; // Add this import
 
 import { InputField } from '@/components/common';
 import { Button } from '@/components/ui/button';
@@ -14,59 +15,132 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
+import {
+  useAddEducationsMutation,
+  useGetEducationsQuery,
+} from '@/redux/features/profile/addEducation/addEducationApi';
+import { useGetProfileQuery } from '@/redux/features/profile/profileApi';
+import { parseCookies } from 'nookies';
 import { useState } from 'react';
 
 // Define Education type
 type EducationItem = {
   id: string;
-  school?: string;
+  schoolName?: string;
   degree?: string;
   fieldOfStudy?: string;
-  gpa?: string;
+  grade?: string;
   startDate?: string;
   endDate?: string;
+  description?: string;
+  candidateId?: string;
 };
 
 // Education component
 const Education = () => {
+  const cookies = parseCookies();
+  const token = cookies['auth_token'];
+  const { data: currentUser } = useGetCurrentUserQuery(
+    token ? { token } : { token: '' },
+    {
+      skip: !token,
+    },
+  );
+
+  const { data: profileInfo } = useGetProfileQuery<any>({});
+
   const [education, setEducation] = useState<EducationItem[]>([
     {
       id: '1',
-      school: '',
+      schoolName: '',
       degree: '',
       fieldOfStudy: '',
-      gpa: '',
+      grade: '',
       startDate: '',
       endDate: '',
+      description: '',
+      candidateId: '', // Initialize as empty string
     },
   ]);
 
+  // Update education items when profileInfo becomes available
+  useEffect(() => {
+    if (profileInfo?.data?.[0]?.id) {
+      setEducation((prevEducation) =>
+        prevEducation.map((edu) => ({
+          ...edu,
+          candidateId: profileInfo.data[0].id,
+        })),
+      );
+    }
+  }, [profileInfo]);
+
   // Add a new education entry
   const addEducation = () => {
-    setEducation([...education, { id: String(Date.now()) }]);
+    setEducation([
+      ...education,
+      {
+        id: String(Date.now()),
+        candidateId: profileInfo?.data?.[0]?.id || '', // Include candidateId for new entries
+      },
+    ]);
   };
+
+  const { data: educationInfo } = useGetEducationsQuery({});
 
   // Remove an education entry
   const removeEducation = (id: string) => {
     setEducation(education.filter((edu) => edu.id !== id));
   };
 
-  // Update an education field
+  const [addEducationMutation] = useAddEducationsMutation();
+
+  // Update an education field locally
   const updateEducationField = (
     id: string,
     field: keyof EducationItem,
     value: string,
   ) => {
     setEducation((prev) =>
-      prev.map((edu) => (edu.id === id ? { ...edu, [field]: value } : edu)),
+      prev.map((edu) => {
+        if (edu.id === id) {
+          if (field === 'startDate' || field === 'endDate') {
+            return {
+              ...edu,
+              [field]: new Date(value).toISOString(),
+            };
+          }
+          return {
+            ...edu,
+            [field]: value,
+          };
+        }
+        return edu;
+      }),
     );
   };
 
   // Save Education Data
-  const saveEducation = () => {
-    console.log('Education Data:', education);
+  const saveEducation = async () => {
+    try {
+      const newEducation = education.map(({ id, ...edu }) => {
+        // Ensure candidateId is included and valid
+        if (!edu.candidateId && profileInfo?.data?.[0]?.id) {
+          edu.candidateId = profileInfo.data[0].id;
+        }
+        return edu;
+      });
+
+      for (const edu of newEducation) {
+        await addEducationMutation({ data: edu });
+      }
+    } catch (error) {
+      console.error('Error saving education data:', error);
+    }
   };
 
+  // Rest of the component remains the same...
   return (
     <Card>
       <CardContent className="p-6">
@@ -109,12 +183,12 @@ const Education = () => {
               )}
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <Label>School</Label>
+                  <Label>School Name</Label>
                   <InputField
                     placeholder="University/College name"
-                    value={edu.school || ''}
+                    value={edu.schoolName || ''}
                     onChange={(e) =>
-                      updateEducationField(edu.id, 'school', e.target.value)
+                      updateEducationField(edu.id, 'schoolName', e.target.value)
                     }
                     className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
                   />
@@ -152,12 +226,12 @@ const Education = () => {
                   />
                 </div>
                 <div>
-                  <Label>GPA (Optional)</Label>
+                  <Label>GPA</Label>
                   <InputField
                     placeholder="e.g. 3.8"
-                    value={edu.gpa || ''}
+                    value={edu.grade || ''}
                     onChange={(e) =>
-                      updateEducationField(edu.id, 'gpa', e.target.value)
+                      updateEducationField(edu.id, 'grade', e.target.value)
                     }
                     className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
                   />
@@ -165,8 +239,12 @@ const Education = () => {
                 <div>
                   <Label>Start Date</Label>
                   <InputField
-                    type="month"
-                    value={edu.startDate || ''}
+                    type="date"
+                    value={
+                      edu.startDate
+                        ? new Date(edu.startDate).toISOString().split('T')[0]
+                        : ''
+                    }
                     onChange={(e) =>
                       updateEducationField(edu.id, 'startDate', e.target.value)
                     }
@@ -176,10 +254,29 @@ const Education = () => {
                 <div>
                   <Label>End Date</Label>
                   <InputField
-                    type="month"
-                    value={edu.endDate || ''}
+                    type="date"
+                    value={
+                      edu.endDate
+                        ? new Date(edu.endDate).toISOString().split('T')[0]
+                        : ''
+                    }
                     onChange={(e) =>
                       updateEducationField(edu.id, 'endDate', e.target.value)
+                    }
+                    className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
+                  />
+                </div>
+                <div>
+                  <Label>Description</Label>
+                  <InputField
+                    placeholder="Focused on machine learning, neural networks, etc."
+                    value={edu.description || ''}
+                    onChange={(e) =>
+                      updateEducationField(
+                        edu.id,
+                        'description',
+                        e.target.value,
+                      )
                     }
                     className="rounded-lg border border-[#404142] bg-transparent text-[#f5f5f5]"
                   />

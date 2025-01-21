@@ -1,54 +1,59 @@
-// import { apiSlice } from '@/redux/apiSlice';
+import { apiSlice } from '@/redux/apiSlice';
 
-// export const addExperienceApi = apiSlice.injectEndpoints({
-//   endpoints: (builder: any) => ({
-//     // Get all experiences
-//     getAllExperiences: builder.query({
-//       query: () => ({
-//         url: `experience`,
-//         method: 'GET',
-//       }),
-//       providesTags: ['Experiences'],
-//     }),
+export const addEducationApi = apiSlice.injectEndpoints({
+  endpoints: (builder: any) => ({
+    // Get all educations
+    getEducations: builder.query({
+      query: () => ({
+        url: `education`,
+        method: 'GET',
+      }),
+      providesTags: ['Educations'],
+    }),
 
-//     // Add a new experience
-//     postExperience: builder.mutation({
-//       query: ({ data }: any) => ({
-//         url: `experience`,
-//         method: 'POST',
-//         headers: {
-//           Authorization: `token ${JSON.parse(localStorage.getItem('auth') || '{}').token || ''}`,
-//         },
-//         body: data,
-//       }),
-//       invalidatesTags: ['Experiences'],
-//     }),
+    // Add a new education
+    addEducations: builder.mutation({
+      query: ({ data }: any) => ({
+        url: `education`,
+        method: 'POST',
+        headers: {
+          Authorization: `token ${JSON.parse(localStorage.getItem('auth') || '{}').token || ''}`,
+        },
+        body: data,
+      }),
+      invalidatesTags: ['Educations'],
+    }),
 
-//     // Update an existing experience
-//     updateExperience: builder.mutation({
-//       query: ({ experienceId, data }: any) => ({
-//         url: `experience/${experienceId}`,
-//         method: 'PUT',
-//         headers: {
-//           Authorization: `token ${JSON.parse(localStorage.getItem('auth') || '{}').token || ''}`,
-//         },
-//         body: data,
-//       }),
-//       invalidatesTags: ['Experiences'],
-//     }),
+    // Update an existing education
+    updateEducations: builder.mutation({
+      query: ({ educationId, data }: any) => ({
+        url: `education/${educationId}`,
+        method: 'PUT',
+        headers: {
+          Authorization: `token ${JSON.parse(localStorage.getItem('auth') || '{}').token || ''}`,
+        },
+        body: data,
+      }),
+      invalidatesTags: ['Educations'],
+    }),
 
-//     // Delete an experience
-//     deleteExperience: builder.mutation({
-//       query: ({ experienceId }: any) => ({
-//         url: `experience/${experienceId}`,
-//         method: 'DELETE',
-//         headers: {
-//           Authorization: `token ${JSON.parse(localStorage.getItem('auth') || '{}').token || ''}`,
-//         },
-//       }),
-//       invalidatesTags: ['Experiences'],
-//     }),
-//   }),
-// });
+    // Delete an education
+    deleteEducations: builder.mutation({
+      query: ({ educationId }: any) => ({
+        url: `education/${educationId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `token ${JSON.parse(localStorage.getItem('auth') || '{}').token || ''}`,
+        },
+      }),
+      invalidatesTags: ['Educations'],
+    }),
+  }),
+});
 
-// export const {} = addExperienceApi;
+export const {
+  useAddEducationsMutation,
+  useGetEducationsQuery,
+  useUpdateEducationsMutation,
+  useDeleteEducationsMutation,
+} = addEducationApi;
