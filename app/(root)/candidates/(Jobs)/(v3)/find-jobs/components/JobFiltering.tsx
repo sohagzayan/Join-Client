@@ -11,13 +11,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal } from 'lucide-react';
@@ -76,7 +69,7 @@ export default function Filters() {
           <select
             value={jobNature}
             onChange={(e: any) => setJobNature(e.target.value)}
-            className="dark-select rounded-6 bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
+            className="dark-select appearance rounded-lg bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
           >
             <option value="" disabled>
               Select job nature
@@ -93,44 +86,40 @@ export default function Filters() {
         {/* Job Level - Always Visible */}
         <div className="w-[200px] space-y-2">
           <Label className="text-sm font-medium">Job Level</Label>
-          <Select
+          <select
             value={jobLevel}
-            onValueChange={setJobLevel}
-            // className="dark-select"
+            onChange={(e) => setJobLevel(e.target.value)}
+            className="dark-select appearance rounded-lg bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
           >
-            <SelectTrigger className="border-gray-700 bg-[rgba(255,255,255,0.08)] text-white">
-              <SelectValue placeholder="Select job level" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="any">Any</SelectItem>
-              <SelectItem value="entry">Entry level</SelectItem>
-              <SelectItem value="mid">Mid level</SelectItem>
-              <SelectItem value="top">Top level</SelectItem>
-            </SelectContent>
-          </Select>
+            <option value="" disabled>
+              Select job level
+            </option>
+            <option value="any">Any</option>
+            <option value="entry">Entry level</option>
+            <option value="mid">Mid level</option>
+            <option value="top">Top level</option>
+          </select>
         </div>
 
         {/* Experience - Always Visible */}
         <div className="w-[200px] space-y-2">
           <Label className="text-sm font-medium">Experience</Label>
-          <Select
+          <select
             value={experience}
-            onValueChange={setExperience}
-            // className="dark-select"
+            onChange={(e) => setExperience(e.target.value)}
+            className="dark-select appearance rounded-lg bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
           >
-            <SelectTrigger className="border-gray-700 bg-[rgba(255,255,255,0.08)] text-white">
-              <SelectValue placeholder="Select experience" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="any">Any</SelectItem>
-              <SelectItem value="fresher">Fresher</SelectItem>
-              <SelectItem value="below-1">Below 1 year</SelectItem>
-              <SelectItem value="1-3">1 - &lt; 3 years</SelectItem>
-              <SelectItem value="3-5">3 - &lt; 5 years</SelectItem>
-              <SelectItem value="5-10">5 - &lt; 10 years</SelectItem>
-              <SelectItem value="above-10">Over 10 years</SelectItem>
-            </SelectContent>
-          </Select>
+            <option value="" disabled>
+              Select experience
+            </option>
+            <option value="any">Any</option>
+            <option value="fresher">Fresher</option>
+            <option value="below-1">Below 1 year</option>
+            <option value="1-3">1 - &lt; 3 years</option>
+            <option value="3-5">3 - &lt; 5 years</option>
+            <option value="5-10">5 - &lt; 10 years</option>
+            <option value="above-10">Over 10 years</option>
+          </select>
         </div>
 
         {/* More Filters Button & Modal */}
@@ -144,7 +133,7 @@ export default function Filters() {
               More Filters
             </Button>
           </DialogTrigger>
-          <DialogContent className="border-gray-700 bg-[rgba(255,255,255,0.08)] text-white sm:max-w-[600px]">
+          <DialogContent className="h-[550px] overflow-y-auto border-gray-700 bg-[#000] text-white sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle className="text-theme1">
                 Additional Filters
@@ -159,23 +148,21 @@ export default function Filters() {
               {/* Age Range */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Age Range</Label>
-                <Select
+                <select
                   value={ageRange}
-                  onValueChange={setAgeRange}
-                  // className="dark-select"
+                  onChange={(e) => setAgeRange(e.target.value)}
+                  className="dark-select appearance block w-full rounded-lg border border-opacity-20 bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
                 >
-                  <SelectTrigger className="border-gray-700 bg-[rgba(255,255,255,0.08)] text-white">
-                    <SelectValue placeholder="Select age range" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="any">Any</SelectItem>
-                    <SelectItem value="below-20">Below 20 years</SelectItem>
-                    <SelectItem value="20-30">20 - &lt; 30 years</SelectItem>
-                    <SelectItem value="30-40">30 - &lt; 40 years</SelectItem>
-                    <SelectItem value="40-50">40 - &lt; 50 years</SelectItem>
-                    <SelectItem value="above-50">Over 50 years</SelectItem>
-                  </SelectContent>
-                </Select>
+                  <option value="" disabled>
+                    Select age range
+                  </option>
+                  <option value="any">Any</option>
+                  <option value="below-20">Below 20 years</option>
+                  <option value="20-30">20 - &lt; 30 years</option>
+                  <option value="30-40">30 - &lt; 40 years</option>
+                  <option value="40-50">40 - &lt; 50 years</option>
+                  <option value="above-50">Over 50 years</option>
+                </select>
               </div>
 
               {/* Gender */}
