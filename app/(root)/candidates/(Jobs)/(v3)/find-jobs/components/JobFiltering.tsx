@@ -11,7 +11,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Slider } from '@/components/ui/slider';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal } from 'lucide-react';
 import { useState } from 'react';
@@ -133,7 +132,7 @@ export default function Filters() {
               More Filters
             </Button>
           </DialogTrigger>
-          <DialogContent className="h-[550px] overflow-y-auto border-gray-700 bg-[#000] text-white sm:max-w-[600px]">
+          <DialogContent className="h-[550px] w-[94%] overflow-y-auto border-gray-700 bg-[#000] text-white md:max-w-[600px]">
             <DialogHeader>
               <DialogTitle className="text-theme1">
                 Additional Filters
@@ -308,14 +307,6 @@ export default function Filters() {
                     className="w-20 border-gray-700 bg-[rgba(255,255,255,0.08)] text-white"
                   />
                 </div>
-                <Slider
-                  value={payRange}
-                  min={1}
-                  max={40}
-                  step={1}
-                  onValueChange={setPayRange}
-                  className="mt-6"
-                />
               </div>
             </motion.div>
           </DialogContent>
