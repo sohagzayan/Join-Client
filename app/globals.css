@@ -391,3 +391,21 @@ body {
     @apply bg-background text-foreground;
   }
 } */
+
+/* custom select style  */
+
+.dark-select [data-radix-select-content] {
+  @apply border-gray-700 bg-[rgba(255,255,255,0.08)];
+}
+
+.dark-select [data-radix-select-item] {
+  @apply text-white hover:bg-blue-600;
+}
+
+.dark-select [data-radix-select-item][data-highlighted] {
+  @apply bg-blue-600 text-white;
+}
+
+.dark-select [data-radix-select-item][data-state='checked'] {
+  @apply bg-blue-600;
+}
