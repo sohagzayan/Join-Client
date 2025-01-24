@@ -37,9 +37,9 @@ type EducationItem = {
   endDate?: string;
   description?: string;
   candidateId?: string;
+  isLocal?: boolean; // Only used locally to distinguish unsaved entries
 };
 
-// Education component
 const Education = () => {
   const cookies = parseCookies();
   const token = cookies['auth_token'];
@@ -54,19 +54,7 @@ const Education = () => {
   const [updateEducationMutation] = useUpdateEducationsMutation();
   const [deleteEducationMutation] = useDeleteEducationsMutation();
 
-  const [education, setEducation] = useState<EducationItem[]>([
-    {
-      id: '1',
-      schoolName: '',
-      degree: '',
-      fieldOfStudy: '',
-      grade: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-      candidateId: '',
-    },
-  ]);
+  const [education, setEducation] = useState<EducationItem[]>([]);
 
   useEffect(() => {
     if (educationInfo?.data) {
@@ -80,6 +68,7 @@ const Education = () => {
         endDate: edu.endDate || '',
         description: edu.description || '',
         candidateId: edu.candidateId || '',
+        isLocal: false, // Mark fetched entries as not local
       }));
       setEducation(mappedEducation);
     }
@@ -100,8 +89,16 @@ const Education = () => {
     setEducation([
       ...education,
       {
-        id: String(Date.now()),
+        id: String(Date.now()), // Generate unique ID locally
+        schoolName: '',
+        degree: '',
+        fieldOfStudy: '',
+        grade: '',
+        startDate: '',
+        endDate: '',
+        description: '',
         candidateId: profileInfo?.data?.[0]?.id || '',
+        isLocal: true, // Mark as local (unsaved)
       },
     ]);
   };
@@ -139,27 +136,28 @@ const Education = () => {
         return;
       }
 
-      const existingEducation = educationInfo?.data?.find(
-        (item: any) => item.id === educationId,
-      );
+      // Exclude the `id` and `isLocal` fields from the request
+      const { id, isLocal, ...dataToSave } = educationToSave;
 
-      if (existingEducation) {
+      if (isLocal) {
+        // POST request for new entries
+        const response: any = await addEducationMutation({ data: dataToSave });
+        toast.success('Education added successfully!');
+        // Replace the local entry with the backend response
+        setEducation((prev) =>
+          prev.map((edu) =>
+            edu.id === educationId
+              ? { ...response.data, isLocal: false } // Use backend-generated ID
+              : edu,
+          ),
+        );
+      } else {
+        // PATCH request for existing entries
         await updateEducationMutation({
           educationId,
-          data: {
-            schoolName: educationToSave.schoolName,
-            degree: educationToSave.degree,
-            fieldOfStudy: educationToSave.fieldOfStudy,
-            grade: educationToSave.grade,
-            startDate: educationToSave.startDate,
-            endDate: educationToSave.endDate,
-            description: educationToSave.description,
-          },
+          data: dataToSave,
         });
         toast.success('Education updated successfully!');
-      } else {
-        await addEducationMutation({ data: educationToSave });
-        toast.success('Education added successfully!');
       }
     } catch (error) {
       toast.error('Error saving education entry!');
@@ -169,18 +167,21 @@ const Education = () => {
 
   const deleteEducation = async (educationId: string) => {
     try {
-      const existingEducation = educationInfo?.data?.find(
-        (item: any) => item.id === educationId,
-      );
+      const educationToDelete = education.find((edu) => edu.id === educationId);
 
-      if (existingEducation) {
+      if (!educationToDelete) {
+        toast.error('Education entry not found!');
+        return;
+      }
+
+      if (!educationToDelete.isLocal) {
+        // Only delete from the backend for existing entries
         await deleteEducationMutation({ educationId });
         toast.success('Education deleted successfully!');
       }
 
-      setEducation((prevEducation) =>
-        prevEducation.filter((edu) => edu.id !== educationId),
-      );
+      // Remove the entry from the local state
+      setEducation((prev) => prev.filter((edu) => edu.id !== educationId));
     } catch (error) {
       toast.error('Error deleting education entry!');
       console.error(error);
