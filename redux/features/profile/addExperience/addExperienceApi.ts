@@ -28,7 +28,7 @@ export const addExperienceApi = apiSlice.injectEndpoints({
     updateExperience: builder.mutation({
       query: ({ experienceId, data }: any) => ({
         url: `experience/${experienceId}`,
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           Authorization: `token ${JSON.parse(localStorage.getItem('auth') || '{}').token || ''}`,
         },
