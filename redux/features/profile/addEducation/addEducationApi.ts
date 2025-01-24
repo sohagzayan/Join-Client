@@ -28,7 +28,7 @@ export const addEducationApi = apiSlice.injectEndpoints({
     updateEducations: builder.mutation({
       query: ({ educationId, data }: any) => ({
         url: `education/${educationId}`,
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           Authorization: `token ${JSON.parse(localStorage.getItem('auth') || '{}').token || ''}`,
         },

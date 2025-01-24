@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { GraduationCap, Plus, Trash2 } from 'lucide-react';
-import { useEffect } from 'react'; // Add this import
+import { useEffect, useState } from 'react';
 
 import { InputField } from '@/components/common';
 import { Button } from '@/components/ui/button';
@@ -18,11 +18,13 @@ import {
 import { useGetCurrentUserQuery } from '@/redux/features/auth/authentication';
 import {
   useAddEducationsMutation,
+  useDeleteEducationsMutation,
   useGetEducationsQuery,
+  useUpdateEducationsMutation,
 } from '@/redux/features/profile/addEducation/addEducationApi';
 import { useGetProfileQuery } from '@/redux/features/profile/profileApi';
 import { parseCookies } from 'nookies';
-import { useState } from 'react';
+import { toast } from 'sonner';
 
 // Define Education type
 type EducationItem = {
@@ -43,12 +45,14 @@ const Education = () => {
   const token = cookies['auth_token'];
   const { data: currentUser } = useGetCurrentUserQuery(
     token ? { token } : { token: '' },
-    {
-      skip: !token,
-    },
+    { skip: !token },
   );
 
   const { data: profileInfo } = useGetProfileQuery<any>({});
+  const { data: educationInfo }: any = useGetEducationsQuery({});
+  const [addEducationMutation] = useAddEducationsMutation();
+  const [updateEducationMutation] = useUpdateEducationsMutation();
+  const [deleteEducationMutation] = useDeleteEducationsMutation();
 
   const [education, setEducation] = useState<EducationItem[]>([
     {
@@ -64,11 +68,6 @@ const Education = () => {
     },
   ]);
 
-  const { data: educationInfo } = useGetEducationsQuery({});
-
-  console.log(educationInfo?.data, 'get-education');
-
-  // Add this useEffect to map the data and update the education state
   useEffect(() => {
     if (educationInfo?.data) {
       const mappedEducation = educationInfo.data.map((edu: any) => ({
@@ -86,7 +85,6 @@ const Education = () => {
     }
   }, [educationInfo]);
 
-  // Update education items when profileInfo becomes available
   useEffect(() => {
     if (profileInfo?.data?.[0]?.id) {
       setEducation((prevEducation) =>
@@ -98,25 +96,16 @@ const Education = () => {
     }
   }, [profileInfo]);
 
-  // Add a new education entry
   const addEducation = () => {
     setEducation([
       ...education,
       {
         id: String(Date.now()),
-        candidateId: profileInfo?.data?.[0]?.id || '', // Include candidateId for new entries
+        candidateId: profileInfo?.data?.[0]?.id || '',
       },
     ]);
   };
 
-  // Remove an education entry
-  const removeEducation = (id: string) => {
-    setEducation(education.filter((edu) => edu.id !== id));
-  };
-
-  const [addEducationMutation] = useAddEducationsMutation();
-
-  // Update an education field locally
   const updateEducationField = (
     id: string,
     field: keyof EducationItem,
@@ -141,26 +130,63 @@ const Education = () => {
     );
   };
 
-  // Save Education Data
-  const saveEducation = async () => {
+  const saveEducation = async (educationId: string) => {
     try {
-      const newEducation = education.map(({ id, ...edu }) => {
-        // Ensure candidateId is included and valid
-        if (!edu.candidateId && profileInfo?.data?.[0]?.id) {
-          edu.candidateId = profileInfo.data[0].id;
-        }
-        return edu;
-      });
+      const educationToSave = education.find((edu) => edu.id === educationId);
 
-      for (const edu of newEducation) {
-        await addEducationMutation({ data: edu });
+      if (!educationToSave) {
+        toast.error('Education entry not found!');
+        return;
+      }
+
+      const existingEducation = educationInfo?.data?.find(
+        (item: any) => item.id === educationId,
+      );
+
+      if (existingEducation) {
+        await updateEducationMutation({
+          educationId,
+          data: {
+            schoolName: educationToSave.schoolName,
+            degree: educationToSave.degree,
+            fieldOfStudy: educationToSave.fieldOfStudy,
+            grade: educationToSave.grade,
+            startDate: educationToSave.startDate,
+            endDate: educationToSave.endDate,
+            description: educationToSave.description,
+          },
+        });
+        toast.success('Education updated successfully!');
+      } else {
+        await addEducationMutation({ data: educationToSave });
+        toast.success('Education added successfully!');
       }
     } catch (error) {
-      console.error('Error saving education data:', error);
+      toast.error('Error saving education entry!');
+      console.error(error);
     }
   };
 
-  // Rest of the component remains the same...
+  const deleteEducation = async (educationId: string) => {
+    try {
+      const existingEducation = educationInfo?.data?.find(
+        (item: any) => item.id === educationId,
+      );
+
+      if (existingEducation) {
+        await deleteEducationMutation({ educationId });
+        toast.success('Education deleted successfully!');
+      }
+
+      setEducation((prevEducation) =>
+        prevEducation.filter((edu) => edu.id !== educationId),
+      );
+    } catch (error) {
+      toast.error('Error deleting education entry!');
+      console.error(error);
+    }
+  };
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -194,7 +220,7 @@ const Education = () => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => removeEducation(edu.id)}
+                    onClick={() => deleteEducation(edu.id)}
                     type="button"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -216,6 +242,7 @@ const Education = () => {
                 <div>
                   <Label>Degree</Label>
                   <Select
+                    value={edu.degree || undefined}
                     onValueChange={(value) =>
                       updateEducationField(edu.id, 'degree', value)
                     }
@@ -302,19 +329,19 @@ const Education = () => {
                   />
                 </div>
               </div>
+              <div className="flex w-full justify-end">
+                <Button
+                  onClick={() => saveEducation(edu.id)}
+                  className="mb-3 mr-3 rounded-lg border-2 px-10 py-2"
+                  type="button"
+                >
+                  Save Education
+                </Button>
+              </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </CardContent>
-      <div className="flex w-full justify-end">
-        <Button
-          onClick={saveEducation}
-          className="mb-3 mr-3 rounded-lg border-2 px-10 py-2"
-          type="button"
-        >
-          Save Education
-        </Button>
-      </div>
     </Card>
   );
 };
