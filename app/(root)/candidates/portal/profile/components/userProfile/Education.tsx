@@ -60,9 +60,31 @@ const Education = () => {
       startDate: '',
       endDate: '',
       description: '',
-      candidateId: '', // Initialize as empty string
+      candidateId: '',
     },
   ]);
+
+  const { data: educationInfo } = useGetEducationsQuery({});
+
+  console.log(educationInfo?.data, 'get-education');
+
+  // Add this useEffect to map the data and update the education state
+  useEffect(() => {
+    if (educationInfo?.data) {
+      const mappedEducation = educationInfo.data.map((edu: any) => ({
+        id: edu.id,
+        schoolName: edu.schoolName || '',
+        degree: edu.degree || '',
+        fieldOfStudy: edu.fieldOfStudy || '',
+        grade: edu.grade || '',
+        startDate: edu.startDate || '',
+        endDate: edu.endDate || '',
+        description: edu.description || '',
+        candidateId: edu.candidateId || '',
+      }));
+      setEducation(mappedEducation);
+    }
+  }, [educationInfo]);
 
   // Update education items when profileInfo becomes available
   useEffect(() => {
@@ -86,8 +108,6 @@ const Education = () => {
       },
     ]);
   };
-
-  const { data: educationInfo } = useGetEducationsQuery({});
 
   // Remove an education entry
   const removeEducation = (id: string) => {
