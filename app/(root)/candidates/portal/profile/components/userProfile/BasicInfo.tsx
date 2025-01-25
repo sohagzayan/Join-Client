@@ -215,7 +215,7 @@ const BasicInfo = () => {
           className="mb-3 mr-3 rounded-lg border-2 px-10 py-2"
           type="button"
         >
-          Save Experience
+          Save Personal Info
         </Button>
       </div>
     </Card>
