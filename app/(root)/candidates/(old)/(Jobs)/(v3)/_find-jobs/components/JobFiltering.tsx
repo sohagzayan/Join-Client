@@ -68,7 +68,7 @@ export default function Filters() {
           <select
             value={jobNature}
             onChange={(e: any) => setJobNature(e.target.value)}
-            className="dark-select appearance rounded-lg bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
+            className="dark-select appearance focus:none rounded-lg border-none bg-gray-800 px-6 py-2 text-white"
           >
             <option value="" disabled>
               Select job nature
@@ -88,7 +88,7 @@ export default function Filters() {
           <select
             value={jobLevel}
             onChange={(e) => setJobLevel(e.target.value)}
-            className="dark-select appearance rounded-lg bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
+            className="dark-select appearance rounded-lg bg-gray-800 px-6 py-2 text-white focus:outline"
           >
             <option value="" disabled>
               Select job level
@@ -106,7 +106,7 @@ export default function Filters() {
           <select
             value={experience}
             onChange={(e) => setExperience(e.target.value)}
-            className="dark-select appearance rounded-lg bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
+            className="dark-select appearance rounded-lg bg-gray-800 px-6 py-2 text-white focus:outline"
           >
             <option value="" disabled>
               Select experience
@@ -150,7 +150,7 @@ export default function Filters() {
                 <select
                   value={ageRange}
                   onChange={(e) => setAgeRange(e.target.value)}
-                  className="dark-select appearance block w-full rounded-lg border border-opacity-20 bg-[rgba(255,255,255,0.08)] px-6 py-2 text-white focus:outline"
+                  className="dark-select appearance block w-full rounded-lg border border-opacity-20 bg-gray-800 px-6 py-2 text-white focus:outline"
                 >
                   <option value="" disabled>
                     Select age range

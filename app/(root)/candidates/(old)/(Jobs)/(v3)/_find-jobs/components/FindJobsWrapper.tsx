@@ -3,7 +3,6 @@ import { useState } from 'react';
 import ExtraInformation from './ExtraInformation';
 import JobFiltering from './JobFiltering';
 import JobListings from './JobListings';
-import JobModal from './JobModal';
 
 const FindJobsWrapper = () => {
   const [selectedJob, setSelectedJob] = useState<any>(null);
@@ -11,16 +10,14 @@ const FindJobsWrapper = () => {
   const [searchTerm, setSearchTerm] = useState<any>('');
   const [showEarlyApplyModal, setShowEarlyApplyModal] = useState<any>(false);
 
+  const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ];
+
   return (
     <div className="relative">
-      <JobModal
-        {...{
-          showJobModal,
-          setShowJobModal,
-          selectedJob,
-          setShowEarlyApplyModal,
-        }}
-      />
       <div className="container py-10">
         <div className="mb-5 border-b border-b-[rgba(255,255,255,0.08)]">
           <h3 className="py-2 text-4xl font-bold text-white">Explore jobs</h3>

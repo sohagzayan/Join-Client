@@ -394,18 +394,26 @@ body {
 
 /* custom select style  */
 
+.dark-select {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
 .dark-select [data-radix-select-content] {
-  @apply border-gray-700 bg-[rgba(255,255,255,0.08)];
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 .dark-select [data-radix-select-item] {
-  @apply text-white hover:bg-blue-600;
+  color: white;
+}
+
+.dark-select [data-radix-select-item]:hover {
+  background-color: #2563eb; /* Tailwind's blue-600 */
 }
 
 .dark-select [data-radix-select-item][data-highlighted] {
-  @apply bg-blue-600 text-white;
+  background-color: #2563eb;
 }
 
 .dark-select [data-radix-select-item][data-state='checked'] {
-  @apply bg-blue-600;
+  background-color: #2563eb;
 }
