@@ -35,7 +35,7 @@ export default function JobFilter() {
 
   return (
     <div className="min-h-screen">
-      <div className="container mx-4 mx-auto py-8">
+      <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-3xl font-bold text-white">
