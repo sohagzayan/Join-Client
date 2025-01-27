@@ -35,7 +35,7 @@ export default function JobHead() {
   const [activeTab, setActiveTab] = useState('for-you');
 
   return (
-    <div className="min-h-screen">
+    <div className="">
       <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="mb-8 text-center">

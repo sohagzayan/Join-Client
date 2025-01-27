@@ -57,7 +57,7 @@ const JobListings = ({
   ];
 
   return (
-    <div>
+    <div className="container">
       <Card className="border-transparent">
         <CardHeader className="mb-5 flex flex-row items-center justify-between py-0">
           <CardTitle className="text-xl text-theme1">

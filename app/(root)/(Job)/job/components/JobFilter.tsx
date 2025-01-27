@@ -39,7 +39,7 @@ const JobFilter = () => {
 
       <div className="relative">
         <Select>
-          <SelectTrigger className="focus:ring-7 w-[120px] border-none bg-black text-white outline-none">
+          <SelectTrigger className="focus:ring-7 w-[150px] border-none bg-black text-white outline-none">
             <SelectValue placeholder="Select a fruit" />
           </SelectTrigger>
           <SelectContent className="border-0 bg-black text-white">
