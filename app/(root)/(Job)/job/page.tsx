@@ -1,9 +1,9 @@
-import JobFilter from './components/JobFilter';
+import JobHead from './components/JobHead';
 
 const JobPage = () => {
   return (
     <div className="bg-themeDark">
-      <JobFilter />
+      <JobHead />
     </div>
   );
 };
