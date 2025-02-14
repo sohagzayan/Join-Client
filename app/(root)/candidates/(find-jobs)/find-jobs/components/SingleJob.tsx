@@ -16,7 +16,7 @@ import {
   Star,
 } from 'lucide-react';
 
-const JobCard = ({ job, setSelectedJob, setShowJobModal }: any) => {
+const SingleJob = ({ job, setSelectedJob, setShowJobModal }: any) => {
   const handleJobClick = (job: any) => {
     console.log('job', job);
     setSelectedJob(job);
@@ -110,4 +110,4 @@ const JobCard = ({ job, setSelectedJob, setShowJobModal }: any) => {
   );
 };
 
-export default JobCard;
+export default SingleJob;

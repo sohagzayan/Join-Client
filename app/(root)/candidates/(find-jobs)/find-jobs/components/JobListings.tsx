@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { jobs_news } from '@/utils/data';
 import { useEffect, useState } from 'react';
-import JobCard from './JobCard';
+import SingleJob from './SingleJob';
 
 const JobListings = ({
   searchTerm,
@@ -55,7 +55,7 @@ const JobListings = ({
         <CardContent>
           <div className="grid grid-cols-1 gap-4">
             {currentJobs.map((job: any) => (
-              <JobCard
+              <SingleJob
                 key={job.id + 10}
                 setSelectedJob={setSelectedJob}
                 setShowJobModal={setShowJobModal}
