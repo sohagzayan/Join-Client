@@ -19,6 +19,7 @@ import {
   Trophy,
   Users,
 } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 
 interface Job {
@@ -392,7 +393,7 @@ function JobCard({
   selected,
   onSelect,
 }: {
-  job: Job;
+  job: any;
   selected: boolean;
   onSelect: () => void;
 }) {
@@ -640,9 +641,11 @@ function LoadingDetails() {
 export default function JobsBoard() {
   const [selectedJob, setSelectedJob] = useState<Job>(jobs[0]);
   const [showMobileDetails, setShowMobileDetails] = useState(false);
+  const searchParams = useSearchParams();
+  const queryParams = Object.fromEntries(searchParams.entries());
 
   const { data: allJobs } = useGetAllJobsQuery({});
-
+  console.log(queryParams);
   console.log('jobs', allJobs);
 
   return (
@@ -663,7 +666,7 @@ export default function JobsBoard() {
                   }
                 >
                   <AnimatePresence>
-                    {allJobs?.data?.map((job) => (
+                    {allJobs?.data?.map((job: any) => (
                       <JobCard
                         key={job.id}
                         job={job}
