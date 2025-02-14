@@ -50,7 +50,7 @@ const JobListings = ({
   ];
 
   return (
-    <div>
+    <div className="container">
       <Card className="border-transparent">
         <CardContent>
           <div className="grid grid-cols-1 gap-4">
