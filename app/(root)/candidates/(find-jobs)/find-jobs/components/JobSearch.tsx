@@ -18,7 +18,14 @@ import {
 } from '@/components/ui/select';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
-import { Bell, Search, SlidersHorizontal, Star, Upload } from 'lucide-react';
+import {
+  Bell,
+  MapPin,
+  Search,
+  SlidersHorizontal,
+  Star,
+  Upload,
+} from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -103,28 +110,33 @@ export default function JobSearch() {
         <div className="flex-1">
           <div className="mb-4 flex items-center gap-4">
             <div className="flex flex-1 gap-2">
-              <div className="relative flex-1">
-                <Search className="text-muted-foreground absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
+              <div className="flex flex-1 cursor-pointer items-center gap-2 rounded-xl bg-gray-50 px-4 py-3 transition-colors duration-200 hover:bg-gray-100">
+                <Search className="h-5 w-5 text-gray-500" />
                 <Input
                   type="text"
                   placeholder="Search jobs..."
                   value={searchTerm}
                   onChange={(e: any) => setSearchTerm(e.target.value)}
-                  className="pl-9"
+                  className="w-full border-none bg-transparent text-gray-900 outline-none placeholder:text-gray-500"
                 />
               </div>
-              <Input
-                type="text"
-                placeholder="Location"
-                value={location}
-                onChange={(e: any) => setLocation(e.target.value)}
-                className="w-[200px]"
-              />
+
+              <div className="flex cursor-pointer items-center gap-2 rounded-xl bg-gray-50 px-4 py-3 transition-colors duration-200 hover:bg-gray-100">
+                <MapPin className="h-5 w-5 text-gray-500" />
+                <Input
+                  type="text"
+                  placeholder="Search your country"
+                  value={location}
+                  onChange={(e: any) => setLocation(e.target.value)}
+                  className="w-[200px]"
+                />
+              </div>
+
               <Dialog open={showFilters} onOpenChange={setShowFilters}>
-                <DialogTrigger asChild>
-                  <Button variant="outline">
-                    <SlidersHorizontal className="h-4 w-4" />
-                  </Button>
+                <DialogTrigger asChild className="">
+                  <button className="rounded-xl bg-gray-50 p-3 transition-colors duration-200 hover:bg-gray-100">
+                    <SlidersHorizontal className="h-5 w-5 text-gray-500" />
+                  </button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>
@@ -227,25 +239,18 @@ export default function JobSearch() {
           </div>
 
           {/* Action Buttons */}
-          <div className="mb-6 flex gap-4">
+          <div className="mb-6 flex justify-center gap-4">
             <Button
               variant="outline"
               className="hover:bg-primary hover:text-primary-foreground group border-none text-theme1"
             >
               <Upload className="group-hover:text-primary-foreground mr-2 h-4 w-4" />
-              Upload your resume
-            </Button>
-            <Button
-              variant="outline"
-              className="hover:text-primary-foreground group border-none shadow-none"
-            >
-              <Bell className="group-hover:text-primary-foreground mr-2 h-4 w-4" />
-              Create job alert
+              Upload your resume - let employers find you
             </Button>
           </div>
 
           {/* Navigation */}
-          <div className="border-b">
+          <div className="flex justify-between border-b">
             <Tabs
               value={activeTab}
               onValueChange={handleTabChange}
@@ -257,6 +262,13 @@ export default function JobSearch() {
                 <TabsTrigger value="activity">Your Activity</TabsTrigger>
               </TabsList>
             </Tabs>
+            <Button
+              variant="outline"
+              className="hover:text-primary-foreground group border-none shadow-none"
+            >
+              <Bell className="group-hover:text-primary-foreground mr-2 h-4 w-4" />
+              Create job alert
+            </Button>
           </div>
 
           {/* Quick Filters */}
