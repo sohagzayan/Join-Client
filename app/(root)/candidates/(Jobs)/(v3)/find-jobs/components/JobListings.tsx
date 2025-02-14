@@ -1,12 +1,5 @@
-import { SelectDropdown } from '@/components/common';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { jobs_news } from '@/utils/data';
 import { useEffect, useState } from 'react';
 import JobCard from './JobCard';
@@ -59,19 +52,6 @@ const JobListings = ({
   return (
     <div>
       <Card className="border-transparent">
-        <CardHeader className="mb-5 flex flex-row items-center justify-between py-0">
-          <CardTitle className="text-xl text-theme1">
-            Job Listings ({filteredJobs.length})
-          </CardTitle>
-          <div>
-            <SelectDropdown
-              placeholder="Sort by"
-              selectedClassName="rounded text-sm w-52 py-2 rounded-xl font-semibold"
-              options={statusOptions}
-            />
-          </div>
-        </CardHeader>
-
         <CardContent>
           <div className="grid grid-cols-1 gap-4">
             {currentJobs.map((job: any) => (

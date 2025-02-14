@@ -2,7 +2,7 @@ import FindJobsWrapper from './components/FindJobsWrapper';
 
 const page = () => {
   return (
-    <div>
+    <div className="bg-white">
       <FindJobsWrapper />
     </div>
   );
