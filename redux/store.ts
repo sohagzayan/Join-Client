@@ -4,7 +4,7 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { OrganizationApi } from './features/Organization';
 import { UserApi } from './features/User';
 import { UserAuthApi } from './features/auth/authentication';
-import { jobsApi } from './features/getJobs';
+import jobsApi from './features/jobs/jobsApi';
 import SidebarReducer from './slice/dashboardSidebar-slice';
 import mobileMenuReducer from './slice/mobileMenu-slice';
 import userReducer from './slice/userSlice';

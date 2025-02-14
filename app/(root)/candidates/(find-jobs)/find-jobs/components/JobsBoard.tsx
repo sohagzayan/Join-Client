@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useGetAllJobsQuery } from '@/redux/features/jobs/jobsApi';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowLeft,
   Bookmark,
   BookmarkCheck,
-  CheckCircle2,
   Clock,
   MapPin,
   MoreHorizontal,
@@ -412,22 +412,22 @@ function JobCard({
       <div className="flex items-start justify-between">
         <div className="flex gap-4">
           <img
-            src={job.company.logo || '/placeholder.svg'}
-            alt={`${job.company.name} logo`}
+            src={job?.company?.logo || '/placeholder.svg'}
+            alt={`logo`}
             className="h-12 w-12 rounded-lg object-cover"
           />
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold">{job.company.name}</h3>
+              <h3 className="font-semibold">{'Your company name'}</h3>
               <div className="text-muted-foreground flex items-center text-sm">
                 <Star className="fill-yellow-400 stroke-yellow-400 h-4 w-4" />
-                <span>{job.company.rating}</span>
+                <span>56</span>
               </div>
             </div>
-            <h4 className="text-lg font-medium">{job.title}</h4>
+            <h4 className="text-lg font-medium">{job?.title}</h4>
             <div className="text-muted-foreground flex items-center gap-2 text-sm">
               <MapPin className="h-4 w-4" />
-              <span>{job.location}</span>
+              <span>{job?.location}</span>
             </div>
           </div>
         </div>
@@ -451,29 +451,27 @@ function JobCard({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">
-              <span className="text-primary font-semibold">
-                {job.matchPercentage}%
-              </span>
+              <span className="text-primary font-semibold">50%</span>
             </div>
             <span className="text-sm font-medium">Match</span>
           </div>
           <div className="text-muted-foreground flex items-center gap-1 text-sm">
             <Users className="h-4 w-4" />
-            <span>{job.applicants} applied</span>
+            <span>77 applied</span>
           </div>
         </div>
 
         <div className="flex items-center justify-between">
           <div className="flex gap-2">
-            {job.workType.map((type) => (
+            {/* {job.workType.map((type) => (
               <Badge key={type} variant="secondary">
                 {type}
               </Badge>
-            ))}
+            ))} */}
           </div>
           <div className="text-muted-foreground flex items-center gap-1 text-sm">
             <Clock className="h-4 w-4" />
-            <span>{job.posted}</span>
+            <span>{job?.createdAt}</span>
           </div>
         </div>
       </div>
@@ -486,39 +484,39 @@ function JobDetails({ job }: { job: Job }) {
     <div className="space-y-8 p-6">
       <div className="flex items-start gap-6">
         <img
-          src={job.company.logo || '/placeholder.svg'}
-          alt={`${job.company.name} logo`}
+          src={job?.company?.logo || '/placeholder.svg'}
+          alt={`${job?.company?.name} logo`}
           className="h-20 w-20 rounded-lg object-cover"
         />
         <div className="flex-1">
           <div className="mb-2 flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold">{job.title}</h2>
+              <h2 className="text-2xl font-bold">{job?.title}</h2>
               <div className="text-muted-foreground flex items-center gap-2">
-                <span className="font-medium">{job.company.name}</span>
+                <span className="font-medium">{'Your company name here'}</span>
                 <span>•</span>
                 <div className="flex items-center">
                   <Star className="fill-yellow-400 stroke-yellow-400 mr-1 h-4 w-4" />
-                  <span>{job.company.rating}</span>
+                  <span>99</span>
                 </div>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-lg font-semibold">{job.salary}</div>
+              <div className="text-lg font-semibold">{job?.salary}</div>
               <div className="text-muted-foreground text-sm">
-                {job.experience}
+                {job?.experience}
               </div>
             </div>
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
-            {job.workType.map((type) => (
+            {/* {job.workType.map((type) => (
               <Badge key={type} variant="secondary">
                 {type}
               </Badge>
-            ))}
+            ))} */}
             <Badge variant="outline" className="gap-1">
               <MapPin className="h-3 w-3" />
-              {job.location}
+              {job?.location}
             </Badge>
           </div>
         </div>
@@ -527,22 +525,22 @@ function JobDetails({ job }: { job: Job }) {
       <div className="grid grid-cols-3 gap-4 text-sm">
         <div className="space-y-1 rounded-lg border p-4">
           <div className="text-muted-foreground">Company Size</div>
-          <div className="font-medium">{job.company.employees}</div>
+          <div className="font-medium">{job?.company?.employees}</div>
         </div>
         <div className="space-y-1 rounded-lg border p-4">
           <div className="text-muted-foreground">Industry</div>
-          <div className="font-medium">{job.company.industry}</div>
+          <div className="font-medium">{job?.company?.industry}</div>
         </div>
         <div className="space-y-1 rounded-lg border p-4">
           <div className="text-muted-foreground">Founded</div>
-          <div className="font-medium">{job.company.founded}</div>
+          <div className="font-medium">{job?.company?.founded}</div>
         </div>
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">About {job.company.name}</h3>
+        <h3 className="text-xl font-semibold">About {job?.company?.name}</h3>
         <p className="text-muted-foreground leading-relaxed">
-          {job.company.description}
+          {job?.company?.description}
         </p>
       </div>
 
@@ -552,7 +550,7 @@ function JobDetails({ job }: { job: Job }) {
         <div>
           <h3 className="mb-4 text-xl font-semibold">Job Description</h3>
           <p className="text-muted-foreground leading-relaxed">
-            {job.description}
+            {job?.description}
           </p>
         </div>
 
@@ -562,9 +560,7 @@ function JobDetails({ job }: { job: Job }) {
             Requirements
           </h4>
           <ul className="text-muted-foreground list-inside list-disc space-y-2">
-            {job.requirements.map((req, index) => (
-              <li key={index}>{req}</li>
-            ))}
+            {job?.requirements?.map((req, index) => <li key={index}>{req}</li>)}
           </ul>
         </div>
 
@@ -574,21 +570,21 @@ function JobDetails({ job }: { job: Job }) {
             Responsibilities
           </h4>
           <ul className="text-muted-foreground list-inside list-disc space-y-2">
-            {job.responsibilities.map((resp, index) => (
+            {/* {job?.responsibilities?.map((resp, index) => (
               <li key={index}>{resp}</li>
-            ))}
+            ))} */}
           </ul>
         </div>
 
         <div>
           <h4 className="mb-3 text-lg font-semibold">Benefits</h4>
           <div className="grid grid-cols-2 gap-2">
-            {job.benefits.map((benefit, index) => (
+            {/* {job?.benefits.map((benefit, index) => (
               <Badge key={index} variant="outline" className="justify-start">
                 <CheckCircle2 className="mr-2 h-4 w-4" />
                 {benefit}
               </Badge>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
@@ -645,6 +641,10 @@ export default function JobsBoard() {
   const [selectedJob, setSelectedJob] = useState<Job>(jobs[0]);
   const [showMobileDetails, setShowMobileDetails] = useState(false);
 
+  const { data: allJobs } = useGetAllJobsQuery({});
+
+  console.log('jobs', allJobs);
+
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-6 md:px-6">
@@ -663,7 +663,7 @@ export default function JobsBoard() {
                   }
                 >
                   <AnimatePresence>
-                    {jobs.map((job) => (
+                    {allJobs?.data?.map((job) => (
                       <JobCard
                         key={job.id}
                         job={job}
