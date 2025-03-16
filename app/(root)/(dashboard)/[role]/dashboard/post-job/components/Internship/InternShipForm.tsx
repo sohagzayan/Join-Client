@@ -1,6 +1,5 @@
 'use client';
 import { InputField } from '@/components/common';
-import RichTextEditor from '@/components/common/QuillEditor/RichTextEditor';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -12,38 +11,87 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { jobSchema } from '@/utils/zodSchemas/zodSchemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 type InternShipFormProps = {
   opportunityType: string;
 };
 
+interface CreateJobFormProps {
+  companyName: string;
+  companyLocation: string;
+  companyAbout: string;
+  companyLogo: string;
+  companyXAccount: string | null;
+  companyWebsite: string;
+}
+
 export default function InternShipForm({
-  opportunityType,
-}: InternShipFormProps) {
+  companyAbout,
+  companyLocation,
+  companyLogo,
+  companyXAccount,
+  companyName,
+  companyWebsite,
+}: CreateJobFormProps) {
   const [internshipType, setInternshipType] = useState('in-office');
   const [workType, setWorkType] = useState('full-time');
   const [startDate, setStartDate] = useState('immediate');
   const [stipendType, setStipendType] = useState('fixed');
+  const [pending, setPending] = useState(false);
+
+  const form = useForm<z.infer<typeof jobSchema>>({
+    resolver: zodResolver(jobSchema),
+    defaultValues: {
+      benefits: [],
+      companyDescription: companyAbout,
+      companyLocation,
+      companyName,
+      companyWebsite,
+      companyXAccount: companyXAccount || '',
+      employmentType: '',
+      jobDescription: '',
+      jobTitle: '',
+      location: '',
+      salaryFrom: 0,
+      salaryTo: 0,
+      companyLogo,
+      listingDuration: 30,
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof jobSchema>) {
+    try {
+      setPending(true);
+
+      // await createJob(values);
+    } catch {
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setPending(false);
+    }
+  }
 
   const handleEditorChange = (content: string) => {
     console.log('Editor Content:', content);
-    // You can send `content` to your backend API or use it as needed here
   };
 
+  const opportunityType = 'internship';
+
   return (
-    <div className="mt-6 space-y-6 border-none">
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="mt-6 space-y-6 border-none"
+    >
       <Card>
-        <CardHeader>
-          <CardTitle>
-            {opportunityType === 'internship' ? 'Internship' : 'Job'} Details
-          </CardTitle>
-        </CardHeader>
+        <CardHeader></CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="profile">
-              {opportunityType === 'internship' ? 'Internship' : 'Job'} profile
-            </Label>
             <InputField
               id="profile"
               placeholder="e.g. Android App Development"
@@ -188,10 +236,7 @@ export default function InternShipForm({
 
           <div className="mt-3 space-y-2">
             <div className="w-64">Candidate&apos;s responsibilities</div>
-            <RichTextEditor
-              onChange={handleEditorChange}
-              apiKey="3njyp0uscyk6k6nmj9gmcuy6222j3fh5r69xn307lilkz5y0"
-            />
+            {/* <JobDescriptionEditor field={field} /> */}
           </div>
 
           <div className="flex items-center space-x-2">
@@ -266,10 +311,7 @@ export default function InternShipForm({
                   </SelectItem>
                 </SelectContent>
               </Select>
-              {/* <Input
-              placeholder="e.g. 10000"
-              className="flex-grow border border-gray-700  text-gray-300 focus:border-none focus:border-gray-700 focus: focus:outline-none"
-            /> */}
+
               <InputField
                 placeholder="e.g. 10000"
                 className="flex-grow rounded border border-gray-700 py-2 text-gray-300"
@@ -420,6 +462,6 @@ export default function InternShipForm({
           </div>
         </CardContent>
       </Card>
-    </div>
+    </form>
   );
 }

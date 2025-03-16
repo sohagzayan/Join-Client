@@ -1,9 +1,9 @@
-import JobPost from './components/JobPost';
+import JobOpportunityTypeModal from './components/JobOpportunityTypeModal/JobOpportunityTypeModal';
 
 const page = () => {
   return (
     <section className="container">
-      <JobPost />
+      <JobOpportunityTypeModal />
     </section>
   );
 };
